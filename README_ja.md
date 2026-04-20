@@ -1,31 +1,31 @@
 # SAM Particle Counter
 
-SAM Particle Counter is a desktop workflow for counting particles from image data using SAM2-assisted segmentation and Napari-based visualization.
+SAM Particle Counter は、SAM2 を使ったセグメンテーションと Napari ベースの可視化により、画像データから粒子をカウントするデスクトップワークフローです。
 
-## Prerequisites
+## 前提条件
 
-Before setup, confirm the following requirements.
+セットアップ前に以下の要件を確認してください。
 
-- **Python**: `>=3.11.6` (defined in `pyproject.toml`)
-- **Required tool**: [`uv`](https://docs.astral.sh/uv/) for dependency and virtual environment management
+- **Python**: `>=3.11.6`（`pyproject.toml` で定義）
+- **必須ツール**: 依存関係・仮想環境管理に [`uv`](https://docs.astral.sh/uv/) を使用
 - **GPU/CUDA**:
-  - GPU is **optional**. The app can run on CPU, but performance may be slower.
-  - For GPU acceleration, use a CUDA-compatible NVIDIA GPU and install a CUDA-compatible PyTorch build for your environment.
-  - Verify CUDA and PyTorch compatibility for your OS/driver before running setup.
-- **OS notes**:
-  - **Windows**: Use PowerShell commands shown below and run `.bat` setup scripts.
-  - **macOS**: Use shell commands shown below and run `.sh` setup scripts.
-  - **Linux**: Use shell commands shown below and run `.sh` setup scripts.
+  - GPU は**任意**です。CPU でも動作しますが、パフォーマンスが低下する場合があります。
+  - GPU アクセラレーションを使用する場合は、CUDA 対応の NVIDIA GPU と、環境に合った CUDA 対応 PyTorch ビルドが必要です。
+  - セットアップ実行前に、OS/ドライバと PyTorch の CUDA 互換性を確認してください。
+- **OS 別の注意事項**:
+  - **Windows**: 以下の PowerShell コマンドを使用し、`.bat` セットアップスクリプトを実行してください。
+  - **macOS**: 以下のシェルコマンドを使用し、`.sh` セットアップスクリプトを実行してください。
+  - **Linux**: 以下のシェルコマンドを使用し、`.sh` セットアップスクリプトを実行してください。
 
-### Maintenance task (metadata consistency)
+### メンテナンスタスク（メタデータの一貫性）
 
-- Keep `pyproject.toml` `[project].description` aligned with the README project description (do not leave placeholder text such as `Add your description here`).
+- `pyproject.toml` の `[project].description` を README のプロジェクト説明と一致させてください（`Add your description here` などのプレースホルダーは残さないこと）。
 
-## Get Started
+## はじめに
 
-### Clone the repository
+### リポジトリを準備する
 
-Clone the repository, then set up the virtual environment and install dependencies.
+リポジトリをクローン後、仮想環境をセットアップして依存関係をインストールしてください。
 
 #### Windows
 
@@ -41,9 +41,9 @@ uv sync
 source .venv/bin/activate
 ```
 
-### Setup SAM2
+### SAM2 セットアップ
 
-Setup the Segment Anything Model2 (SAM2).
+Segment Anything Model2（SAM2）をセットアップします。
 
 ### Windows
 
@@ -57,7 +57,7 @@ setup\setup_sam2.bat
 ./setup/setup_sam2.sh
 ```
 
-### Launch the application
+### アプリ起動
 
 ```powershell
 uv run main.py
@@ -65,20 +65,20 @@ uv run main.py
 
 ## Quick Start Workflow
 
-This is the typical operation flow for particle counting in Napari. The wording matches the `main.py` UI button names so users can map README steps directly to the UI.
+Napari上で粒子カウントを行う際の典型的な操作フローです。`main.py` のUIボタン名に合わせて記載しているため、READMEと画面を1対1で対応付けできます。
 
-1. **Load an image**  
-   Open an image in Napari (drag and drop, or `File > Open...`). When the first image is added, the corresponding ROI layer (`<image_name>_ROI`) is created automatically.
-2. **Create/select the ROI layer and draw a rectangle**  
-   Select the `*_ROI` layer, then draw one rectangular ROI with the Shapes tool (if multiple ROIs exist, the most recently drawn ROI is used).
-3. **Run crop**  
-   Execute **`Crop to ROI`** in the right dock to create the `<image_name>_cropped` layer.
-4. **Run SAM2 auto segmentation**  
-   Select `*_cropped` (or a related layer) and execute **`Run SAM2 auto segmentation`** in the right dock. Adjust parameters such as `Output mode` as needed.
-5. **Check particle counts and export**  
-   After reviewing segmentation results, execute **`Export segmentation artifacts`** in the right dock. In the completion message, `sam2=...` and `final=...` indicate particle counts.
+1. **画像を読み込む**  
+   Napariで画像を開きます（ドラッグ&ドロップ / `File > Open...` など）。最初の画像追加時に、対応するROIレイヤー（`<画像名>_ROI`）が自動作成されます。
+2. **ROIレイヤー作成と矩形描画**  
+   `*_ROI` レイヤーを選択し、Shapesツールで矩形ROIを1つ描画します（複数ある場合は最後に描いたROIが使用されます）。
+3. **Crop実行**  
+   右側ドックの **`Crop to ROI`** を実行して、`<画像名>_cropped` レイヤーを作成します。
+4. **SAM2 auto segmentation実行**  
+   `*_cropped`（または対応レイヤー）を選び、右側ドックの **`Run SAM2 auto segmentation`** を実行します。必要に応じて `Output mode` などのパラメータを調整してください。
+5. **粒子数確認・エクスポート**  
+   セグメンテーション結果を確認後、右側ドックの **`Export segmentation artifacts`** を実行して書き出します。完了メッセージ内の `sam2=...` / `final=...` が粒子数の目安です。
 
-## Troubleshooting / FAQ
+## トラブルシューティング / FAQ
 
 ### 1) `setup/setup_sam2.sh` / `.bat` 実行時の失敗例と対処
 
@@ -127,4 +127,3 @@ This is the typical operation flow for particle counting in Napari. The wording 
 | Windows | 3.11.6 以上 | `setup/setup_sam2.bat` を利用 |
 | macOS | 3.11.6 以上 | `setup/setup_sam2.sh` を利用 |
 | Linux | 3.11.6 以上 | `setup/setup_sam2.sh` を利用 |
-
