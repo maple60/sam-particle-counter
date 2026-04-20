@@ -15,7 +15,7 @@ class Sam2Service:
     def prepare_rgb_image(self, layer: Image) -> np.ndarray:
         image = np.asarray(layer.data)
         if image.ndim != 3 or image.shape[2] not in (3, 4):
-            raise ValueError("RGB(A)画像を入力してください。")
+            raise ValueError("Please provide an RGB(A) image.")
 
         rgb = np.asarray(image[..., :3])
         if rgb.dtype == np.uint8:
@@ -43,7 +43,7 @@ class Sam2Service:
         )
         if not checkpoint.exists():
             raise FileNotFoundError(
-                "SAM2 checkpointが見つかりません。scripts/setup_sam2.bat 相当のセットアップを先に実施してください。"
+                "SAM2 checkpoint not found. Run setup equivalent to scripts/setup_sam2.bat first."
             )
         model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
         return str(checkpoint), model_cfg
@@ -267,7 +267,7 @@ class Sam2Service:
             if not np.all(valid):
                 invalid_values = np.unique(labels[~valid])
                 raise ValueError(
-                    f"labelは0か1のみ使用できます。無効値: {invalid_values.tolist()}"
+                    f"Labels can only be 0 or 1. Invalid values: {invalid_values.tolist()}"
                 )
 
             coords_yx = np.asarray(points_layer.data)[:, :2]
@@ -282,26 +282,26 @@ class Sam2Service:
         if has_fg:
             fg_layer = layers[fg_points_name]
             if not isinstance(fg_layer, Points):
-                raise ValueError(f"{fg_points_name} はPointsレイヤーではありません。")
+                raise ValueError(f"{fg_points_name} is not a Points layer.")
             _append_points(fg_layer, fixed_label=1)
 
         if has_bg:
             bg_layer = layers[bg_points_name]
             if not isinstance(bg_layer, Points):
-                raise ValueError(f"{bg_points_name} はPointsレイヤーではありません。")
+                raise ValueError(f"{bg_points_name} is not a Points layer.")
             _append_points(bg_layer, fixed_label=0)
 
         if has_legacy:
             points_layer = layers[legacy_points_name]
             if not isinstance(points_layer, Points):
                 raise ValueError(
-                    f"{legacy_points_name} はPointsレイヤーではありません。"
+                    f"{legacy_points_name} is not a Points layer."
                 )
             _append_points(points_layer)
 
         if not (has_fg or has_bg or has_legacy):
             raise ValueError(
-                f"{fg_points_name} / {bg_points_name} / {legacy_points_name} がありません。Create prompt points layer で作成してください。"
+                f"{fg_points_name} / {bg_points_name} / {legacy_points_name} not found. Create them with Create prompt points layer."
             )
 
         if not layers_coords_xy:
