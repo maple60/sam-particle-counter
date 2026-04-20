@@ -67,7 +67,7 @@ This is the typical operation flow for particle counting in [napari](https://nap
 ## Acknowledgements
 
 This project depends heavily on many open-source software projects.
-In particular, I would like to thank the developers and vontributers of [napari](https://napari.org/stable/), [Segment Anything Model 2 (SAM 2)](https://github.com/facebookresearch/sam2), [OpenCV](https://opencv.org/), [NumPy](https://numpy.org/), and [pandas](https://pandas.pydata.org/).
+In particular, I would like to thank the developers and contributors of [napari](https://napari.org/stable/), [Segment Anything Model 2 (SAM 2)](https://github.com/facebookresearch/sam2), [OpenCV](https://opencv.org/), [NumPy](https://numpy.org/), and [pandas](https://pandas.pydata.org/).
 
 ## License
 
