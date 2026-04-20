@@ -1,5 +1,7 @@
 # SAM Particle Counter
 
+[日本語版READMEはこちら / Japanese README](README_ja.md)
+
 SAM Particle Counter is a desktop application for counting particles from image data using [SAM2](https://ai.meta.com/research/sam2/)-assisted segmentation and [napari](https://napari.org/stable/)-based visualization.
 
 ## Prerequisites
