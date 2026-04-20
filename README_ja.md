@@ -51,7 +51,9 @@ uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch 
 uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
 ```
 
-> 注意: NVIDIA ドライバと OS に合う CUDA バリアントを選択してください。
+> 注意1: `--upgrade` は同じ `uv` 環境内の既存 `torch*` パッケージを置き換えるため、`uv sync` の後に実行しても有効です。
+>
+> 注意2: `nvidia-smi` の `CUDA Version: ...` でドライバがサポートする CUDA ランタイムを確認し、互換な PyTorch CUDA ホイール（例: `cu121`）を選んでください。
 
 ### SAM2 のセットアップ
 

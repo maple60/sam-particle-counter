@@ -53,7 +53,9 @@ uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch 
 uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
 ```
 
-> Note: Choose a CUDA variant that matches your NVIDIA driver and OS.
+> Note 1: `--upgrade` replaces the currently installed `torch*` packages in the same `uv` environment, so running this after `uv sync` is meaningful.
+>
+> Note 2: You can check the driver-supported CUDA runtime with `nvidia-smi` (`CUDA Version: ...`), then select a compatible PyTorch CUDA wheel (for example `cu121`).
 
 ### Setup SAM2
 
