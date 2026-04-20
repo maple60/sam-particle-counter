@@ -27,8 +27,8 @@ class RoiController:
         self.viewer = viewer
         self.sam2_service = sam2_service
         self.export_service = export_service
-        self.viewer.layers.events.inserted.connect(self.on_image_layer_added)
         self._is_first_image_initialized = False
+        self._ensure_image_layer_insert_listener()
         self._register_widgets()
 
     @dataclass(slots=True)
@@ -737,6 +737,8 @@ class RoiController:
                 if layer_name in self.viewer.layers:
                     del self.viewer.layers[layer_name]
 
+            self._is_first_image_initialized = False
+            self._ensure_image_layer_insert_listener()
             show_info(f"{len(target_layer_names)} レイヤーを削除しました。")
 
         self.clear_current_image_layers_widget = clear_current_image_layers
@@ -780,6 +782,14 @@ class RoiController:
         if widget.prompt_target.value != target_value:
             widget.prompt_target.value = target_value
 
+    def _ensure_image_layer_insert_listener(self) -> None:
+        events = self.viewer.layers.events.inserted
+        events.connect(self.on_image_layer_added)
+
+    def _disable_image_layer_insert_listener(self) -> None:
+        events = self.viewer.layers.events.inserted
+        events.disconnect(self.on_image_layer_added)
+
     def on_image_layer_added(self, event: Event) -> None:
         if self._is_first_image_initialized:
             return
@@ -807,6 +817,6 @@ class RoiController:
             edge_width=2,
         )
         self._is_first_image_initialized = True
-        self.viewer.layers.events.inserted.disconnect(self.on_image_layer_added)
+        self._disable_image_layer_insert_listener()
 
         QTimer.singleShot(0, lambda: self._activate_shapes_layer(shapes_layer))
