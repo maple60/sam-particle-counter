@@ -1,7 +1,7 @@
 [project]
 name = "male-flower-count"
 version = "0.1.0"
-description = "Add your description here"
+description = "Desktop workflow for counting particles from image data with SAM2-assisted segmentation and Napari visualization"
 readme = "README.md"
 requires-python = ">=3.11.6"
 dependencies = [
