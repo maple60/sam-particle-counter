@@ -27,7 +27,10 @@ SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用い�
 uv sync
 ```
 
-デフォルトの `uv sync` では、`torch` は PyPI 版（通常は CPU ビルド）として解決されます。GPU を使いたい場合は、`uv sync` 後に PC に合った CUDA 版 PyTorch を再インストールしてください（下記例）。
+デフォルトの `uv sync` では `torch` は PyPI から解決されます。
+プラットフォームによっては（例: Linux x86_64）PyPI ホイールがすでに CUDA ランタイム依存を含む場合があり、別の環境では CPU 専用ビルドになることもあります。
+
+まず現在のビルドを確認し、必要な場合のみ CPU/CUDA のインデックスを指定して切り替えてください（下記例）。
 
 #### PyTorch ビルドの切り替え（CPU / CUDA）
 

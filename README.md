@@ -29,7 +29,9 @@ Clone the repository, then set up the virtual environment and install dependenci
 uv sync
 ```
 
-By default, `uv sync` resolves `torch` from PyPI, which is typically a CPU build. If you want GPU acceleration, install a CUDA-specific PyTorch wheel for your machine after `uv sync` (see examples below).
+By default, `uv sync` resolves `torch` from PyPI. On some platforms (for example Linux x86_64), the PyPI wheel may already include CUDA runtime dependencies, while other platforms/environments may get CPU-only builds. 
+
+Always verify your installed build first, then switch to a specific CPU/CUDA index only when needed (see examples below).
 
 #### Switch PyTorch build (CPU / CUDA)
 
