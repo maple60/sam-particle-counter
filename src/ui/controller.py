@@ -219,7 +219,9 @@ class RoiController:
                 return
 
             cropped_layer = image_layer.data[ymin:ymax, xmin:xmax]
-            cropped_layer = self.viewer.add_image(cropped_layer, name=layer_names.cropped)
+            cropped_layer = self.viewer.add_image(
+                cropped_layer, name=layer_names.cropped
+            )
             self._attach_metadata(
                 cropped_layer,
                 {
@@ -481,7 +483,9 @@ class RoiController:
                     },
                 )
 
-            target_layer = fg_layer if prompt_target == "Foreground points" else bg_layer
+            target_layer = (
+                fg_layer if prompt_target == "Foreground points" else bg_layer
+            )
             target_layer.mode = "add"
             self.viewer.layers.selection.select_only(target_layer)
             show_info(
@@ -607,10 +611,16 @@ class RoiController:
             layer_names = self._layer_names(image_name)
 
             try:
-                export_dir = self.export_service.ensure_export_dir(output_dir, image_name)
-                sam2_original_layer = self._resolve_sam2_original_labels_layer(cropped_layer)
+                export_dir = self.export_service.ensure_export_dir(
+                    output_dir, image_name
+                )
+                sam2_original_layer = self._resolve_sam2_original_labels_layer(
+                    cropped_layer
+                )
                 sam2_labels_source = (
-                    sam2_original_layer if sam2_original_layer is not None else sam2_layer
+                    sam2_original_layer
+                    if sam2_original_layer is not None
+                    else sam2_layer
                 )
                 active_layer = self.viewer.layers.selection.active
                 final_layer: Labels
@@ -627,7 +637,9 @@ class RoiController:
                 cropped_rgb = self.sam2_service.prepare_rgb_image(cropped_layer)
                 source_layer = self.viewer.layers[layer_names.image]
                 if not isinstance(source_layer, Image):
-                    raise ValueError(f"{layer_names.image} は画像レイヤーではありません。")
+                    raise ValueError(
+                        f"{layer_names.image} は画像レイヤーではありません。"
+                    )
                 source_rgb = self.sam2_service.prepare_rgb_image(source_layer)
                 roi_bbox_yx = None
                 if layer_names.roi in self.viewer.layers:
@@ -635,9 +647,15 @@ class RoiController:
                         self.viewer.layers[layer_names.roi], source_rgb.shape[:2]
                     )
 
-                sam2_overlay = self.export_service._build_overlay_with_ids(cropped_rgb, sam2_labels)
-                final_overlay = self.export_service._build_overlay_with_ids(cropped_rgb, final_labels)
-                roi_overlay = self.export_service._build_roi_overlay(source_rgb, roi_bbox_yx)
+                sam2_overlay = self.export_service._build_overlay_with_ids(
+                    cropped_rgb, sam2_labels
+                )
+                final_overlay = self.export_service._build_overlay_with_ids(
+                    cropped_rgb, final_labels
+                )
+                roi_overlay = self.export_service._build_roi_overlay(
+                    source_rgb, roi_bbox_yx
+                )
 
                 cv2.imwrite(
                     str(export_dir / "sam2_only_overlay.png"),
@@ -656,8 +674,12 @@ class RoiController:
                     cv2.cvtColor(roi_overlay, cv2.COLOR_RGB2BGR),
                 )
 
-                self.export_service._write_blob_csv(export_dir / "sam2_blobs.csv", sam2_labels)
-                self.export_service._write_blob_csv(export_dir / "final_blobs.csv", final_labels)
+                self.export_service._write_blob_csv(
+                    export_dir / "sam2_blobs.csv", sam2_labels
+                )
+                self.export_service._write_blob_csv(
+                    export_dir / "final_blobs.csv", final_labels
+                )
 
                 output_files = sorted(
                     [p.name for p in export_dir.iterdir() if p.is_file()]
