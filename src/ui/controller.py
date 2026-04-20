@@ -372,7 +372,7 @@ class RoiController:
                 labels_layer = self.viewer.add_labels(
                     label_image,
                     name=labels_name,
-                    opacity=0.7,
+                    opacity=0.8,
                 )
                 original_labels_layer = self.viewer.add_labels(
                     label_image.copy(),
@@ -551,7 +551,9 @@ class RoiController:
                     polygon_scores.append(float(score))
 
             if not polygons:
-                show_info("Could not create valid polygons from point inference results.")
+                show_info(
+                    "Could not create valid polygons from point inference results."
+                )
                 return
 
             shapes_name = f"{image_layer.name}_sam2_points"
@@ -637,9 +639,7 @@ class RoiController:
                 cropped_rgb = self.sam2_service.prepare_rgb_image(cropped_layer)
                 source_layer = self.viewer.layers[layer_names.image]
                 if not isinstance(source_layer, Image):
-                    raise ValueError(
-                        f"{layer_names.image} is not an image layer."
-                    )
+                    raise ValueError(f"{layer_names.image} is not an image layer.")
                 source_rgb = self.sam2_service.prepare_rgb_image(source_layer)
                 roi_bbox_yx = None
                 if layer_names.roi in self.viewer.layers:
