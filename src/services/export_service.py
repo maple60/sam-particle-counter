@@ -1,6 +1,5 @@
 import csv
 import platform
-import random
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,14 +9,12 @@ import cv2
 import numpy as np
 from napari.layers import Image, Labels
 
+from src.shared_palette import sam2_palette_rgb
+
 
 class ExportService:
     def _label_colormap(self, label: int) -> tuple[int, int, int]:
-        seed = int(label * 1103515245 + 12345) & 0x7FFFFFFF
-        b = 80 + (seed % 156)
-        g = 80 + ((seed // 97) % 156)
-        r = 80 + ((seed // 197) % 156)
-        return int(r), int(g), int(b)
+        return sam2_palette_rgb(label)
 
     def _build_overlay_with_ids(self, image_rgb: np.ndarray, labels: np.ndarray) -> np.ndarray:
         overlay = image_rgb.copy()

@@ -15,6 +15,7 @@ from qtpy.QtWidgets import QMessageBox
 
 from src.services.export_service import ExportService
 from src.services.sam2_service import Sam2Service
+from src.shared_palette import sam2_palette_rgb
 
 
 class RoiController:
@@ -374,12 +375,22 @@ class RoiController:
                     name=labels_name,
                     opacity=0.7,
                 )
+                color_map = {
+                    None: (0.0, 0.0, 0.0, 0.0),
+                    0: (0.0, 0.0, 0.0, 0.0),
+                }
+                for label_id in (int(v) for v in np.unique(label_image) if int(v) > 0):
+                    r, g, b = sam2_palette_rgb(label_id)
+                    color_map[label_id] = (r / 255.0, g / 255.0, b / 255.0, 1.0)
+                labels_layer.color = color_map
+
                 original_labels_layer = self.viewer.add_labels(
                     label_image.copy(),
                     name=original_labels_name,
                     opacity=0.0,
                     visible=False,
                 )
+                original_labels_layer.color = color_map
                 original_labels_layer.editable = False
                 labels_layer.selected_label = int(np.max(label_image))
                 self._attach_metadata(
