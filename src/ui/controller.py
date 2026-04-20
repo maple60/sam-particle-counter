@@ -784,14 +784,10 @@ class RoiController:
 
     def _ensure_image_layer_insert_listener(self) -> None:
         events = self.viewer.layers.events.inserted
-        if self.on_image_layer_added in events.callbacks:
-            return
         events.connect(self.on_image_layer_added)
 
     def _disable_image_layer_insert_listener(self) -> None:
         events = self.viewer.layers.events.inserted
-        if self.on_image_layer_added not in events.callbacks:
-            return
         events.disconnect(self.on_image_layer_added)
 
     def on_image_layer_added(self, event: Event) -> None:
