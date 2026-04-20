@@ -138,7 +138,7 @@ class RoiController:
 
             layer = self.viewer.layers[layer_name]
             if not isinstance(layer, Labels):
-                show_warning(f"{layer_name} は Labels レイヤーではありません。")
+                show_warning(f"{layer_name} is not a Labels layer.")
                 return None
 
             if layer.data.shape[:2] != cropped_layer.data.shape[:2]:
@@ -148,8 +148,8 @@ class RoiController:
 
         show_warning(
             (
-                f"{candidate_names[0]} または {candidate_names[1]} が見つかりません。"
-                "先に cropped 画像に対して SAM2 auto segmentation を実行してください。"
+                f"Could not find {candidate_names[0]} or {candidate_names[1]}."
+                "Run SAM2 auto segmentation on the cropped image first."
             )
         )
         return None
@@ -184,7 +184,7 @@ class RoiController:
         def crop_to_roi() -> None:
             layer = self.viewer.layers.selection.active
             if not layer.name.endswith("_ROI"):
-                show_info("ROIレイヤーを選択してください。")
+                show_info("Please select an ROI layer.")
                 return
 
             image_layer_name = layer.name[:-4]
@@ -192,18 +192,18 @@ class RoiController:
             try:
                 image_layer = self.viewer.layers[layer_names.image]
             except KeyError:
-                show_warning(f"{image_layer_name} という画像レイヤーが見つかりません。")
+                show_warning(f"Could not find an image layer named {image_layer_name}.")
                 return
             if not isinstance(image_layer, Image):
-                show_warning(f"{image_layer_name} は画像レイヤーではありません。")
+                show_warning(f"{image_layer_name} is not an image layer.")
                 return
-            show_info("対応する画像レイヤーを取得できました。")
+            show_info("Resolved the corresponding image layer.")
 
             if len(layer.data) == 0:
-                show_warning("ROIが1つもありません。矩形を1つ描いてください。")
+                show_warning("No ROI found. Please draw one rectangle.")
                 return
             roi = layer.data[-1]
-            show_info(f"ROIの頂点座標: {roi}")
+            show_info(f"ROI vertices: {roi}")
             ymin = int(np.floor(roi[:, 0].min()))
             ymax = int(np.ceil(roi[:, 0].max()))
             xmin = int(np.floor(roi[:, 1].min()))
@@ -215,7 +215,7 @@ class RoiController:
             xmax = min(w, xmax)
 
             if ymin >= ymax or xmin >= xmax:
-                show_warning("有効なROIが描かれていません。")
+                show_warning("No valid ROI is drawn.")
                 return
 
             cropped_layer = image_layer.data[ymin:ymax, xmin:xmax]
@@ -264,7 +264,7 @@ class RoiController:
             layer = self.viewer.layers.selection.active
 
             if layer is None or not isinstance(layer, Image):
-                show_warning("画像レイヤーを1つだけ選択してください。")
+                show_warning("Please select exactly one image layer.")
                 return
 
             try:
@@ -278,7 +278,7 @@ class RoiController:
                 image_rgb = self.sam2_service.prepare_rgb_image(layer)
                 masks = mask_generator.generate(image_rgb)
             except Exception as e:
-                show_warning(f"SAM2自動セグメンテーションに失敗しました: {e}")
+                show_warning(f"SAM2 auto segmentation failed: {e}")
                 traceback.print_exc()
                 return
 
@@ -321,7 +321,7 @@ class RoiController:
             if needs_shapes:
                 polygons, polygon_scores = self.sam2_service._masks_to_polygons(masks)
                 if not polygons:
-                    show_info("SAM2で有効なマスクが得られませんでした。")
+                    show_info("No valid mask was produced by SAM2.")
                     return
 
             label_image: np.ndarray | None = None
@@ -330,7 +330,7 @@ class RoiController:
                     masks, layer.data.shape[:2]
                 )
                 if np.max(label_image) == 0:
-                    show_info("SAM2で有効なマスクが得られませんでした。")
+                    show_info("No valid mask was produced by SAM2.")
                     return
 
             if needs_shapes:
@@ -427,7 +427,7 @@ class RoiController:
             layer = self._resolve_target_cropped_image_layer()
             if layer is None:
                 show_warning(
-                    "対象の cropped 画像レイヤーが見つかりません。先に Crop to ROI を実行してください。"
+                    "Could not find the target cropped image layer. Run Crop to ROI first."
                 )
                 return
 
@@ -438,7 +438,7 @@ class RoiController:
             if bg_points_name in self.viewer.layers:
                 bg_layer = self.viewer.layers[bg_points_name]
                 if not isinstance(bg_layer, Points):
-                    show_warning(f"{bg_points_name} はPointsレイヤーではありません。")
+                    show_warning(f"{bg_points_name} is not a Points layer.")
                     return
             else:
                 bg_layer = self.viewer.add_points(
@@ -462,7 +462,7 @@ class RoiController:
             if fg_points_name in self.viewer.layers:
                 fg_layer = self.viewer.layers[fg_points_name]
                 if not isinstance(fg_layer, Points):
-                    show_warning(f"{fg_points_name} はPointsレイヤーではありません。")
+                    show_warning(f"{fg_points_name} is not a Points layer.")
                     return
             else:
                 fg_layer = self.viewer.add_points(
@@ -489,7 +489,7 @@ class RoiController:
             target_layer.mode = "add"
             self.viewer.layers.selection.select_only(target_layer)
             show_info(
-                "ポイントレイヤー準備OK。プルダウンで選んだ対象に点を追加してください（前景=緑, 背景=赤）。追加後に Run SAM2 point prompt を実行します。"
+                "Prompt point layers are ready. Add points to the selected target from the dropdown (foreground=green, background=red), then run SAM2 point prompt."
             )
 
         self.create_prompt_points_layer_widget = create_prompt_points_layer
@@ -503,7 +503,7 @@ class RoiController:
             image_layer = self._resolve_target_cropped_image_layer()
             if image_layer is None:
                 show_warning(
-                    "対象の cropped 画像レイヤーが見つかりません。先に Crop to ROI を実行してください。"
+                    "Could not find the target cropped image layer. Run Crop to ROI first."
                 )
                 return
 
@@ -512,11 +512,11 @@ class RoiController:
                     image_layer, self.viewer.layers
                 )
             except Exception as e:
-                show_warning(f"ポイントの収集に失敗しました: {e}")
+                show_warning(f"Failed to collect points: {e}")
                 return
 
             if len(point_coords) == 0:
-                show_info("有効なポイントがありません。")
+                show_info("No valid points found.")
                 return
 
             try:
@@ -529,12 +529,12 @@ class RoiController:
                     multimask_output=True,
                 )
             except Exception as e:
-                show_warning(f"SAM2ポイント推論に失敗しました: {e}")
+                show_warning(f"SAM2 point inference failed: {e}")
                 traceback.print_exc()
                 return
 
             if masks is None or len(masks) == 0:
-                show_info("ポイント推論でマスクが得られませんでした。")
+                show_info("No mask was produced from point inference.")
                 return
 
             polygons = []
@@ -551,7 +551,7 @@ class RoiController:
                     polygon_scores.append(float(score))
 
             if not polygons:
-                show_info("ポイント推論結果から有効なポリゴンを作れませんでした。")
+                show_info("Could not create valid polygons from point inference results.")
                 return
 
             shapes_name = f"{image_layer.name}_sam2_points"
@@ -595,7 +595,7 @@ class RoiController:
             cropped_layer = self._resolve_target_cropped_image_layer()
             if cropped_layer is None:
                 show_warning(
-                    "対象の cropped 画像レイヤーが見つかりません。先に Crop to ROI を実行してください。"
+                    "Could not find the target cropped image layer. Run Crop to ROI first."
                 )
                 return
 
@@ -638,7 +638,7 @@ class RoiController:
                 source_layer = self.viewer.layers[layer_names.image]
                 if not isinstance(source_layer, Image):
                     raise ValueError(
-                        f"{layer_names.image} は画像レイヤーではありません。"
+                        f"{layer_names.image} is not an image layer."
                     )
                 source_rgb = self.sam2_service.prepare_rgb_image(source_layer)
                 roi_bbox_yx = None
@@ -702,35 +702,35 @@ class RoiController:
                     encoding="utf-8",
                 )
             except Exception as e:
-                show_warning(f"エクスポートに失敗しました: {e}")
+                show_warning(f"Export failed: {e}")
                 traceback.print_exc()
                 return
 
             show_info(
-                f"書き出し完了: {export_dir} (sam2={self.export_service._count_positive_labels(sam2_labels)}, final={self.export_service._count_positive_labels(final_labels)})"
+                f"Export completed: {export_dir} (sam2={self.export_service._count_positive_labels(sam2_labels)}, final={self.export_service._count_positive_labels(final_labels)})"
             )
 
         self.export_segmentation_artifacts_widget = export_segmentation_artifacts
 
-        @magicgui(call_button="現在画像のレイヤーを全削除")
+        @magicgui(call_button="Delete all layers for current image")
         def clear_current_image_layers() -> None:
             target_layer_names = [layer.name for layer in list(self.viewer.layers)]
             if not target_layer_names:
-                show_info("削除対象のレイヤーが見つかりませんでした。")
+                show_info("No layers found to delete.")
                 return
 
             reply = QMessageBox.question(
                 self.viewer.window._qt_window,
-                "レイヤー削除の確認",
+                "Confirm layer deletion",
                 (
-                    f"存在する {len(target_layer_names)} レイヤーをすべて削除します。"
-                    "\nこの操作は元に戻せません。続行しますか？"
+                    f"This will delete all {len(target_layer_names)} existing layers."
+                    "\nThis action cannot be undone. Continue?"
                 ),
                 QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel,
                 QMessageBox.StandardButton.Cancel,
             )
             if reply != QMessageBox.StandardButton.Ok:
-                show_info("レイヤー削除をキャンセルしました。")
+                show_info("Layer deletion was canceled.")
                 return
 
             for layer_name in target_layer_names:
@@ -739,7 +739,7 @@ class RoiController:
 
             self._is_first_image_initialized = False
             self._ensure_image_layer_insert_listener()
-            show_info(f"{len(target_layer_names)} レイヤーを削除しました。")
+            show_info(f"Deleted {len(target_layer_names)} layers.")
 
         self.clear_current_image_layers_widget = clear_current_image_layers
 
@@ -802,11 +802,11 @@ class RoiController:
         if not isinstance(layer, Image):
             return
 
-        show_info(f"画像レイヤーが追加されました: {layer.name}")
+        show_info(f"Image layer added: {layer.name}")
 
         shapes_name = self._layer_names(layer.name).roi
         if any(existing.name == shapes_name for existing in self.viewer.layers):
-            show_info(f"{shapes_name} はすでに存在します。")
+            show_info(f"{shapes_name} already exists.")
             return
 
         shapes_layer = self.viewer.add_shapes(
