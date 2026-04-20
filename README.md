@@ -59,6 +59,9 @@ uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torc
 >
 > Note 2: You can check the driver-supported CUDA runtime with `nvidia-smi` (`CUDA Version: ...`), then select a compatible PyTorch CUDA wheel (for example `cu121`).
 
+You can find the appropriate PyTorch installation command [here](https://pytorch.org/get-started/locally/).
+Use `uv pip` instead of `pip3`.
+
 ### Setup SAM2
 
 Setup the Segment Anything Model2 (SAM2).

@@ -1,6 +1,6 @@
 # SAM Particle Counter
 
-SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用いたセグメンテーションと [napari](https://napari.org/stable/) ベースの可視化により、画像データから粒子をカウントするデスクトップアプリケーションです。
+SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用いたセグメンテーションと [napari](https://napari.org/stable/) ベースの可視化により、画像データから粒をカウントするデスクトップアプリケーションです。
 
 ## 前提条件
 
@@ -57,6 +57,9 @@ uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torc
 > 注意1: `--upgrade` は同じ `uv` 環境内の既存 `torch*` パッケージを置き換えるため、`uv sync` の後に実行しても有効です。
 >
 > 注意2: `nvidia-smi` の `CUDA Version: ...` でドライバがサポートする CUDA ランタイムを確認し、互換な PyTorch CUDA ホイール（例: `cu121`）を選んでください。
+
+OSやCUDAのバージョンに応じたPytorchのインストールコマンドは[こちら](https://pytorch.org/get-started/locally/)からご確認いただけます。
+`pip3`となっている部分は`uv pip`に置き換えてください。
 
 ### SAM2 のセットアップ
 
