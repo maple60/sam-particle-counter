@@ -32,7 +32,9 @@ setup\setup_sam2.bat
 
 ### macOS/Linux
 
-In preparation.
+```bash
+./setup/setup_sam2.sh
+```
 
 ### Launch the application
 
