@@ -29,6 +29,34 @@ Clone the repository, then set up the virtual environment and install dependenci
 uv sync
 ```
 
+By default, `uv sync` resolves `torch` from PyPI, which is typically a CPU build. If you want GPU acceleration, install a CUDA-specific PyTorch wheel for your machine after `uv sync` (see examples below).
+
+#### Switch PyTorch build (CPU / CUDA)
+
+You can keep the same project and swap PyTorch builds to match your PC.
+
+- Confirm current build:
+
+```bash
+uv run python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+```
+
+- Reinstall CPU build explicitly:
+
+```bash
+uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+```
+
+- Reinstall CUDA 12.1 build (example):
+
+```bash
+uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+```
+
+> Note 1: `--upgrade` replaces the currently installed `torch*` packages in the same `uv` environment, so running this after `uv sync` is meaningful.
+>
+> Note 2: You can check the driver-supported CUDA runtime with `nvidia-smi` (`CUDA Version: ...`), then select a compatible PyTorch CUDA wheel (for example `cu121`).
+
 ### Setup SAM2
 
 Setup the Segment Anything Model2 (SAM2).
