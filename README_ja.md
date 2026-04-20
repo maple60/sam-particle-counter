@@ -27,6 +27,32 @@ SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用い�
 uv sync
 ```
 
+デフォルトの `uv sync` では、`torch` は PyPI 版（通常は CPU ビルド）として解決されます。GPU を使いたい場合は、`uv sync` 後に PC に合った CUDA 版 PyTorch を再インストールしてください（下記例）。
+
+#### PyTorch ビルドの切り替え（CPU / CUDA）
+
+同じプロジェクト環境のまま、PC に合わせて PyTorch ビルドを切り替えできます。
+
+- 現在のビルド確認:
+
+```bash
+uv run python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+```
+
+- CPU ビルドを明示して再インストール:
+
+```bash
+uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+```
+
+- CUDA 12.1 ビルドを再インストール（例）:
+
+```bash
+uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+```
+
+> 注意: NVIDIA ドライバと OS に合う CUDA バリアントを選択してください。
+
 ### SAM2 のセットアップ
 
 Segment Anything Model2（SAM2）をセットアップします。
