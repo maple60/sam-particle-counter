@@ -76,11 +76,14 @@ class RoiController:
         )
 
     def _build_label_color_mapping(self, max_label: int) -> dict[int | None, str]:
-        color_mapping: dict[int | None, str] = {None: "#00000000"}
+        palette = get_mask_palette_hex(self.MASK_COLOR_COUNT)
+        fallback_color = palette[0] if palette else "#FFFFFF"
+
+        # Keep fallback labels visible in direct mode (e.g., newly created labels).
+        color_mapping: dict[int | None, str] = {None: fallback_color}
         if max_label <= 0:
             return color_mapping
 
-        palette = get_mask_palette_hex(self.MASK_COLOR_COUNT)
         palette_size = len(palette)
         for label_id in range(1, max_label + 1):
             color_mapping[label_id] = palette[(label_id - 1) % palette_size]
