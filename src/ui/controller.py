@@ -5,6 +5,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+import glasbey
 from magicgui import magicgui
 from napari import Viewer
 from napari.layers import Image, Labels, Points
@@ -369,16 +370,18 @@ class RoiController:
                 ):
                     del self.viewer.layers[original_labels_name]
 
+                palette_glasbey = glasbey.create_palette(
+                    palette_size=12, colorblind_safe=True
+                )
                 labels_layer = self.viewer.add_labels(
-                    label_image,
-                    name=labels_name,
-                    opacity=0.8,
+                    label_image, name=labels_name, opacity=0.8, colormap=palette_glasbey
                 )
                 original_labels_layer = self.viewer.add_labels(
                     label_image.copy(),
                     name=original_labels_name,
                     opacity=0.0,
                     visible=False,
+                    colormap=palette_glasbey,
                 )
                 original_labels_layer.editable = False
                 labels_layer.selected_label = int(np.max(label_image))
