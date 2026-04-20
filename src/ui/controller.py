@@ -13,11 +13,15 @@ from napari.utils.notifications import show_info, show_warning
 from qtpy.QtCore import QTimer
 from qtpy.QtWidgets import QMessageBox
 
+from src.mask_palette import get_mask_palette_hex
 from src.services.export_service import ExportService
 from src.services.sam2_service import Sam2Service
 
 
 class RoiController:
+    # Increase/decrease this value to quickly control the number of mask colors.
+    MASK_COLOR_COUNT = 10
+
     def __init__(
         self,
         viewer: Viewer,
@@ -70,6 +74,17 @@ class RoiController:
             sam2_auto_labels_original=f"{image_layer_name}_sam2_auto_labels_original",
             sam2_points=f"{image_layer_name}_sam2_points",
         )
+
+    def _build_label_color_mapping(self, max_label: int) -> dict[int | None, str]:
+        color_mapping: dict[int | None, str] = {None: "#00000000"}
+        if max_label <= 0:
+            return color_mapping
+
+        palette = get_mask_palette_hex(self.MASK_COLOR_COUNT)
+        palette_size = len(palette)
+        for label_id in range(1, max_label + 1):
+            color_mapping[label_id] = palette[(label_id - 1) % palette_size]
+        return color_mapping
 
     def _infer_image_name_from_layer(self, layer) -> str | None:
         if isinstance(layer, Image):
@@ -372,7 +387,7 @@ class RoiController:
                 labels_layer = self.viewer.add_labels(
                     label_image,
                     name=labels_name,
-                    opacity=0.7,
+                    opacity=0.8,
                 )
                 original_labels_layer = self.viewer.add_labels(
                     label_image.copy(),
@@ -382,6 +397,11 @@ class RoiController:
                 )
                 original_labels_layer.editable = False
                 labels_layer.selected_label = int(np.max(label_image))
+                label_color_mapping = self._build_label_color_mapping(
+                    int(np.max(label_image))
+                )
+                labels_layer.color = label_color_mapping
+                original_labels_layer.color = label_color_mapping
                 self._attach_metadata(
                     labels_layer,
                     {

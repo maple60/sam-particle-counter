@@ -10,14 +10,23 @@ import cv2
 import numpy as np
 from napari.layers import Image, Labels
 
+from src.mask_palette import get_mask_palette_hex, hex_to_rgb
+
 
 class ExportService:
+    # Keep this aligned with RoiController.MASK_COLOR_COUNT if you want matching colors
+    # between viewer and exported overlays.
+    MASK_COLOR_COUNT = 10
+
+    def _mask_palette_rgb(self) -> tuple[tuple[int, int, int], ...]:
+        palette = get_mask_palette_hex(self.MASK_COLOR_COUNT)
+        return tuple(hex_to_rgb(color) for color in palette)
+
     def _label_colormap(self, label: int) -> tuple[int, int, int]:
-        seed = int(label * 1103515245 + 12345) & 0x7FFFFFFF
-        b = 80 + (seed % 156)
-        g = 80 + ((seed // 97) % 156)
-        r = 80 + ((seed // 197) % 156)
-        return int(r), int(g), int(b)
+        if label <= 0:
+            return (0, 0, 0)
+        rgb_palette = self._mask_palette_rgb()
+        return rgb_palette[(label - 1) % len(rgb_palette)]
 
     def _build_overlay_with_ids(self, image_rgb: np.ndarray, labels: np.ndarray) -> np.ndarray:
         overlay = image_rgb.copy()
