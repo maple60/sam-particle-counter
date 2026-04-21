@@ -31,7 +31,6 @@ class RoiController:
         self.sam2_service = sam2_service
         self.export_service = export_service
         self._sam2_id_zoom_handlers: dict[str, Callable] = {}
-        self._sam2_id_hover_handlers: dict[str, Callable] = {}
         self._sam2_id_points_cache: dict[str, tuple[np.ndarray, np.ndarray]] = {}
         self._is_first_image_initialized = False
         self._ensure_image_layer_insert_listener()
@@ -419,7 +418,7 @@ class RoiController:
                     },
                 )
                 self._create_or_update_sam2_id_layers(
-                    labels_layer, display_mode="always", min_area=0
+                    labels_layer, min_area=0
                 )
                 self.viewer.layers.selection.select_only(labels_layer)
 
@@ -431,32 +430,6 @@ class RoiController:
                 show_info(f"SAM2 auto masks: {len(masks)} (output={output_mode})")
 
         self.run_sam2_auto_on_active_widget = run_sam2_auto_on_active
-
-        @magicgui(
-            call_button="Create SAM2 ID overlay",
-            display_mode={"choices": ["always", "hover"]},
-            min_area={"min": 0, "max": 5000, "step": 1},
-        )
-        def create_sam2_id_overlay(
-            display_mode: str = "always",
-            min_area: int = 0,
-        ) -> None:
-            cropped_layer = self._resolve_target_cropped_image_layer()
-            if cropped_layer is None:
-                show_warning(
-                    "Could not find the target cropped image layer. Run Crop to ROI first."
-                )
-                return
-            labels_layer = self._resolve_sam2_auto_labels_layer(cropped_layer)
-            if labels_layer is None:
-                return
-            self._create_or_update_sam2_id_layers(
-                labels_layer=labels_layer,
-                display_mode=display_mode,
-                min_area=int(min_area),
-            )
-
-        self.create_sam2_id_overlay_widget = create_sam2_id_overlay
 
         @magicgui(
             call_button="Create prompt points layer",
@@ -822,9 +795,7 @@ class RoiController:
             label_ids.append(label_id)
         return np.asarray(centroids, dtype=np.float32), np.asarray(label_ids, dtype=np.int32)
 
-    def _create_or_update_sam2_id_layers(
-        self, labels_layer: Labels, display_mode: str, min_area: int
-    ) -> None:
+    def _create_or_update_sam2_id_layers(self, labels_layer: Labels, min_area: int) -> None:
         labels_name = labels_layer.name
         image_name = labels_name[: -len("_sam2_auto_labels")]
         layer_names = self._layer_names(image_name)
@@ -862,15 +833,16 @@ class RoiController:
             text={"string": "{id}", "color": "white", "size": text_size},
         )
 
-        self._attach_metadata(id_layer, {"mode": "sam2_id_overlay", "display_mode": display_mode})
+        self._attach_metadata(id_layer, {"mode": "sam2_id_overlay", "display_mode": "always"})
         self._attach_metadata(
-            outline_layer, {"mode": "sam2_id_overlay", "display_mode": display_mode}
+            outline_layer, {"mode": "sam2_id_overlay", "display_mode": "always"}
         )
         self._sync_sam2_id_layers_to_zoom(image_name)
-        self._set_sam2_id_display_mode(image_name, display_mode)
-        show_info(f"SAM2 ID overlay created: mode={display_mode}, labels={len(label_ids)}")
+        self._set_sam2_id_display_mode(image_name)
+        self.viewer.layers.selection.select_only(labels_layer)
+        show_info(f"SAM2 ID overlay created: mode=always, labels={len(label_ids)}")
 
-    def _set_sam2_id_display_mode(self, image_name: str, display_mode: str) -> None:
+    def _set_sam2_id_display_mode(self, image_name: str) -> None:
         layer_names = self._layer_names(image_name)
         if layer_names.sam2_auto_ids not in self.viewer.layers:
             return
@@ -881,47 +853,12 @@ class RoiController:
 
         id_layer.visible = True
         outline_layer.visible = True
-        if display_mode == "always":
-            if image_name in self._sam2_id_hover_handlers:
-                handler = self._sam2_id_hover_handlers.pop(image_name)
-                if handler in self.viewer.mouse_move_callbacks:
-                    self.viewer.mouse_move_callbacks.remove(handler)
-            coords, label_ids = self._sam2_id_points_cache[image_name]
-            text_strings = np.asarray([str(v) for v in label_ids], dtype=object)
-            id_layer.data = coords
-            outline_layer.data = coords
-            id_layer.features = {"id": text_strings}
-            outline_layer.features = {"id": text_strings}
-            return
-
         coords, label_ids = self._sam2_id_points_cache[image_name]
-
-        def _hover_show_one(_viewer, _event) -> None:
-            if len(coords) == 0:
-                return
-            cursor = np.asarray(self.viewer.cursor.position[:2], dtype=np.float32)
-            d2 = np.sum((coords - cursor[None, :]) ** 2, axis=1)
-            idx = int(np.argmin(d2))
-            threshold = (18.0 / max(float(self.viewer.camera.zoom), 1e-3)) ** 2
-            if float(d2[idx]) > threshold:
-                id_layer.data = np.empty((0, 2), dtype=np.float32)
-                outline_layer.data = np.empty((0, 2), dtype=np.float32)
-                return
-            one_coord = coords[idx : idx + 1]
-            one_id = np.asarray([str(label_ids[idx])], dtype=object)
-            id_layer.data = one_coord
-            outline_layer.data = one_coord
-            id_layer.features = {"id": one_id}
-            outline_layer.features = {"id": one_id}
-
-        if image_name in self._sam2_id_hover_handlers:
-            prev = self._sam2_id_hover_handlers[image_name]
-            if prev in self.viewer.mouse_move_callbacks:
-                self.viewer.mouse_move_callbacks.remove(prev)
-        self._sam2_id_hover_handlers[image_name] = _hover_show_one
-        self.viewer.mouse_move_callbacks.append(_hover_show_one)
-        id_layer.data = np.empty((0, 2), dtype=np.float32)
-        outline_layer.data = np.empty((0, 2), dtype=np.float32)
+        text_strings = np.asarray([str(v) for v in label_ids], dtype=object)
+        id_layer.data = coords
+        outline_layer.data = coords
+        id_layer.features = {"id": text_strings}
+        outline_layer.features = {"id": text_strings}
 
     def _sync_sam2_id_layers_to_zoom(self, image_name: str) -> None:
         layer_names = self._layer_names(image_name)
@@ -945,10 +882,6 @@ class RoiController:
         _on_zoom()
 
     def _cleanup_sam2_id_state(self, image_name: str) -> None:
-        hover_handler = self._sam2_id_hover_handlers.pop(image_name, None)
-        if hover_handler is not None and hover_handler in self.viewer.mouse_move_callbacks:
-            self.viewer.mouse_move_callbacks.remove(hover_handler)
-
         zoom_handler = self._sam2_id_zoom_handlers.pop(image_name, None)
         if zoom_handler is not None:
             self.viewer.camera.events.zoom.disconnect(zoom_handler)
