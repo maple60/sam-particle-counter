@@ -18,6 +18,9 @@ def main() -> None:
         roi_controller.run_sam2_auto_on_active_widget, area="right"
     )
     viewer.window.add_dock_widget(
+        roi_controller.create_sam2_id_overlay_widget, area="right"
+    )
+    viewer.window.add_dock_widget(
         roi_controller.create_prompt_points_layer_widget, area="right"
     )
     viewer.window.add_dock_widget(
