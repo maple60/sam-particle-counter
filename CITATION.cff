@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "SAM Particle Counter"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+- family-names: "Konrai"
+  given-names: "Kaede"
+  orcid: "https://orcid.org/0009-0005-4555-8424"
+repository-code: "https://github.com/maple60/sam-particle-counter"
+license: "BSD-3-Clause"
+url: "https://github.com/maple60/sam-particle-counter"
+version: "v0.1.0"
+date-released: 2026-04-21
+doi: 10.5281/zenodo.19678863
+abstract: "SAM Particle Counter is a desktop application for particle counting from image data using SAM2-assisted segmentation and napari-based visualization."
+identifiers:
+- type: swh
+  value: swh:1:dir:d59ad1e3ff4ff3b87f64d35df746305a1a4d8fc0;origin=https://doi.org/10.5281/zenodo.19678862;visit=swh:1:snp:065a584560e09e5186a9d0afadd19f819aec9ac7;anchor=swh:1:rel:58e3c7010ecb6d1404e70dca4be653ccc48a0469;path=maple60-sam-particle-counter-6af413e

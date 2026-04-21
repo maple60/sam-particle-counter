@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1215439992.svg)](https://doi.org/10.5281/zenodo.19678862)
+
 # SAM Particle Counter
 
 [日本語版READMEはこちら / Japanese README](README_ja.md)
@@ -108,10 +110,20 @@ This is the typical operation flow for particle counting in [napari](https://nap
 5. **Check particle counts and export**  
    After reviewing segmentation results, execute **`Export segmentation artifacts`** in the right dock. In the completion message, `sam2=...` and `final=...` indicate particle counts.
 
+## How to cite
+
+If you use SAM Particle Counter in your research, please cite the software release:
+
+Kaede Konrai. (2026). maple60/sam-particle-counter: v0.1.0 (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.19678863
+
+You can also find citation metadata in [`CITATION.cff`](CITATION.cff).
+
 ## Acknowledgements
 
 This project depends heavily on many open-source software projects.
-In particular, I would like to thank the developers and contributors of [napari](https://napari.org/stable/), [Segment Anything Model 2 (SAM 2)](https://github.com/facebookresearch/sam2), [OpenCV](https://opencv.org/), [NumPy](https://numpy.org/), and [pandas](https://pandas.pydata.org/).
+In particular, I would like to thank the developers and contributors of [napari](https://napari.org/stable/), [Segment Anything Model 2 (SAM 2)](https://github.com/facebookresearch/sam2), [OpenCV](https://opencv.org/), [NumPy](https://numpy.org/), [grasbey](https://glasbey.readthedocs.io/en/latest/creating_palettes.html), and [pandas](https://pandas.pydata.org/).
+
+This software was also inspired in part by existing plant image analysis workflows and tools, including *Samplify* ([Bente et al., 2026](https://doi.org/10.1111/nph.70979)).
 
 ## License
 
