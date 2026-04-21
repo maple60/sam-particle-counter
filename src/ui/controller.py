@@ -35,6 +35,7 @@ class RoiController:
         self._sam2_id_points_cache: dict[str, tuple[np.ndarray, np.ndarray]] = {}
         self._is_first_image_initialized = False
         self._ensure_image_layer_insert_listener()
+        self._ensure_layer_remove_listener()
         self._register_widgets()
 
     @dataclass(slots=True)
@@ -943,6 +944,17 @@ class RoiController:
         self.viewer.camera.events.zoom.connect(_on_zoom)
         _on_zoom()
 
+    def _cleanup_sam2_id_state(self, image_name: str) -> None:
+        hover_handler = self._sam2_id_hover_handlers.pop(image_name, None)
+        if hover_handler is not None and hover_handler in self.viewer.mouse_move_callbacks:
+            self.viewer.mouse_move_callbacks.remove(hover_handler)
+
+        zoom_handler = self._sam2_id_zoom_handlers.pop(image_name, None)
+        if zoom_handler is not None:
+            self.viewer.camera.events.zoom.disconnect(zoom_handler)
+
+        self._sam2_id_points_cache.pop(image_name, None)
+
     def _zoom_to_layer(self, layer: Image) -> None:
         h, w = layer.data.shape[:2]
         show_info(f"{h}, {w}")
@@ -977,6 +989,22 @@ class RoiController:
     def _disable_image_layer_insert_listener(self) -> None:
         events = self.viewer.layers.events.inserted
         events.disconnect(self.on_image_layer_added)
+
+    def _ensure_layer_remove_listener(self) -> None:
+        self.viewer.layers.events.removed.connect(self._on_layer_removed)
+
+    def _on_layer_removed(self, event: Event) -> None:
+        layer = event.value
+        layer_name = str(getattr(layer, "name", ""))
+        image_name = self._infer_image_name_from_layer(layer)
+        if image_name is None:
+            return
+
+        layer_names = self._layer_names(image_name)
+        if layer_name not in {layer_names.sam2_auto_ids, layer_names.sam2_auto_ids_outline}:
+            return
+
+        self._cleanup_sam2_id_state(image_name)
 
     def on_image_layer_added(self, event: Event) -> None:
         if self._is_first_image_initialized:
