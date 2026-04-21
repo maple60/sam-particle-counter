@@ -8,18 +8,40 @@ from typing import Any, Callable
 
 import cv2
 import numpy as np
+import glasbey
 from napari.layers import Image, Labels
 
 
 class ExportService:
+    def __init__(self):
+        self.palette_glasbey = glasbey.create_palette(
+            palette_size=12, colorblind_safe=True
+        )
+
+    def _hex_to_rgb(self, hex_color: str) -> tuple[int, int, int]:
+        hex_color = hex_color.lstrip("#")
+        if len(hex_color) != 6:
+            raise ValueError(f"Invalid hex color: {hex_color}")
+        return tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
+
+    def _label_colormap(self, label: int) -> tuple[int, int, int]:
+        if label <= 0:
+            return (0, 0, 0)  # Transparent for background or non-positive labels
+        hex_color = self.palette_glasbey[(label - 1) % len(self.palette_glasbey)]
+        return self._hex_to_rgb(hex_color)
+
+    """
     def _label_colormap(self, label: int) -> tuple[int, int, int]:
         seed = int(label * 1103515245 + 12345) & 0x7FFFFFFF
         b = 80 + (seed % 156)
         g = 80 + ((seed // 97) % 156)
         r = 80 + ((seed // 197) % 156)
         return int(r), int(g), int(b)
+    """
 
-    def _build_overlay_with_ids(self, image_rgb: np.ndarray, labels: np.ndarray) -> np.ndarray:
+    def _build_overlay_with_ids(
+        self, image_rgb: np.ndarray, labels: np.ndarray
+    ) -> np.ndarray:
         overlay = image_rgb.copy()
         blended = image_rgb.copy()
         unique_labels = [int(v) for v in np.unique(labels) if int(v) > 0]
