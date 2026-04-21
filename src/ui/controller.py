@@ -814,15 +814,6 @@ class RoiController:
         text_size = self._id_text_size_from_zoom()
         text_strings = np.asarray([str(v) for v in label_ids], dtype=object)
         transparent = np.zeros((len(coords), 4), dtype=np.float32)
-        outline_layer = self.viewer.add_points(
-            data=coords,
-            name=layer_names.sam2_auto_ids_outline,
-            features={"id": text_strings},
-            size=0.1,
-            face_color=transparent,
-            border_color=transparent,
-            text={"string": "{id}", "color": "black", "size": text_size + 2},
-        )
         id_layer = self.viewer.add_points(
             data=coords,
             name=layer_names.sam2_auto_ids,
@@ -830,13 +821,10 @@ class RoiController:
             size=0.1,
             face_color=transparent,
             border_color=transparent,
-            text={"string": "{id}", "color": "white", "size": text_size},
+            text={"string": "{id}", "color": "black", "size": text_size},
         )
 
         self._attach_metadata(id_layer, {"mode": "sam2_id_overlay", "display_mode": "always"})
-        self._attach_metadata(
-            outline_layer, {"mode": "sam2_id_overlay", "display_mode": "always"}
-        )
         self._sync_sam2_id_layers_to_zoom(image_name)
         self._set_sam2_id_display_mode(image_name)
         self.viewer.layers.selection.select_only(labels_layer)
@@ -847,18 +835,16 @@ class RoiController:
         if layer_names.sam2_auto_ids not in self.viewer.layers:
             return
         id_layer = self.viewer.layers[layer_names.sam2_auto_ids]
-        outline_layer = self.viewer.layers[layer_names.sam2_auto_ids_outline]
-        if not isinstance(id_layer, Points) or not isinstance(outline_layer, Points):
+        if not isinstance(id_layer, Points):
             return
 
         id_layer.visible = True
-        outline_layer.visible = True
+        if layer_names.sam2_auto_ids_outline in self.viewer.layers:
+            del self.viewer.layers[layer_names.sam2_auto_ids_outline]
         coords, label_ids = self._sam2_id_points_cache[image_name]
         text_strings = np.asarray([str(v) for v in label_ids], dtype=object)
         id_layer.data = coords
-        outline_layer.data = coords
         id_layer.features = {"id": text_strings}
-        outline_layer.features = {"id": text_strings}
 
     def _sync_sam2_id_layers_to_zoom(self, image_name: str) -> None:
         layer_names = self._layer_names(image_name)
@@ -867,12 +853,10 @@ class RoiController:
             if layer_names.sam2_auto_ids not in self.viewer.layers:
                 return
             id_layer = self.viewer.layers[layer_names.sam2_auto_ids]
-            outline_layer = self.viewer.layers[layer_names.sam2_auto_ids_outline]
-            if not isinstance(id_layer, Points) or not isinstance(outline_layer, Points):
+            if not isinstance(id_layer, Points):
                 return
             base_size = self._id_text_size_from_zoom()
             id_layer.text.size = base_size
-            outline_layer.text.size = base_size + 2
 
         if image_name in self._sam2_id_zoom_handlers:
             old = self._sam2_id_zoom_handlers[image_name]
@@ -934,7 +918,7 @@ class RoiController:
             return
 
         layer_names = self._layer_names(image_name)
-        if layer_name not in {layer_names.sam2_auto_ids, layer_names.sam2_auto_ids_outline}:
+        if layer_name != layer_names.sam2_auto_ids:
             return
 
         self._cleanup_sam2_id_state(image_name)
