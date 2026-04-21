@@ -840,9 +840,7 @@ class RoiController:
 
         id_layer.visible = True
         if layer_names.sam2_auto_ids_outline in self.viewer.layers:
-            outline_layer = self.viewer.layers[layer_names.sam2_auto_ids_outline]
-            if isinstance(outline_layer, Points):
-                outline_layer.visible = False
+            del self.viewer.layers[layer_names.sam2_auto_ids_outline]
         coords, label_ids = self._sam2_id_points_cache[image_name]
         text_strings = np.asarray([str(v) for v in label_ids], dtype=object)
         id_layer.data = coords
@@ -920,7 +918,7 @@ class RoiController:
             return
 
         layer_names = self._layer_names(image_name)
-        if layer_name not in {layer_names.sam2_auto_ids, layer_names.sam2_auto_ids_outline}:
+        if layer_name != layer_names.sam2_auto_ids:
             return
 
         self._cleanup_sam2_id_state(image_name)
