@@ -125,6 +125,13 @@ In particular, I would like to thank the developers and contributors of [napari]
 
 This software was also inspired in part by existing plant image analysis workflows and tools, including *Samplify* ([Bente et al., 2026](https://doi.org/10.1111/nph.70979)).
 
+## AI Assistant
+
+AI tools, including GitHub Copilot and OpenAI tools (ChatGPT/Codex), were used to assist in drafting code and revising documentation.
+
+All methodological decisions and validations were conducted by the author. 
+The author assumes full responsibility for the scientific correctness and reproducibility of this software.
+
 ## License
 
 This project is licensed under the [BSD 3-Clause License](https://opensource.org/license/BSD-3-clause). 
