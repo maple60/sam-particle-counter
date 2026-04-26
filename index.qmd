@@ -265,8 +265,8 @@ The exported folder includes the following files:
 
 ### Step 6. Delete layers
 
-After export is complete, run **Delete all layers for current image** to remove all layers related to the current image.
-A confirmation dialog appears, so please be careful not to delete by mistake.
+After export is complete, run **Delete all layers for current image** to remove **all layers currently loaded in the viewer** (not only the current image).
+A confirmation dialog appears, but this operation can discard unrelated in-progress work, so use it with care.
 
 Once all layers are deleted, you are ready to load the next image.
 Return to Step 1 and load the next image.
