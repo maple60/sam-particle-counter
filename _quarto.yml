@@ -9,6 +9,8 @@ book:
   chapters:
     - href: manual/index.qmd
       text: "Home"
+    - href: manual/index_ja.qmd
+      text: "日本語版"
 
 number-sections: false
 
