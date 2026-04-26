@@ -189,6 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sam2-自動セグメンテーションが失敗する" id="toc-sam2-自動セグメンテーションが失敗する" class="nav-link" data-scroll-target="#sam2-自動セグメンテーションが失敗する">SAM2 自動セグメンテーションが失敗する</a></li>
   <li><a href="#エクスポートが失敗する" id="toc-エクスポートが失敗する" class="nav-link" data-scroll-target="#エクスポートが失敗する">エクスポートが失敗する</a></li>
   </ul></li>
+  <li><a href="#アイコンのクレジット" id="toc-アイコンのクレジット" class="nav-link" data-scroll-target="#アイコンのクレジット">アイコンのクレジット</a></li>
   </ul>
 </nav>
     </div>
@@ -318,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-2.-_roi-レイヤーに-roi-を描画">Step 2. <code>*_ROI</code> レイヤーに ROI を描画</h3>
 <ol type="1">
 <li>ROI レイヤー（<code>&lt;image_name&gt;_ROI</code>）を選択（デフォルトで選択されています）</li>
-<li>Add Rectangles ツールで矩形を描画（デフォルトで選択されています）</li>
+<li>Add Rectangles ツール <img src="assets/icons/rectangle.svg" class="img-fluid" width="24"> で矩形を描画（デフォルトで選択されています）</li>
 <li>ROI が複数ある場合は <strong>最後に描いた矩形</strong> が使用される</li>
 <li>右のウィジェットの <strong>Crop to ROI</strong> ボタンを実行する</li>
 <li><code>&lt;image_name&gt;_cropped</code> レイヤーが作成され、元画像の ROI 部分が切り出される</li>
@@ -471,20 +472,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <section id="粒を追加したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="粒を追加したいとき">粒を追加したいとき</h3>
-<p>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。 brush size からペンの太さを調整できます。</p>
+<p>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツール <img src="assets/icons/paint.svg" class="img-fluid" width="24"> で新たな粒のマスクを作成します。 brush size からペンの太さを調整できます。</p>
 </section>
 <section id="粒を分割したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="粒を分割したいとき">粒を分割したいとき</h3>
-<p>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、label の番号を増やしてペンツールで新たな粒のマスクを作成します。</p>
+<p>複数の粒が連結してしまっている場合は、片方を消しゴムツール <img src="assets/icons/erase.svg" class="img-fluid" width="24"> で消去した後、label の番号を増やしてペンツール <img src="assets/icons/paint.svg" class="img-fluid" width="24"> で新たな粒のマスクを作成します。</p>
 </section>
 <section id="広範囲を消去したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="広範囲を消去したいとき">広範囲を消去したいとき</h3>
-<p>背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。</p>
-<p>同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。</p>
+<p>背景がマスクとして誤検出されている場合は、スポイトツール <img src="assets/icons/picker.svg" class="img-fluid" width="24"> で何もない場所をクリックして背景色を選択し、塗りつぶしツール <img src="assets/icons/fill.svg" class="img-fluid" width="24"> で背景マスクをクリックすると、まとめて消去できます。</p>
+<p>同様に、かたまり単位で粒を消去したいときは、スポイトツール <img src="assets/icons/picker.svg" class="img-fluid" width="24"> で粒子の色をクリックして選択し、塗りつぶしツール <img src="assets/icons/fill.svg" class="img-fluid" width="24"> でその粒子をクリックすると、まとめて消去できます。</p>
 </section>
 <section id="誤検出された粒を消去したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="誤検出された粒を消去したいとき">誤検出された粒を消去したいとき</h3>
-<p>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。</p>
+<p>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツール <img src="assets/icons/erase.svg" class="img-fluid" width="24"> で消去します。</p>
 </section>
 <section id="マスクごとに確認したい場合" class="level3">
 <h3 class="anchored" data-anchor-id="マスクごとに確認したい場合">マスクごとに確認したい場合</h3>
@@ -610,11 +611,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>SAM2 ラベルレイヤーが存在するか確認</li>
 <li>出力先ディレクトリに書き込み権限があるか確認</li>
 </ul>
+</section>
+</section>
+<section id="アイコンのクレジット" class="level2">
+<h2 class="anchored" data-anchor-id="アイコンのクレジット">アイコンのクレジット</h2>
+<p>使用している一部のインターフェースアイコン（例：Add Shapes, Paint, Erase, Polygon）は、<a href="https://github.com/napari/napari">napari</a> プロジェクトに由来するものであり、<a href="https://github.com/napari/napari/blob/main/LICENSE">BSD 3-Clause License</a> の下で配布されています。 本ドキュメントでは、説明および教育目的で使用しています。</p>
 
 
 <!-- -->
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1156,7 +1161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2. `*_ROI` レイヤーに ROI を描画</span></span>
 <span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>ROI レイヤー（<span class="in">`&lt;image_name&gt;_ROI`</span>）を選択（デフォルトで選択されています）</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add Rectangles ツールで矩形を描画（デフォルトで選択されています）</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add Rectangles ツール <span class="al">![](assets/icons/rectangle.svg)</span>{width="24"} で矩形を描画（デフォルトで選択されています）</span>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>ROI が複数ある場合は **最後に描いた矩形** が使用される</span>
 <span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>右のウィジェットの **Crop to ROI** ボタンを実行する</span>
 <span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="in">`&lt;image_name&gt;_cropped`</span> レイヤーが作成され、元画像の ROI 部分が切り出される</span>
@@ -1267,22 +1272,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を追加したいとき</span></span>
 <span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツール <span class="al">![](assets/icons/paint.svg)</span>{width="24"} で新たな粒のマスクを作成します。</span>
 <span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>brush size からペンの太さを調整できます。</span>
 <span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を分割したいとき</span></span>
 <span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、label の番号を増やしてペンツールで新たな粒のマスクを作成します。</span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>複数の粒が連結してしまっている場合は、片方を消しゴムツール <span class="al">![](assets/icons/erase.svg)</span>{width="24"} で消去した後、label の番号を増やしてペンツール <span class="al">![](assets/icons/paint.svg)</span>{width="24"} で新たな粒のマスクを作成します。</span>
 <span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### 広範囲を消去したいとき</span></span>
 <span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>背景がマスクとして誤検出されている場合は、スポイトツール <span class="al">![](assets/icons/picker.svg)</span>{width="24"} で何もない場所をクリックして背景色を選択し、塗りつぶしツール <span class="al">![](assets/icons/fill.svg)</span>{width="24"} で背景マスクをクリックすると、まとめて消去できます。</span>
 <span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。</span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>同様に、かたまり単位で粒を消去したいときは、スポイトツール <span class="al">![](assets/icons/picker.svg)</span>{width="24"} で粒子の色をクリックして選択し、塗りつぶしツール <span class="al">![](assets/icons/fill.svg)</span>{width="24"} でその粒子をクリックすると、まとめて消去できます。</span>
 <span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="fu">### 誤検出された粒を消去したいとき</span></span>
 <span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツール <span class="al">![](assets/icons/erase.svg)</span>{width="24"} で消去します。</span>
 <span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### マスクごとに確認したい場合</span></span>
 <span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a></span>
@@ -1380,7 +1385,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*_cropped`</span> レイヤーが存在するか確認</span>
 <span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 ラベルレイヤーが存在するか確認</span>
-<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>出力先ディレクトリに書き込み権限があるか確認</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>出力先ディレクトリに書き込み権限があるか確認</span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a><span class="fu">## アイコンのクレジット</span></span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a>使用している一部のインターフェースアイコン（例：Add Shapes, Paint, Erase, Polygon）は、<span class="co">[</span><span class="ot">napari</span><span class="co">](https://github.com/napari/napari)</span> プロジェクトに由来するものであり、<span class="co">[</span><span class="ot">BSD 3-Clause License</span><span class="co">](https://github.com/napari/napari/blob/main/LICENSE)</span> の下で配布されています。</span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a>本ドキュメントでは、説明および教育目的で使用しています。</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

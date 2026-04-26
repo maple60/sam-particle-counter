@@ -76,7 +76,7 @@ Please do not manually rename layers.
 ### Step 2. Draw ROI on the `*_ROI` layer
 
 1. Select the ROI layer (`<image_name>_ROI`) (selected by default)
-2. Draw a rectangle with the Add Rectangles tool (selected by default)
+2. Draw a rectangle with the Add Rectangles tool ![](manual/assets/icons/rectangle.svg){width="24"} (selected by default)
 3. If multiple ROIs exist, the **last rectangle drawn** is used
 4. Run the **Crop to ROI** button in the right-side widget
 5. An `<image_name>_cropped` layer is created, and the ROI region is cropped from the source image
@@ -187,22 +187,22 @@ For basic label editing operations, see the [official napari documentation](http
 
 ### When you want to add particles
 
-If particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool.
+If particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool ![](manual/assets/icons/paint.svg){width="24"}.
 You can adjust brush thickness via brush size.
 
 ### When you want to split particles
 
-If multiple particles are connected, erase one side with the eraser tool, then increase the label number and repaint a new particle mask.
+If multiple particles are connected, erase one side with the eraser tool ![](manual/assets/icons/erase.svg){width="24"}, then increase the label number and repaint a new particle mask.
 
 ### When you want to erase a wide area
 
-If background is falsely detected as a mask, click an empty area with the picker tool to select background, then click the background mask with fill tool to erase in bulk.
+If background is falsely detected as a mask, click an empty area with the picker tool ![](manual/assets/icons/picker.svg){width="24"} to select background, then click the background mask with fill tool ![](manual/assets/icons/fill.svg){width="24"} to erase in bulk.
 
-Similarly, to erase particles in chunks, pick the particle color with the picker tool and then click that particle with fill tool to erase in bulk.
+Similarly, to erase particles in chunks, pick the particle color with the picker tool ![](manual/assets/icons/picker.svg){width="24"} and then click that particle with fill tool ![](manual/assets/icons/fill.svg){width="24"} to erase in bulk.
 
 ### When you want to remove falsely detected particles
 
-If noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool.
+If noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool ![](manual/assets/icons/erase.svg){width="24"}.
 
 ### When you want to inspect mask by mask
 
@@ -301,3 +301,8 @@ Before accepting final results, check at least the following:
 - Confirm a `*_cropped` layer exists
 - Confirm a SAM2 label layer exists
 - Confirm write permission for the output directory
+
+## Icon Credits
+
+Icons such as *Add Shapes*, *Paint*, *Erase*, and *Polygon* used in the Usage section are derived from the [napari](https://github.com/napari/napari) open-source project (© napari contributors), distributed under the [BSD 3-Clause License](https://github.com/napari/napari/blob/main/LICENSE).
+They have been used here solely for illustrative purposes.
