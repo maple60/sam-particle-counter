@@ -7,7 +7,7 @@ book:
   title: "SAM Particle Counter"
   repo-url: https://github.com/maple60/sam-particle-counter
   chapters:
-    - href: manual/index.qmd
+    - href: index.qmd
       text: "Home"
     - href: manual/index_ja.qmd
       text: "日本語版"
