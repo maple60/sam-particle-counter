@@ -167,54 +167,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
-  <ul class="collapse">
-  <li><a href="#what-this-application-does" id="toc-what-this-application-does" class="nav-link" data-scroll-target="#what-this-application-does">What this application does</a></li>
-  </ul></li>
-  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start">Before You Start</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-this-app-can-do" id="toc-what-this-app-can-do" class="nav-link" data-scroll-target="#what-this-app-can-do">What this app can do</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
   <ul class="collapse">
   <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment setup</a></li>
-  <li><a href="#recommended-input-image-conditions" id="toc-recommended-input-image-conditions" class="nav-link" data-scroll-target="#recommended-input-image-conditions">Recommended input image conditions</a></li>
   </ul></li>
-  <li><a href="#detailed-analysis-procedure" id="toc-detailed-analysis-procedure" class="nav-link" data-scroll-target="#detailed-analysis-procedure">Detailed Analysis Procedure</a>
+  <li><a href="#detailed-analysis-procedure" id="toc-detailed-analysis-procedure" class="nav-link" data-scroll-target="#detailed-analysis-procedure">Detailed analysis procedure</a>
   <ul class="collapse">
-  <li><a href="#step-1.-load-an-image" id="toc-step-1.-load-an-image" class="nav-link" data-scroll-target="#step-1.-load-an-image">Step 1. Load an image</a>
-  <ul class="collapse">
-  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why this matters</a></li>
+  <li><a href="#step-1.-load-an-image" id="toc-step-1.-load-an-image" class="nav-link" data-scroll-target="#step-1.-load-an-image">Step 1. Load an image</a></li>
+  <li><a href="#step-2.-draw-roi-on-the-_roi-layer" id="toc-step-2.-draw-roi-on-the-_roi-layer" class="nav-link" data-scroll-target="#step-2.-draw-roi-on-the-_roi-layer">Step 2. Draw ROI on the <code>*_ROI</code> layer</a></li>
+  <li><a href="#step-3.-run-run-sam2-auto-segmentation" id="toc-step-3.-run-run-sam2-auto-segmentation" class="nav-link" data-scroll-target="#step-3.-run-run-sam2-auto-segmentation">Step 3. Run <strong>Run SAM2 auto segmentation</strong></a></li>
+  <li><a href="#step-4.-manual-refinement-optional" id="toc-step-4.-manual-refinement-optional" class="nav-link" data-scroll-target="#step-4.-manual-refinement-optional">Step 4. Manual refinement (optional)</a></li>
+  <li><a href="#step-5.-export-results" id="toc-step-5.-export-results" class="nav-link" data-scroll-target="#step-5.-export-results">Step 5. Export results</a></li>
+  <li><a href="#step-6.-delete-layers" id="toc-step-6.-delete-layers" class="nav-link" data-scroll-target="#step-6.-delete-layers">Step 6. Delete layers</a></li>
   </ul></li>
-  <li><a href="#step-2.-draw-roi-on-the-_roi-layer" id="toc-step-2.-draw-roi-on-the-_roi-layer" class="nav-link" data-scroll-target="#step-2.-draw-roi-on-the-_roi-layer">Step 2. Draw ROI on the <code>*_ROI</code> layer</a>
-  <ul class="collapse">
-  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips">Practical tips</a></li>
-  </ul></li>
-  <li><a href="#step-3.-run-crop-to-roi" id="toc-step-3.-run-crop-to-roi" class="nav-link" data-scroll-target="#step-3.-run-crop-to-roi">Step 3. Run <strong>Crop to ROI</strong></a>
-  <ul class="collapse">
-  <li><a href="#what-to-check" id="toc-what-to-check" class="nav-link" data-scroll-target="#what-to-check">What to check</a></li>
-  </ul></li>
-  <li><a href="#step-4.-run-sam2-auto-segmentation" id="toc-step-4.-run-sam2-auto-segmentation" class="nav-link" data-scroll-target="#step-4.-run-sam2-auto-segmentation">Step 4. Run <strong>SAM2 auto segmentation</strong></a>
-  <ul class="collapse">
-  <li><a href="#main-parameters-first-pass-recommendation" id="toc-main-parameters-first-pass-recommendation" class="nav-link" data-scroll-target="#main-parameters-first-pass-recommendation">Main parameters (first-pass recommendation)</a></li>
-  <li><a href="#output-layers" id="toc-output-layers" class="nav-link" data-scroll-target="#output-layers">Output layers</a></li>
-  <li><a href="#interpretation-notes" id="toc-interpretation-notes" class="nav-link" data-scroll-target="#interpretation-notes">Interpretation notes</a></li>
-  </ul></li>
-  <li><a href="#step-5.-optional-refinement-recommended-for-publication-quality-counts" id="toc-step-5.-optional-refinement-recommended-for-publication-quality-counts" class="nav-link" data-scroll-target="#step-5.-optional-refinement-recommended-for-publication-quality-counts">Step 5. Optional refinement (recommended for publication-quality counts)</a>
-  <ul class="collapse">
-  <li><a href="#a-point-prompt-refinement-with-sam2" id="toc-a-point-prompt-refinement-with-sam2" class="nav-link" data-scroll-target="#a-point-prompt-refinement-with-sam2">A) Point-prompt refinement with SAM2</a></li>
-  <li><a href="#b-direct-manual-label-editing" id="toc-b-direct-manual-label-editing" class="nav-link" data-scroll-target="#b-direct-manual-label-editing">B) Direct manual label editing</a></li>
-  </ul></li>
-  <li><a href="#step-6.-export-results" id="toc-step-6.-export-results" class="nav-link" data-scroll-target="#step-6.-export-results">Step 6. Export results</a>
-  <ul class="collapse">
-  <li><a href="#exported-files" id="toc-exported-files" class="nav-link" data-scroll-target="#exported-files">Exported files</a></li>
-  <li><a href="#count-definitions" id="toc-count-definitions" class="nav-link" data-scroll-target="#count-definitions">Count definitions</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#suggested-qa-checklist" id="toc-suggested-qa-checklist" class="nav-link" data-scroll-target="#suggested-qa-checklist">Suggested QA Checklist</a></li>
+  <li><a href="#qa-checklist" id="toc-qa-checklist" class="nav-link" data-scroll-target="#qa-checklist">QA checklist</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
-  <li><a href="#no-cropped-layer-is-created" id="toc-no-cropped-layer-is-created" class="nav-link" data-scroll-target="#no-cropped-layer-is-created">No cropped layer is created</a></li>
+  <li><a href="#cropped-layer-is-not-created" id="toc-cropped-layer-is-not-created" class="nav-link" data-scroll-target="#cropped-layer-is-not-created">Cropped layer is not created</a></li>
   <li><a href="#sam2-auto-segmentation-fails" id="toc-sam2-auto-segmentation-fails" class="nav-link" data-scroll-target="#sam2-auto-segmentation-fails">SAM2 auto segmentation fails</a></li>
   <li><a href="#export-fails" id="toc-export-fails" class="nav-link" data-scroll-target="#export-fails">Export fails</a></li>
   </ul></li>
-  <li><a href="#notes-for-future-japanese-translation" id="toc-notes-for-future-japanese-translation" class="nav-link" data-scroll-target="#notes-for-future-japanese-translation">Notes for Future Japanese Translation</a></li>
   </ul>
 </nav>
     </div>
@@ -243,268 +217,404 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Japanese version is available here: <a href="./manual/index_ja.html">SAM Particle Counter マニュアル（日本語版）</a></p>
 </blockquote>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Welcome to the <strong>SAM Particle Counter</strong> manual.</p>
-<p>This document is a draft for an online manual that explains the analysis workflow in detail, from image loading to final export of particle counts and tables. It is written in English so it can be used as the source for a later Japanese version.</p>
-<section id="what-this-application-does" class="level2">
-<h2 class="anchored" data-anchor-id="what-this-application-does">What this application does</h2>
-<p>SAM Particle Counter is a napari-based desktop tool that helps you:</p>
+<p>This page is the English manual describing the analysis workflow, from image loading to exporting particle count results.</p>
+</section>
+<section id="what-this-app-can-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-app-can-do">What this app can do</h2>
+<p>SAM Particle Counter is a <a href="https://napari.org/stable/">napari</a> based desktop tool that supports the following tasks:</p>
 <ul>
-<li>draw a rectangular region of interest (ROI),</li>
-<li>run SAM2-based automatic segmentation,</li>
-<li>optionally refine segmentation with point prompts and manual label edits,</li>
-<li>export overlays, CSV tables, and run metadata.</li>
+<li>Creating a rectangular ROI (region of interest)</li>
+<li>Automatic segmentation with <a href="https://ai.meta.com/research/sam2/">SAM2</a></li>
+<li>Refinement by point prompts and label editing</li>
+<li>Exporting overlay images, CSV files, and run metadata</li>
 </ul>
-<p>The typical usage pattern is:</p>
+<p>The typical workflow is as follows:</p>
 <ol type="1">
-<li>Load image</li>
-<li>Draw ROI</li>
-<li>Crop to ROI</li>
+<li>Load an image</li>
+<li>Draw an ROI</li>
+<li>Crop to the ROI</li>
 <li>Run SAM2 auto segmentation</li>
-<li>Review/edit labels</li>
+<li>Refine the result if needed</li>
 <li>Export artifacts</li>
 </ol>
-<hr>
 </section>
-</section>
-<section id="before-you-start" class="level1">
-<h1>Before You Start</h1>
-<section id="environment-setup" class="level2">
-<h2 class="anchored" data-anchor-id="environment-setup">Environment setup</h2>
-<p>Please complete project setup first (see the main README for full commands).</p>
-<p>At a minimum:</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="environment-setup" class="level3">
+<h3 class="anchored" data-anchor-id="environment-setup">Environment setup</h3>
+<p>For detailed setup instructions, see <a href="https://github.com/maple60/sam-particle-counter"><code>README.md</code></a>. At minimum, ensure the following:</p>
 <ul>
-<li>Python and dependencies installed via <code>uv</code></li>
-<li>SAM2 setup script executed for your OS</li>
-<li>App starts successfully with:</li>
+<li>Dependencies have been installed with <code>uv</code></li>
+<li>The SAM2 setup script for your OS has been executed</li>
+<li>The app can be started with the following command</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="recommended-input-image-conditions" class="level2">
-<h2 class="anchored" data-anchor-id="recommended-input-image-conditions">Recommended input image conditions</h2>
-<p>For stable segmentation quality:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Recommended input image conditions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To stabilize segmentation quality, the following is recommended:</p>
 <ul>
-<li>Use images with clear contrast between particles and background.</li>
-<li>Avoid severe blur or compression artifacts when possible.</li>
-<li>If images are very large, use ROI cropping to reduce computation and memory load.</li>
+<li>Images with sufficient contrast between particles and background</li>
+<li>Images with minimal strong blur or compression noise</li>
 </ul>
-<hr>
+</div>
+</div>
 </section>
 </section>
-<section id="detailed-analysis-procedure" class="level1">
-<h1>Detailed Analysis Procedure</h1>
-<section id="step-1.-load-an-image" class="level2">
-<h2 class="anchored" data-anchor-id="step-1.-load-an-image">Step 1. Load an image</h2>
-<p>Open your image in napari (drag-and-drop or <code>File &gt; Open...</code>).</p>
-<p>When the first image layer is added, the app automatically creates a corresponding ROI layer named:</p>
-<ul>
-<li><code>&lt;image_name&gt;_ROI</code></li>
-</ul>
-<section id="why-this-matters" class="level3">
-<h3 class="anchored" data-anchor-id="why-this-matters">Why this matters</h3>
-<p>All downstream operations are tied to layer names. Keeping the base image name unchanged helps the tool resolve related layers automatically.</p>
-<hr>
+<section id="detailed-analysis-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-analysis-procedure">Detailed analysis procedure</h2>
+<section id="step-1.-load-an-image" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.-load-an-image">Step 1. Load an image</h3>
+<p>Load an image into napari (drag and drop, or <code>File &gt; Open...</code>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/open_file_01.webp" class="img-fluid figure-img"></p>
+<figcaption>Select File</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/open_file_02.webp" class="img-fluid figure-img"></p>
+<figcaption>Select Open File(s)…</figcaption>
+</figure>
+</div>
+<p>When the first image layer is added, the corresponding ROI (region of interest) layer (<code>&lt;image_name&gt;_ROI</code>) is created automatically.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/open_file_03.webp" class="img-fluid figure-img"></p>
+<figcaption>Loaded image</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Do not rename layers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This app resolves processing targets using layer naming conventions. Please do not manually rename layers.</p>
+</div>
+</div>
 </section>
-</section>
-<section id="step-2.-draw-roi-on-the-_roi-layer" class="level2">
-<h2 class="anchored" data-anchor-id="step-2.-draw-roi-on-the-_roi-layer">Step 2. Draw ROI on the <code>*_ROI</code> layer</h2>
+<section id="step-2.-draw-roi-on-the-_roi-layer" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.-draw-roi-on-the-_roi-layer">Step 2. Draw ROI on the <code>*_ROI</code> layer</h3>
 <ol type="1">
-<li>Select the ROI layer (<code>&lt;image_name&gt;_ROI</code>).</li>
-<li>Draw a rectangle using the Shapes tool.</li>
-<li>If multiple rectangles exist, the <strong>most recently drawn ROI</strong> is used.</li>
+<li>Select the ROI layer (<code>&lt;image_name&gt;_ROI</code>) (selected by default)</li>
+<li>Draw a rectangle with the Add Rectangles tool (selected by default)</li>
+<li>If multiple ROIs exist, the <strong>last rectangle drawn</strong> is used</li>
+<li>Run the <strong>Crop to ROI</strong> button in the right-side widget</li>
+<li>An <code>&lt;image_name&gt;_cropped</code> layer is created, and the ROI region is cropped from the source image</li>
 </ol>
-<section id="practical-tips" class="level3">
-<h3 class="anchored" data-anchor-id="practical-tips">Practical tips</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/crop_roi_01.webp" class="img-fluid figure-img"></p>
+<figcaption>Draw ROI and run Crop to ROI</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/crop_roi_02.webp" class="img-fluid figure-img"></p>
+<figcaption>Cropped image</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Practical tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Include all target particles with a small safety margin.</li>
-<li>Exclude unrelated structures as much as possible.</li>
-<li>If segmentation is slow, start with a smaller ROI and expand later.</li>
+<li>Leave a small margin so target particles are not missed</li>
+<li>Exclude irrelevant regions as much as possible</li>
+<li>If processing is heavy, start from a smaller ROI</li>
+<li>You can pan the view by dragging while holding the space key</li>
 </ul>
-<hr>
+</div>
+</div>
 </section>
-</section>
-<section id="step-3.-run-crop-to-roi" class="level2">
-<h2 class="anchored" data-anchor-id="step-3.-run-crop-to-roi">Step 3. Run <strong>Crop to ROI</strong></h2>
-<p>Press the right-dock button:</p>
-<ul>
-<li><strong>Crop to ROI</strong></li>
-</ul>
-<p>This creates a cropped image layer:</p>
-<ul>
-<li><code>&lt;image_name&gt;_cropped</code></li>
-</ul>
-<p>and stores crop metadata internally (source image/layer names and crop coordinates).</p>
-<section id="what-to-check" class="level3">
-<h3 class="anchored" data-anchor-id="what-to-check">What to check</h3>
-<ul>
-<li>The cropped layer appears in the layer list.</li>
-<li>The cropped region visually matches your intended analysis area.</li>
-</ul>
-<p>If no valid rectangle exists, cropping will not run.</p>
-<hr>
-</section>
-</section>
-<section id="step-4.-run-sam2-auto-segmentation" class="level2">
-<h2 class="anchored" data-anchor-id="step-4.-run-sam2-auto-segmentation">Step 4. Run <strong>SAM2 auto segmentation</strong></h2>
-<p>Select <code>&lt;image_name&gt;_cropped</code>, then execute:</p>
-<ul>
-<li><strong>Run SAM2 auto segmentation</strong></li>
-</ul>
-<section id="main-parameters-first-pass-recommendation" class="level3">
-<h3 class="anchored" data-anchor-id="main-parameters-first-pass-recommendation">Main parameters (first-pass recommendation)</h3>
-<ul>
-<li><code>points_per_side</code>: start around <strong>56</strong> (higher = denser proposals, slower)</li>
-<li><code>pred_iou_thresh</code>: start around <strong>0.84</strong></li>
-<li><code>stability_score_thresh</code>: start around <strong>0.90</strong></li>
-<li><code>crop_n_layers</code>: start with <strong>1</strong></li>
-<li><code>crop_n_points_downscale_factor</code>: start with <strong>1</strong></li>
-<li><code>deduplicate_masks</code>: usually <strong>ON</strong></li>
-<li><code>contain_thresh</code>: start around <strong>0.90</strong></li>
-<li><code>iou_thresh</code>: start around <strong>0.70</strong></li>
-<li><code>output_mode</code>: usually <strong>labels</strong> (or <code>both</code> if polygon output is also needed)</li>
-</ul>
-</section>
-<section id="output-layers" class="level3">
-<h3 class="anchored" data-anchor-id="output-layers">Output layers</h3>
-<p>Depending on <code>output_mode</code>, the app creates:</p>
-<ul>
-<li><code>&lt;image_name&gt;_cropped_sam2_auto</code> (shape polygons)</li>
-<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code> (editable labels)</li>
-<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels_original</code> (non-editable reference copy)</li>
-<li>ID text overlay layer for label numbers</li>
-</ul>
-</section>
-<section id="interpretation-notes" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-notes">Interpretation notes</h3>
-<ul>
-<li>With deduplication enabled, overlapping/redundant masks are reduced.</li>
-<li>Label IDs are integer objects (<code>1..N</code>), with <code>0</code> as background.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="step-5.-optional-refinement-recommended-for-publication-quality-counts" class="level2">
-<h2 class="anchored" data-anchor-id="step-5.-optional-refinement-recommended-for-publication-quality-counts">Step 5. Optional refinement (recommended for publication-quality counts)</h2>
-<p>You can refine the result in two ways.</p>
-<section id="a-point-prompt-refinement-with-sam2" class="level3">
-<h3 class="anchored" data-anchor-id="a-point-prompt-refinement-with-sam2">A) Point-prompt refinement with SAM2</h3>
+<section id="step-3.-run-run-sam2-auto-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.-run-run-sam2-auto-segmentation">Step 3. Run <strong>Run SAM2 auto segmentation</strong></h3>
 <ol type="1">
-<li>Use <strong>Create prompt points layer</strong></li>
-<li>Choose foreground/background target</li>
-<li>Add points on the cropped image</li>
+<li>Select the <code>&lt;image_name&gt;_cropped</code> layer (selected by default)</li>
+<li>Run the <strong>Run SAM2 auto segmentation</strong> button in the right-side widget (adjust parameters as needed)</li>
+<li>SAM2 segmentation results are output as new layers:
+<ul>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto</code> (polygons)</li>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code> (editable labels)</li>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels_original</code> (read-only reference copy)</li>
+<li>Overlay showing label IDs (do not edit)</li>
+</ul></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/sam2_segmentation.webp" class="img-fluid figure-img"></p>
+<figcaption>SAM2 segmentation</figcaption>
+</figure>
+</div>
+<section id="sam2-parameters" class="level4">
+<h4 class="anchored" data-anchor-id="sam2-parameters">SAM2 parameters</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+<th>Default (recommended)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>points_per_side</code></td>
+<td>Specifies the density of automatic prompt points placed across the image. Increasing this value enables finer exploration and improves detection of small particles, but increases processing time and memory usage.</td>
+<td><strong>56</strong></td>
+</tr>
+<tr class="even">
+<td><code>pred iou thresh</code></td>
+<td>Threshold for SAM2’s predicted mask quality score. Higher values keep only more confident masks and tend to reduce false positives, but may increase missed detections.</td>
+<td><strong>0.84</strong></td>
+</tr>
+<tr class="odd">
+<td><code>stability score thresh</code></td>
+<td>Threshold for mask stability score. Higher values keep only masks with more stable boundaries. Particles with unstable contours or very small particles may be filtered out.</td>
+<td><strong>0.90</strong></td>
+</tr>
+<tr class="even">
+<td><code>crop n layers</code></td>
+<td>Number of iterative crop-and-reprocess passes. Increasing this value can improve local mask detection, but increases processing time.</td>
+<td><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td><code>crop n points downscale factor</code></td>
+<td>Scaling factor for prompt point density within crop regions. Higher values reduce point density in crop regions and lighten processing, but may reduce sensitivity for small targets.</td>
+<td><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td><code>deduplicate masks</code></td>
+<td>Enables removal of duplicate masks. When enabled, duplicate masks generated for the same particle are removed.</td>
+<td><strong>True</strong></td>
+</tr>
+<tr class="odd">
+<td><code>contain thresh</code></td>
+<td>Defines how much one mask must be contained in another to be treated as a duplicate. Lower values make duplicate detection less strict and can remove more masks. Higher values remove masks only when one is almost fully contained in another.</td>
+<td><strong>0.90</strong></td>
+</tr>
+<tr class="even">
+<td><code>iou thresh</code></td>
+<td>IoU (Intersection over Union) threshold for overlap between two masks. Lower values make partially overlapping masks more likely to be removed as duplicates. Higher values remove only strongly overlapping masks.</td>
+<td><strong>0.70</strong></td>
+</tr>
+<tr class="odd">
+<td><code>score key</code></td>
+<td>Score used to decide which duplicate mask to keep. Typically use <code>predicted_iou</code> to retain the higher-quality mask.</td>
+<td><strong>predicted_iou</strong></td>
+</tr>
+<tr class="even">
+<td><code>output mode</code></td>
+<td>Specifies the output format for SAM2 results.
+<ul>
+<li><code>labels</code>: Outputs an editable label layer. Usually recommended.</li>
+<li><code>shapes</code>: Outputs a polygon layer. Use this if you do not need label painting/editing. Typically not edited.</li>
+<li><code>both</code>: Outputs both layers.</li>
+</ul></td>
+<td><strong>labels</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="step-4.-manual-refinement-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.-manual-refinement-optional">Step 4. Manual refinement (optional)</h3>
+<p>Refine results as needed to improve final count accuracy.</p>
+<section id="a-manual-label-editing" class="level4">
+<h4 class="anchored">(A) Manual label editing</h4>
+<ol type="1">
+<li>Select the <code>&lt;image_name&gt;_cropped_sam2_auto_labels</code> layer (selected by default)</li>
+<li>Edit labels using napari label editing tools</li>
+</ol>
+<p>For basic label editing operations, see the <a href="https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components">official napari documentation</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/manual_refinement_01.webp" class="img-fluid figure-img"></p>
+<figcaption>Label editing example</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tips for manual editing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="when-you-want-to-add-particles" class="level3">
+<h3 class="anchored" data-anchor-id="when-you-want-to-add-particles">When you want to add particles</h3>
+<p>If particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool. You can adjust brush thickness via brush size.</p>
+</section>
+<section id="when-you-want-to-split-particles" class="level3">
+<h3 class="anchored" data-anchor-id="when-you-want-to-split-particles">When you want to split particles</h3>
+<p>If multiple particles are connected, erase one side with the eraser tool, then increase the label number and repaint a new particle mask.</p>
+</section>
+<section id="when-you-want-to-erase-a-wide-area" class="level3">
+<h3 class="anchored" data-anchor-id="when-you-want-to-erase-a-wide-area">When you want to erase a wide area</h3>
+<p>If background is falsely detected as a mask, click an empty area with the picker tool to select background, then click the background mask with fill tool to erase in bulk.</p>
+<p>Similarly, to erase particles in chunks, pick the particle color with the picker tool and then click that particle with fill tool to erase in bulk.</p>
+</section>
+<section id="when-you-want-to-remove-falsely-detected-particles" class="level3">
+<h3 class="anchored" data-anchor-id="when-you-want-to-remove-falsely-detected-particles">When you want to remove falsely detected particles</h3>
+<p>If noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool.</p>
+</section>
+<section id="when-you-want-to-inspect-mask-by-mask" class="level3">
+<h3 class="anchored" data-anchor-id="when-you-want-to-inspect-mask-by-mask">When you want to inspect mask by mask</h3>
+<p>Enable show selected to display only the selected label ID mask. While this is enabled, changing label lets you inspect masks one by one.</p>
+</section>
+</div>
+</div>
+</section>
+<section id="b-point-prompt-refinement" class="level4">
+<h4 class="anchored" data-anchor-id="b-point-prompt-refinement">(B) Point-prompt refinement</h4>
+<ol type="1">
+<li>Run <strong>Create prompt points layer</strong></li>
+<li>Select Foreground / Background</li>
+<li>Place points on the cropped image</li>
 <li>Run <strong>Run SAM2 point prompt</strong></li>
 </ol>
-<p>This produces prompt-based polygon candidates (<code>*_sam2_points</code>) that can guide manual correction.</p>
-</section>
-<section id="b-direct-manual-label-editing" class="level3">
-<h3 class="anchored" data-anchor-id="b-direct-manual-label-editing">B) Direct manual label editing</h3>
-<p>Use napari label editing tools on:</p>
-<ul>
-<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code></li>
-</ul>
-<p>Typical edits:</p>
-<ul>
-<li>split merged particles,</li>
-<li>remove obvious false positives,</li>
-<li>add missing particles.</li>
-</ul>
-<blockquote class="blockquote">
-<p>Recommendation: Keep edits minimal and traceable, and document any manual criteria in your experiment notes.</p>
-</blockquote>
-<hr>
+<p>Candidate polygons are output to the <code>*_sam2_points</code> layer and can be used to guide refinement.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Notes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This feature is currently experimental and may not behave stably in all cases. It often does not work well for very small particles, so regular manual editing is usually more reliable. Please note that this feature is likely to change in future updates.</p>
+</div>
+</div>
 </section>
 </section>
-<section id="step-6.-export-results" class="level2">
-<h2 class="anchored" data-anchor-id="step-6.-export-results">Step 6. Export results</h2>
-<p>Execute:</p>
-<ul>
-<li><strong>Export segmentation artifacts</strong></li>
-</ul>
-<p>Choose an output directory (default: <code>./outputs</code>).</p>
-<p>A timestamped export folder is generated, such as:</p>
-<ul>
-<li><code>example_01_20260421T094932Z</code></li>
-</ul>
-<section id="exported-files" class="level3">
-<h3 class="anchored" data-anchor-id="exported-files">Exported files</h3>
-<p>Typical files include:</p>
-<ul>
-<li><code>source_with_roi.png</code> (original image + ROI box)</li>
-<li><code>cropped_image.png</code> (cropped analysis region)</li>
-<li><code>sam2_only_overlay.png</code> (overlay from SAM2 auto result)</li>
-<li><code>final_overlay.png</code> (overlay from final selected labels)</li>
-<li><code>sam2_blobs.csv</code> (per-particle table from SAM2)</li>
-<li><code>final_blobs.csv</code> (per-particle table from final labels)</li>
-<li><code>run_metadata.json</code> (parameters, counts, environment, output list)</li>
-</ul>
+<section id="step-5.-export-results" class="level3">
+<h3 class="anchored" data-anchor-id="step-5.-export-results">Step 5. Export results</h3>
+<ol type="1">
+<li>After manual editing is complete, run <strong>Export segmentation artifacts</strong> to export outputs. The output directory defaults to <code>./outputs</code>, but you can choose any location. The output directory is created automatically.</li>
+<li>When export completes, a timestamped folder such as <code>example_02_20260426T044227Z</code> is generated.</li>
+</ol>
+<p>The exported folder includes the following files:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>source_with_roi.png</code></td>
+<td>Source image with ROI box overlay</td>
+</tr>
+<tr class="even">
+<td><code>cropped_image.png</code></td>
+<td>Cropped analysis region image</td>
+</tr>
+<tr class="odd">
+<td><code>sam2_only_overlay.png</code></td>
+<td>Overlay image of SAM2 auto segmentation result</td>
+</tr>
+<tr class="even">
+<td><code>final_overlay.png</code></td>
+<td>Overlay image of the final adopted labels</td>
+</tr>
+<tr class="odd">
+<td><code>sam2_blobs.csv</code></td>
+<td>Particle mask data based on SAM2 auto segmentation result</td>
+</tr>
+<tr class="even">
+<td><code>final_blobs.csv</code></td>
+<td>Particle mask data based on the final adopted labels</td>
+</tr>
+<tr class="odd">
+<td><code>run_metadata.json</code></td>
+<td>JSON file summarizing run parameters, counts, and environment information</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="count-definitions" class="level3">
-<h3 class="anchored" data-anchor-id="count-definitions">Count definitions</h3>
-<p>The export metadata reports:</p>
+<section id="step-6.-delete-layers" class="level3">
+<h3 class="anchored" data-anchor-id="step-6.-delete-layers">Step 6. Delete layers</h3>
+<p>After export is complete, run <strong>Delete all layers for current image</strong> to remove <strong>all layers currently loaded in the viewer</strong> (not only the current image). A confirmation dialog appears, but this operation can discard unrelated in-progress work, so use it with care.</p>
+<p>Once all layers are deleted, you are ready to load the next image. Return to Step 1 and load the next image.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="manual/assets/delete_all_layers.webp" class="img-fluid figure-img"></p>
+<figcaption>Delete layers</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="qa-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="qa-checklist">QA checklist</h2>
+<p>Before accepting final results, check at least the following:</p>
 <ul>
-<li><code>sam2_raw_count_before_dedup</code></li>
-<li><code>sam2_after_dedup_count</code></li>
-<li><code>dedup_removed_count</code></li>
-<li><code>final_count</code></li>
-<li><code>manual_delta_count_net</code></li>
-</ul>
-<p>This helps separate model output from manual adjustments.</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="suggested-qa-checklist" class="level1">
-<h1>Suggested QA Checklist</h1>
-<p>Before accepting final counts:</p>
-<ul>
-<li>ROI includes all relevant particles and excludes irrelevant regions.</li>
-<li>SAM2 masks align with object boundaries at representative locations.</li>
-<li>Major merge/split errors are corrected.</li>
-<li>Final overlay and CSV rows are consistent.</li>
-<li>Run metadata is archived together with exported images.</li>
-</ul>
-<hr>
-</section>
-<section id="troubleshooting" class="level1">
-<h1>Troubleshooting</h1>
-<section id="no-cropped-layer-is-created" class="level2">
-<h2 class="anchored" data-anchor-id="no-cropped-layer-is-created">No cropped layer is created</h2>
-<ul>
-<li>Confirm the active layer is <code>*_ROI</code>.</li>
-<li>Confirm at least one valid rectangle exists.</li>
-</ul>
-</section>
-<section id="sam2-auto-segmentation-fails" class="level2">
-<h2 class="anchored" data-anchor-id="sam2-auto-segmentation-fails">SAM2 auto segmentation fails</h2>
-<ul>
-<li>Re-check SAM2 setup scripts and model files.</li>
-<li>Try a smaller ROI.</li>
-<li>Reduce proposal density (<code>points_per_side</code>).</li>
+<li>ROI includes required regions without major over/under coverage</li>
+<li>Mask boundaries are reasonable at representative locations</li>
+<li>Major merge/split errors have been corrected</li>
+<li>Overlay display and CSV row counts are consistent</li>
+<li><code>run_metadata.json</code> is saved together with image artifacts</li>
 </ul>
 </section>
-<section id="export-fails" class="level2">
-<h2 class="anchored" data-anchor-id="export-fails">Export fails</h2>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<section id="cropped-layer-is-not-created" class="level3">
+<h3 class="anchored" data-anchor-id="cropped-layer-is-not-created">Cropped layer is not created</h3>
 <ul>
-<li>Ensure a cropped layer exists.</li>
-<li>Ensure SAM2 label layer exists.</li>
-<li>Check write permission for the output directory.</li>
+<li>Confirm the active layer is <code>*_ROI</code></li>
+<li>Confirm a valid rectangular ROI has been drawn</li>
 </ul>
-<hr>
 </section>
-</section>
-<section id="notes-for-future-japanese-translation" class="level1">
-<h1>Notes for Future Japanese Translation</h1>
-<p>When creating the Japanese edition, consider keeping:</p>
+<section id="sam2-auto-segmentation-fails" class="level3">
+<h3 class="anchored" data-anchor-id="sam2-auto-segmentation-fails">SAM2 auto segmentation fails</h3>
 <ul>
-<li>button names in English (exact UI labels),</li>
-<li>terminology mappings in a glossary (ROI, mask, label, deduplication),</li>
-<li>one-to-one heading structure with this English version for maintainability.</li>
+<li>Recheck SAM2 setup and model placement</li>
+<li>Retry with a smaller ROI</li>
+<li>Retry with a lower <code>points_per_side</code></li>
+</ul>
+</section>
+<section id="export-fails" class="level3">
+<h3 class="anchored" data-anchor-id="export-fails">Export fails</h3>
+<ul>
+<li>Confirm a <code>*_cropped</code> layer exists</li>
+<li>Confirm a SAM2 label layer exists</li>
+<li>Confirm write permission for the output directory</li>
 </ul>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -974,250 +1084,303 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Japanese version is available here: </span><span class="co">[</span><span class="ot">SAM Particle Counter マニュアル（日本語版）</span><span class="co">](manual/index_ja.qmd)</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Welcome to the **SAM Particle Counter** manual.</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>This document is a draft for an online manual that explains the analysis workflow in detail, from image loading to final export of particle counts and tables. It is written in English so it can be used as the source for a later Japanese version.</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>This page is the English manual describing the analysis workflow, from image loading to exporting particle count results.</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this application does</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this app can do</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>SAM Particle Counter is a napari-based desktop tool that helps you:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>SAM Particle Counter is a <span class="co">[</span><span class="ot">napari</span><span class="co">](https://napari.org/stable/)</span> based desktop tool that supports the following tasks:</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>draw a rectangular region of interest (ROI),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>run SAM2-based automatic segmentation,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>optionally refine segmentation with point prompts and manual label edits,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>export overlays, CSV tables, and run metadata.</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Creating a rectangular ROI (region of interest)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatic segmentation with <span class="co">[</span><span class="ot">SAM2</span><span class="co">](https://ai.meta.com/research/sam2/)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Refinement by point prompts and label editing</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exporting overlay images, CSV files, and run metadata</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>The typical usage pattern is:</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>The typical workflow is as follows:</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load image</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Draw ROI</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Crop to ROI</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load an image</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Draw an ROI</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Crop to the ROI</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run SAM2 auto segmentation</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Review/edit labels</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Refine the result if needed</span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Export artifacts</span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prerequisites</span></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Before You Start</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### Environment setup</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Environment setup</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>Please complete project setup first (see the main README for full commands).</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>At a minimum:</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Python and dependencies installed via <span class="in">`uv`</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 setup script executed for your OS</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>App starts successfully with:</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run main.py</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>For detailed setup instructions, see <span class="co">[</span><span class="ot">`README.md`</span><span class="co">](https://github.com/maple60/sam-particle-counter)</span>.</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>At minimum, ensure the following:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dependencies have been installed with <span class="in">`uv`</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The SAM2 setup script for your OS has been executed</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The app can be started with the following command</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run main.py</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended input image conditions</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended input image conditions</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>To stabilize segmentation quality, the following is recommended:</span>
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>For stable segmentation quality:</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use images with clear contrast between particles and background.</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Avoid severe blur or compression artifacts when possible.</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If images are very large, use ROI cropping to reduce computation and memory load.</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Images with sufficient contrast between particles and background</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Images with minimal strong blur or compression noise</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detailed analysis procedure</span></span>
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1. Load an image</span></span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="fu"># Detailed Analysis Procedure</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>Load an image into napari (drag and drop, or <span class="in">`File &gt; Open...`</span>).</span>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1. Load an image</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="al">![Select File](manual/assets/open_file_01.webp)</span></span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>Open your image in napari (drag-and-drop or <span class="in">`File &gt; Open...`</span>).</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="al">![Select Open File(s)...](manual/assets/open_file_02.webp)</span></span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>When the first image layer is added, the app automatically creates a corresponding ROI layer named:</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>When the first image layer is added, the corresponding ROI (region of interest) layer (<span class="in">`&lt;image_name&gt;_ROI`</span>) is created automatically.</span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_ROI`</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="al">![Loaded image](manual/assets/open_file_03.webp)</span></span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why this matters</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>All downstream operations are tied to layer names. Keeping the base image name unchanged helps the tool resolve related layers automatically.</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 2. Draw ROI on the `*_ROI` layer</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the ROI layer (<span class="in">`&lt;image_name&gt;_ROI`</span>).</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Draw a rectangle using the Shapes tool.</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>If multiple rectangles exist, the **most recently drawn ROI** is used.</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Practical tips</span></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include all target particles with a small safety margin.</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exclude unrelated structures as much as possible.</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If segmentation is slow, start with a smaller ROI and expand later.</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 3. Run **Crop to ROI**</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution}</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Do not rename layers</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>This app resolves processing targets using layer naming conventions.</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>Please do not manually rename layers.</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2. Draw ROI on the `*_ROI` layer</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the ROI layer (<span class="in">`&lt;image_name&gt;_ROI`</span>) (selected by default)</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Draw a rectangle with the Add Rectangles tool (selected by default)</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>If multiple ROIs exist, the **last rectangle drawn** is used</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run the **Crop to ROI** button in the right-side widget</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>An <span class="in">`&lt;image_name&gt;_cropped`</span> layer is created, and the ROI region is cropped from the source image</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="al">![Draw ROI and run Crop to ROI](manual/assets/crop_roi_01.webp)</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="al">![Cropped image](manual/assets/crop_roi_02.webp)</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical tips</span></span>
 <span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>Press the right-dock button:</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crop to ROI**</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>This creates a cropped image layer:</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Leave a small margin so target particles are not missed</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exclude irrelevant regions as much as possible</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If processing is heavy, start from a smaller ROI</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can pan the view by dragging while holding the space key</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_cropped`</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3. Run **Run SAM2 auto segmentation**</span></span>
 <span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>and stores crop metadata internally (source image/layer names and crop coordinates).</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### What to check</span></span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The cropped layer appears in the layer list.</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The cropped region visually matches your intended analysis area.</span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>If no valid rectangle exists, cropping will not run.</span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4. Run **SAM2 auto segmentation**</span></span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>Select <span class="in">`&lt;image_name&gt;_cropped`</span>, then execute:</span>
-<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Run SAM2 auto segmentation**</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the <span class="in">`&lt;image_name&gt;_cropped`</span> layer (selected by default)</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Run the **Run SAM2 auto segmentation** button in the right-side widget (adjust parameters as needed)</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>SAM2 segmentation results are output as new layers:</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto`</span> (polygons)</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span> (editable labels)</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels_original`</span> (read-only reference copy)</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Overlay showing label IDs (do not edit)</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="al">![SAM2 segmentation](manual/assets/sam2_segmentation.webp)</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">#### SAM2 parameters</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- Parameter</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Description</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Default (recommended)</span>
 <span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="fu">### Main parameters (first-pass recommendation)</span></span>
-<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`points_per_side`</span>: start around **56** (higher = denser proposals, slower)</span>
-<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pred_iou_thresh`</span>: start around **0.84**</span>
-<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`stability_score_thresh`</span>: start around **0.90**</span>
-<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`crop_n_layers`</span>: start with **1**</span>
-<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`crop_n_points_downscale_factor`</span>: start with **1**</span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`deduplicate_masks`</span>: usually **ON**</span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`contain_thresh`</span>: start around **0.90**</span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`iou_thresh`</span>: start around **0.70**</span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`output_mode`</span>: usually **labels** (or <span class="in">`both`</span> if polygon output is also needed)</span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Output layers</span></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>Depending on <span class="in">`output_mode`</span>, the app creates:</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`points_per_side`</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Specifies the density of automatic prompt points placed across the image.</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    Increasing this value enables finer exploration and improves detection of small particles, but increases processing time and memory usage.</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**56**</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`pred iou thresh`</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Threshold for SAM2’s predicted mask quality score.</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    Higher values keep only more confident masks and tend to reduce false positives, but may increase missed detections.</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.84**</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`stability score thresh`</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Threshold for mask stability score.</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>    Higher values keep only masks with more stable boundaries.</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    Particles with unstable contours or very small particles may be filtered out.</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
 <span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto`</span> (shape polygons)</span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span> (editable labels)</span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels_original`</span> (non-editable reference copy)</span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ID text overlay layer for label numbers</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n layers`</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Number of iterative crop-and-reprocess passes.</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>    Increasing this value can improve local mask detection, but increases processing time.</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**2**</span>
 <span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpretation notes</span></span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>With deduplication enabled, overlapping/redundant masks are reduced.</span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Label IDs are integer objects (<span class="in">`1..N`</span>), with <span class="in">`0`</span> as background.</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n points downscale factor`</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Scaling factor for prompt point density within crop regions.</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    Higher values reduce point density in crop regions and lighten processing, but may reduce sensitivity for small targets.</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**1**</span>
 <span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 5. Optional refinement (recommended for publication-quality counts)</span></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>You can refine the result in two ways.</span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### A) Point-prompt refinement with SAM2</span></span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Use **Create prompt points layer**</span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose foreground/background target</span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Add points on the cropped image</span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run **Run SAM2 point prompt**</span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>This produces prompt-based polygon candidates (<span class="in">`*_sam2_points`</span>) that can guide manual correction.</span>
-<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### B) Direct manual label editing</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`deduplicate masks`</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Enables removal of duplicate masks.</span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>    When enabled, duplicate masks generated for the same particle are removed.</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**True**</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`contain thresh`</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Defines how much one mask must be contained in another to be treated as a duplicate.</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>    Lower values make duplicate detection less strict and can remove more masks.</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    Higher values remove masks only when one is almost fully contained in another.</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`iou thresh`</span></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>IoU (Intersection over Union) threshold for overlap between two masks.</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>    Lower values make partially overlapping masks more likely to be removed as duplicates.</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>    Higher values remove only strongly overlapping masks.</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.70**</span>
 <span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>Use napari label editing tools on:</span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span></span>
-<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>Typical edits:</span>
-<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>split merged particles,</span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>remove obvious false positives,</span>
-<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>add missing particles.</span>
-<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Recommendation: Keep edits minimal and traceable, and document any manual criteria in your experiment notes.</span></span>
-<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 6. Export results</span></span>
-<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>Execute:</span>
-<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Export segmentation artifacts**</span>
-<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>Choose an output directory (default: <span class="in">`./outputs`</span>).</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`score key`</span></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Score used to decide which duplicate mask to keep.</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>    Typically use <span class="in">`predicted_iou`</span> to retain the higher-quality mask.</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**predicted_iou**</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`output mode`</span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Specifies the output format for SAM2 results.</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`labels`</span>: Outputs an editable label layer. Usually recommended.</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`shapes`</span>: Outputs a polygon layer. Use this if you do not need label painting/editing. Typically not edited.</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`both`</span>: Outputs both layers.</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**labels**</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4. Manual refinement (optional)</span></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>Refine results as needed to improve final count accuracy.</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (A) Manual label editing</span></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the <span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span> layer (selected by default)</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Edit labels using napari label editing tools</span>
 <span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>A timestamped export folder is generated, such as:</span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>For basic label editing operations, see the <span class="co">[</span><span class="ot">official napari documentation</span><span class="co">](https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components)</span>.</span>
 <span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`example_01_20260421T094932Z`</span></span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="al">![Label editing example](manual/assets/manual_refinement_01.webp)</span></span>
 <span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exported files</span></span>
-<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a>Typical files include:</span>
-<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`source_with_roi.png`</span> (original image + ROI box)</span>
-<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`cropped_image.png`</span> (cropped analysis region)</span>
-<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sam2_only_overlay.png`</span> (overlay from SAM2 auto result)</span>
-<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`final_overlay.png`</span> (overlay from final selected labels)</span>
-<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sam2_blobs.csv`</span> (per-particle table from SAM2)</span>
-<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`final_blobs.csv`</span> (per-particle table from final labels)</span>
-<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`run_metadata.json`</span> (parameters, counts, environment, output list)</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tips for manual editing</span></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### When you want to add particles</span></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>If particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool.</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>You can adjust brush thickness via brush size.</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### When you want to split particles</span></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>If multiple particles are connected, erase one side with the eraser tool, then increase the label number and repaint a new particle mask.</span>
 <span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Count definitions</span></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### When you want to erase a wide area</span></span>
 <span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>The export metadata reports:</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>If background is falsely detected as a mask, click an empty area with the picker tool to select background, then click the background mask with fill tool to erase in bulk.</span>
 <span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sam2_raw_count_before_dedup`</span></span>
-<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sam2_after_dedup_count`</span></span>
-<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`dedup_removed_count`</span></span>
-<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`final_count`</span></span>
-<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`manual_delta_count_net`</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>Similarly, to erase particles in chunks, pick the particle color with the picker tool and then click that particle with fill tool to erase in bulk.</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="fu">### When you want to remove falsely detected particles</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>If noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool.</span>
 <span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>This helps separate model output from manual adjustments.</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### When you want to inspect mask by mask</span></span>
 <span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="fu"># Suggested QA Checklist</span></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>Enable show selected to display only the selected label ID mask.</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>While this is enabled, changing label lets you inspect masks one by one.</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>Before accepting final counts:</span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (B) Point-prompt refinement</span></span>
 <span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI includes all relevant particles and excludes irrelevant regions.</span>
-<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 masks align with object boundaries at representative locations.</span>
-<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Major merge/split errors are corrected.</span>
-<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Final overlay and CSV rows are consistent.</span>
-<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Run metadata is archived together with exported images.</span>
-<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="fu"># Troubleshooting</span></span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run **Create prompt points layer**</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select Foreground / Background</span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Place points on the cropped image</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run **Run SAM2 point prompt**</span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>Candidate polygons are output to the <span class="in">`*_sam2_points`</span> layer and can be used to guide refinement.</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes</span></span>
 <span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## No cropped layer is created</span></span>
-<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm the active layer is <span class="in">`*_ROI`</span>.</span>
-<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm at least one valid rectangle exists.</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>This feature is currently experimental and may not behave stably in all cases.</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>It often does not work well for very small particles, so regular manual editing is usually more reliable.</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>Please note that this feature is likely to change in future updates.</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## SAM2 auto segmentation fails</span></span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5. Export results</span></span>
 <span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Re-check SAM2 setup scripts and model files.</span>
-<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try a smaller ROI.</span>
-<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reduce proposal density (<span class="in">`points_per_side`</span>).</span>
-<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Export fails</span></span>
-<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure a cropped layer exists.</span>
-<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure SAM2 label layer exists.</span>
-<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check write permission for the output directory.</span>
-<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>After manual editing is complete, run **Export segmentation artifacts** to export outputs.</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>   The output directory defaults to <span class="in">`./outputs`</span>, but you can choose any location.</span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>   The output directory is created automatically.</span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>When export completes, a timestamped folder such as <span class="in">`example_02_20260426T044227Z`</span> is generated.</span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>The exported folder includes the following files:</span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- Filename</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Description</span>
 <span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a><span class="fu"># Notes for Future Japanese Translation</span></span>
-<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>When creating the Japanese edition, consider keeping:</span>
-<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>button names in English (exact UI labels),</span>
-<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>terminology mappings in a glossary (ROI, mask, label, deduplication),</span>
-<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one-to-one heading structure with this English version for maintainability.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`source_with_roi.png`</span></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Source image with ROI box overlay</span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`cropped_image.png`</span></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Cropped analysis region image</span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_only_overlay.png`</span></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Overlay image of SAM2 auto segmentation result</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_overlay.png`</span></span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Overlay image of the final adopted labels</span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_blobs.csv`</span></span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Particle mask data based on SAM2 auto segmentation result</span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_blobs.csv`</span></span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Particle mask data based on the final adopted labels</span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`run_metadata.json`</span></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>JSON file summarizing run parameters, counts, and environment information</span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 6. Delete layers</span></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a>After export is complete, run **Delete all layers for current image** to remove **all layers currently loaded in the viewer** (not only the current image).</span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>A confirmation dialog appears, but this operation can discard unrelated in-progress work, so use it with care.</span>
+<span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a>Once all layers are deleted, you are ready to load the next image.</span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a>Return to Step 1 and load the next image.</span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a><span class="al">![Delete layers](manual/assets/delete_all_layers.webp)</span></span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## QA checklist</span></span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a>Before accepting final results, check at least the following:</span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI includes required regions without major over/under coverage</span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mask boundaries are reasonable at representative locations</span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Major merge/split errors have been corrected</span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Overlay display and CSV row counts are consistent</span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`run_metadata.json`</span> is saved together with image artifacts</span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cropped layer is not created</span></span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm the active layer is <span class="in">`*_ROI`</span></span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm a valid rectangular ROI has been drawn</span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### SAM2 auto segmentation fails</span></span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recheck SAM2 setup and model placement</span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Retry with a smaller ROI</span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Retry with a lower <span class="in">`points_per_side`</span></span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export fails</span></span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm a <span class="in">`*_cropped`</span> layer exists</span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm a SAM2 label layer exists</span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Confirm write permission for the output directory</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

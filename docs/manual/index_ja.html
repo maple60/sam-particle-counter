@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Open File(s)… を選択する</figcaption>
 </figure>
 </div>
-<p>最初の画像レイヤーが追加されると、対応する ROI (region of interest) レイヤー (<code>&lt;image_name&gt;_ROI</code>) が自動作成されます。</p>
+<p>最初の画像レイヤーが追加されると、対応する ROI（region of interest）レイヤー（<code>&lt;image_name&gt;_ROI</code>）が自動作成されます。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/open_file_03.webp" class="img-fluid figure-img"></p>
@@ -317,16 +317,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-2.-_roi-レイヤーに-roi-を描画" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.-_roi-レイヤーに-roi-を描画">Step 2. <code>*_ROI</code> レイヤーに ROI を描画</h3>
 <ol type="1">
-<li>ROI レイヤー（<code>&lt;image_name&gt;_ROI</code>）を選択 (デフォルトで選択されています)</li>
-<li>Add Rectangles ツールで矩形を描画 (デフォルトで選択されています)</li>
-<li>ROI が複数ある場合は<strong>最後に描いた矩形</strong>が使用される</li>
+<li>ROI レイヤー（<code>&lt;image_name&gt;_ROI</code>）を選択（デフォルトで選択されています）</li>
+<li>Add Rectangles ツールで矩形を描画（デフォルトで選択されています）</li>
+<li>ROI が複数ある場合は <strong>最後に描いた矩形</strong> が使用される</li>
 <li>右のウィジェットの <strong>Crop to ROI</strong> ボタンを実行する</li>
 <li><code>&lt;image_name&gt;_cropped</code> レイヤーが作成され、元画像の ROI 部分が切り出される</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/crop_roi_01.webp" class="img-fluid figure-img"></p>
-<figcaption>ROI を描いてCrop to ROI を実行</figcaption>
+<figcaption>ROI を描いて Crop to ROI を実行</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -357,9 +357,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-3.-run-sam2-auto-segmentation-を実行" class="level3">
 <h3 class="anchored" data-anchor-id="step-3.-run-sam2-auto-segmentation-を実行">Step 3. <strong>Run SAM2 auto segmentation</strong> を実行</h3>
 <ol type="1">
-<li><code>&lt;image_name&gt;_cropped</code> レイヤーを選択 (デフォルトで選択されています)</li>
-<li>右のウィジェットの <strong>Run SAM2 auto segmentation</strong> ボタンを実行する (必要に応じてパラメータを調整)</li>
-<li>SAM2 のセグメンテーション結果が新しいレイヤーに出力される (<code>&lt;image_name&gt;_cropped_sam2_auto_labels</code>)。 同時に<code>&lt;image_name&gt;_cropped_sam2_auto_labels</code>（編集不可の参照コピー）も生成される。 また、番号を示す<code>&lt;image_name&gt;_cropped_sam2_auto_labels</code>のオーバーレイも表示される (編集しない)。</li>
+<li><code>&lt;image_name&gt;_cropped</code> レイヤーを選択（デフォルトで選択されています）</li>
+<li>右のウィジェットの <strong>Run SAM2 auto segmentation</strong> ボタンを実行する（必要に応じてパラメータを調整）</li>
+<li>SAM2 のセグメンテーション結果が新しいレイヤーに出力される。
+<ul>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto</code>（ポリゴン）</li>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code>（編集可能ラベル）</li>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels_original</code>（編集不可の参照コピー）</li>
+<li>ラベル番号を示すオーバーレイ（編集しない）</li>
+</ul></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -374,65 +380,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th>パラメータ</th>
 <th>説明</th>
-<th>初期値 (おすすめ設定)</th>
+<th>初期値（おすすめ設定）</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>points_per_side</code></td>
-<td>画像全体に配置する自動プロンプト点の密度を指定します。<br>
-値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。</td>
+<td>画像全体に配置する自動プロンプト点の密度を指定します。 値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。</td>
 <td><strong>56</strong></td>
 </tr>
 <tr class="even">
 <td><code>pred iou thresh</code></td>
-<td>SAM2 が予測したマスク品質スコアのしきい値です。<br>
-値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。</td>
+<td>SAM2 が予測したマスク品質スコアのしきい値です。 値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。</td>
 <td><strong>0.84</strong></td>
 </tr>
 <tr class="odd">
 <td><code>stability score thresh</code></td>
-<td>マスクの安定性スコアのしきい値です。<br>
-値を高くすると、境界が安定したマスクだけが残ります。<br>
-輪郭が不安定な粒子や小さい粒子は除外されやすくなります。</td>
+<td>マスクの安定性スコアのしきい値です。 値を高くすると、境界が安定したマスクだけが残ります。 輪郭が不安定な粒子や小さい粒子は除外されやすくなります。</td>
 <td><strong>0.90</strong></td>
 </tr>
 <tr class="even">
 <td><code>crop n layers</code></td>
-<td>画像を段階的にクロップして再探索する回数を指定します。<br>
-値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。</td>
+<td>画像を段階的にクロップして再探索する回数を指定します。 値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。</td>
 <td><strong>2</strong></td>
 </tr>
 <tr class="odd">
 <td><code>crop n points downscale factor</code></td>
-<td>クロップ領域で使用するプロンプト点密度の調整係数です。<br>
-値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。</td>
+<td>クロップ領域で使用するプロンプト点密度の調整係数です。 値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。</td>
 <td><strong>1</strong></td>
 </tr>
 <tr class="even">
 <td><code>deduplicate masks</code></td>
-<td>重複して検出されたマスクを削除するかどうかを指定します。<br>
-有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。</td>
+<td>重複して検出されたマスクを削除するかどうかを指定します。 有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。</td>
 <td><strong>True</strong></td>
 </tr>
 <tr class="odd">
 <td><code>contain thresh</code></td>
-<td>片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。<br>
-値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。<br>
-値を高くすると、ほぼ内包されている場合だけ削除されます。</td>
+<td>片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。 値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。 値を高くすると、ほぼ内包されている場合だけ削除されます。</td>
 <td><strong>0.90</strong></td>
 </tr>
 <tr class="even">
 <td><code>iou thresh</code></td>
-<td>2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。<br>
-値を低くすると、少し重なったマスクも重複として削除されやすくなります。<br>
-値を高くすると、強く重なっている場合だけ削除されます。</td>
+<td>2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。 値を低くすると、少し重なったマスクも重複として削除されやすくなります。 値を高くすると、強く重なっている場合だけ削除されます。</td>
 <td><strong>0.70</strong></td>
 </tr>
 <tr class="odd">
 <td><code>score key</code></td>
-<td>重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。<br>
-通常は <code>predicted_iou</code> を用い、品質スコアが高いマスクを残します。</td>
+<td>重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。 通常は <code>predicted_iou</code> を用い、品質スコアが高いマスクを残します。</td>
 <td><strong>predicted_iou</strong></td>
 </tr>
 <tr class="even">
@@ -455,10 +449,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a-ラベルの手動編集" class="level4">
 <h4 class="anchored">(A) ラベルの手動編集</h4>
 <ol type="1">
-<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code> レイヤーを選択 (デフォルトで選択されています)</li>
+<li><code>&lt;image_name&gt;_cropped_sam2_auto_labels</code> レイヤーを選択（デフォルトで選択されています）</li>
 <li>napari のラベル編集機能で次を編集します。</li>
 </ol>
-<p>基本的なラベルの修正方法については、<a href="https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components">napari の公式ドキュメント</a>を参照してください。</p>
+<p>基本的なラベルの修正方法については、<a href="https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components">napari の公式ドキュメント</a> を参照してください。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/manual_refinement_01.webp" class="img-fluid figure-img"></p>
@@ -477,12 +471,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <section id="粒を追加したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="粒を追加したいとき">粒を追加したいとき</h3>
-<p>粒が見落とされている場合は、左上のlabelの番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。<br>
-brush size からペンの太さを調整できます。</p>
+<p>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。 brush size からペンの太さを調整できます。</p>
 </section>
 <section id="粒を分割したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="粒を分割したいとき">粒を分割したいとき</h3>
-<p>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、labelの番号を増やしてペンツールで新たな粒のマスクを作成します。</p>
+<p>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、label の番号を増やしてペンツールで新たな粒のマスクを作成します。</p>
 </section>
 <section id="広範囲を消去したいとき" class="level3">
 <h3 class="anchored" data-anchor-id="広範囲を消去したいとき">広範囲を消去したいとき</h3>
@@ -495,7 +488,7 @@ brush size からペンの太さを調整できます。</p>
 </section>
 <section id="マスクごとに確認したい場合" class="level3">
 <h3 class="anchored" data-anchor-id="マスクごとに確認したい場合">マスクごとに確認したい場合</h3>
-<p>show selected にチェックを入れると、選択したラベルIDのマスクだけが表示されるようになります。 この状態で label を変更すると、次々にマスクを確認できます。</p>
+<p>show selected にチェックを入れると、選択したラベル ID のマスクだけが表示されるようになります。 この状態で label を変更すると、次々にマスクを確認できます。</p>
 </section>
 </div>
 </div>
@@ -527,9 +520,7 @@ brush size からペンの太さを調整できます。</p>
 <section id="step-5.-結果のエクスポート" class="level3">
 <h3 class="anchored" data-anchor-id="step-5.-結果のエクスポート">Step 5. 結果のエクスポート</h3>
 <ol type="1">
-<li>手動編集が完了したら、<strong>Export segmentation artifacts</strong> を実行して成果物を出力します。<br>
-出力先のディレクトリはデフォルトで <code>./outputs</code> ですが、任意の場所を選択できます。<br>
-出力先のディレクトリは自動で作成されます。</li>
+<li>手動編集が完了したら、<strong>Export segmentation artifacts</strong> を実行して成果物を出力します。 出力先のディレクトリはデフォルトで <code>./outputs</code> ですが、任意の場所を選択できます。 出力先のディレクトリは自動で作成されます。</li>
 <li>出力が完了すると、<code>example_02_20260426T044227Z</code> のようなタイムスタンプ付きのフォルダが生成されます。</li>
 </ol>
 <p>出力されたフォルダには、以下のファイルが含まれます。</p>
@@ -574,8 +565,8 @@ brush size からペンの太さを調整できます。</p>
 </section>
 <section id="step-6.-レイヤの消去" class="level3">
 <h3 class="anchored" data-anchor-id="step-6.-レイヤの消去">Step 6. レイヤの消去</h3>
-<p>出力が完了したら、<strong>Delete all layers for current image</strong> を実行して、現在の画像に関連するすべてのレイヤーを削除できます。 確認のダイアログが表示されるので、誤って消去しないよう注意してください。</p>
-<p>全てのレイヤが消去されると、次の画像を読み込む準備ができます。 Step 1 に戻って、次の画像を読み込んでください。</p>
+<p>出力が完了したら、<strong>Delete all layers for current image</strong> を実行すると、<strong>現在の画像だけでなく、ビューアに読み込まれている全レイヤー</strong> が削除されます。 確認のダイアログは表示されますが、別画像で進めていた作業も失われる可能性があるため、十分注意してください。</p>
+<p>すべてのレイヤーが消去されると、次の画像を読み込む準備ができます。 Step 1 に戻って、次の画像を読み込んでください。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/delete_all_layers.webp" class="img-fluid figure-img"></p>
@@ -1131,260 +1122,265 @@ brush size からペンの太さを調整できます。</p>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run main.py</span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## 入力画像の推奨条件</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>セグメンテーション精度を安定させるため、以下を推奨します。</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>粒子と背景のコントラストが十分にある画像</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>強いブレや圧縮ノイズが少ない画像</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## 詳細な解析手順</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1. 画像の読み込み</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>napari に画像を読み込みます（ドラッグ＆ドロップ、または <span class="in">`File &gt; Open...`</span>）。</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="al">![File を選択する](assets/open_file_01.webp)</span></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="al">![Open File(s)... を選択する](assets/open_file_02.webp)</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>最初の画像レイヤーが追加されると、対応する ROI (region of interest) レイヤー (<span class="in">`&lt;image_name&gt;_ROI`</span>) が自動作成されます。</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="al">![読み込まれた画像](assets/open_file_03.webp)</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution}</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## レイヤ名は変更しないでください</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>このアプリはレイヤー名の規則を使って処理対象を解決します。</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>レイヤー名は手動で変更しないようにしてください。</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2. `*_ROI` レイヤーに ROI を描画</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>ROI レイヤー（<span class="in">`&lt;image_name&gt;_ROI`</span>）を選択 (デフォルトで選択されています)</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add Rectangles ツールで矩形を描画 (デフォルトで選択されています)</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>ROI が複数ある場合は**最後に描いた矩形**が使用される</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>右のウィジェットの **Crop to ROI** ボタンを実行する</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="in">`&lt;image_name&gt;_cropped`</span> レイヤーが作成され、元画像の ROI 部分が切り出される</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="al">![ROI を描いてCrop to ROI を実行](assets/crop_roi_01.webp)</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="al">![クロップされた画像](assets/crop_roi_02.webp)</span></span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## 実務中のコツ</span></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>対象粒子を取りこぼさないよう少し余裕を持たせる</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>無関係な領域は可能な限り除外する</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>処理が重い場合は小さい ROI から開始する</span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>スペースキーを押しながらドラッグすることで、表示を移動できます</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3. **Run SAM2 auto segmentation** を実行</span></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`&lt;image_name&gt;_cropped`</span> レイヤーを選択 (デフォルトで選択されています)</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>右のウィジェットの **Run SAM2 auto segmentation** ボタンを実行する (必要に応じてパラメータを調整)</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>SAM2 のセグメンテーション結果が新しいレイヤーに出力される (<span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span>)。  同時に<span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span>（編集不可の参照コピー）も生成される。  また、番号を示す<span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span>のオーバーレイも表示される (編集しない)。</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="al">![SAM2 セグメンテーション](assets/sam2_segmentation.webp)</span></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="fu">#### SAM2 のパラメータ</span></span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- パラメータ</span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>説明</span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>初期値 (おすすめ設定)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## 入力画像の推奨条件</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>セグメンテーション精度を安定させるため、以下を推奨します。</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>粒子と背景のコントラストが十分にある画像</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>強いブレや圧縮ノイズが少ない画像</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## 詳細な解析手順</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1. 画像の読み込み</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>napari に画像を読み込みます（ドラッグ＆ドロップ、または <span class="in">`File &gt; Open...`</span>）。</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="al">![File を選択する](assets/open_file_01.webp)</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="al">![Open File(s)... を選択する](assets/open_file_02.webp)</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>最初の画像レイヤーが追加されると、対応する ROI（region of interest）レイヤー（<span class="in">`&lt;image_name&gt;_ROI`</span>）が自動作成されます。</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="al">![読み込まれた画像](assets/open_file_03.webp)</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution}</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## レイヤ名は変更しないでください</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>このアプリはレイヤー名の規則を使って処理対象を解決します。</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>レイヤー名は手動で変更しないようにしてください。</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2. `*_ROI` レイヤーに ROI を描画</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>ROI レイヤー（<span class="in">`&lt;image_name&gt;_ROI`</span>）を選択（デフォルトで選択されています）</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Add Rectangles ツールで矩形を描画（デフォルトで選択されています）</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>ROI が複数ある場合は **最後に描いた矩形** が使用される</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>右のウィジェットの **Crop to ROI** ボタンを実行する</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="in">`&lt;image_name&gt;_cropped`</span> レイヤーが作成され、元画像の ROI 部分が切り出される</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="al">![ROI を描いて Crop to ROI を実行](assets/crop_roi_01.webp)</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="al">![クロップされた画像](assets/crop_roi_02.webp)</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## 実務中のコツ</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>対象粒子を取りこぼさないよう少し余裕を持たせる</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>無関係な領域は可能な限り除外する</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>処理が重い場合は小さい ROI から開始する</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>スペースキーを押しながらドラッグすることで、表示を移動できます</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3. **Run SAM2 auto segmentation** を実行</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`&lt;image_name&gt;_cropped`</span> レイヤーを選択（デフォルトで選択されています）</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>右のウィジェットの **Run SAM2 auto segmentation** ボタンを実行する（必要に応じてパラメータを調整）</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>SAM2 のセグメンテーション結果が新しいレイヤーに出力される。</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto`</span>（ポリゴン）</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span>（編集可能ラベル）</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels_original`</span>（編集不可の参照コピー）</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>ラベル番号を示すオーバーレイ（編集しない）</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="al">![SAM2 セグメンテーション](assets/sam2_segmentation.webp)</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">#### SAM2 のパラメータ</span></span>
 <span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`points_per_side`</span></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>画像全体に配置する自動プロンプト点の密度を指定します。  </span>
-<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。</span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**56**</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- パラメータ</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>説明</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>初期値（おすすめ設定）</span>
 <span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`pred iou thresh`</span></span>
-<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 が予測したマスク品質スコアのしきい値です。  </span>
-<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。</span>
-<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.84**</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`points_per_side`</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>画像全体に配置する自動プロンプト点の密度を指定します。</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**56**</span>
 <span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`stability score thresh`</span></span>
-<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>マスクの安定性スコアのしきい値です。  </span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    値を高くすると、境界が安定したマスクだけが残ります。  </span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    輪郭が不安定な粒子や小さい粒子は除外されやすくなります。</span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n layers`</span></span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>画像を段階的にクロップして再探索する回数を指定します。  </span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。</span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**2**</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`pred iou thresh`</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 が予測したマスク品質スコアのしきい値です。</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.84**</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`stability score thresh`</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>マスクの安定性スコアのしきい値です。</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>    値を高くすると、境界が安定したマスクだけが残ります。</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    輪郭が不安定な粒子や小さい粒子は除外されやすくなります。</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
 <span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n points downscale factor`</span></span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>クロップ領域で使用するプロンプト点密度の調整係数です。  </span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。</span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**1**</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n layers`</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>画像を段階的にクロップして再探索する回数を指定します。</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**2**</span>
 <span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`deduplicate masks`</span></span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>重複して検出されたマスクを削除するかどうかを指定します。  </span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。</span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**True**</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`crop n points downscale factor`</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>クロップ領域で使用するプロンプト点密度の調整係数です。</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**1**</span>
 <span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`contain thresh`</span></span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。  </span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>    値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。  </span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>    値を高くすると、ほぼ内包されている場合だけ削除されます。</span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`iou thresh`</span></span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。  </span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    値を低くすると、少し重なったマスクも重複として削除されやすくなります。  </span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>    値を高くすると、強く重なっている場合だけ削除されます。</span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.70**</span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`score key`</span></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。  </span>
-<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>    通常は <span class="in">`predicted_iou`</span> を用い、品質スコアが高いマスクを残します。</span>
-<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**predicted_iou**</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`deduplicate masks`</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>重複して検出されたマスクを削除するかどうかを指定します。</span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>    有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**True**</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`contain thresh`</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>    値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    値を高くすると、ほぼ内包されている場合だけ削除されます。</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.90**</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`iou thresh`</span></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>    値を低くすると、少し重なったマスクも重複として削除されやすくなります。</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>    値を高くすると、強く重なっている場合だけ削除されます。</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**0.70**</span>
 <span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`output mode`</span></span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の結果をどの形式で出力するかを指定します。  </span>
-<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`labels`</span>: 編集可能なラベルレイヤーを出力します。通常はこちらを選択します。</span>
-<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`shapes`</span>: ポリゴンレイヤーを出力します。セグメンテーション結果を塗り分けしたくない場合はこちらを選択します。通常こちらは編集しません。</span>
-<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`both`</span>: 両方のレイヤーを出力します。</span>
-<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**labels**</span>
-<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4. 手動補正（必要に応じて）</span></span>
-<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>最終カウント精度を高めるため、必要に応じて補正します。</span>
-<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (A) ラベルの手動編集</span></span>
-<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span> レイヤーを選択 (デフォルトで選択されています)</span>
-<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>napari のラベル編集機能で次を編集します。</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`score key`</span></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>    通常は <span class="in">`predicted_iou`</span> を用い、品質スコアが高いマスクを残します。</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**predicted_iou**</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`output mode`</span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の結果をどの形式で出力するかを指定します。</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`labels`</span>: 編集可能なラベルレイヤーを出力します。通常はこちらを選択します。</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`shapes`</span>: ポリゴンレイヤーを出力します。セグメンテーション結果を塗り分けしたくない場合はこちらを選択します。通常こちらは編集しません。</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`both`</span>: 両方のレイヤーを出力します。</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**labels**</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4. 手動補正（必要に応じて）</span></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>最終カウント精度を高めるため、必要に応じて補正します。</span>
 <span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>基本的なラベルの修正方法については、<span class="co">[</span><span class="ot">napari の公式ドキュメント</span><span class="co">](https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components)</span>を参照してください。</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (A) ラベルの手動編集</span></span>
 <span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="al">![ラベル編集例](assets/manual_refinement_01.webp)</span></span>
-<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## 手動編集のポイント</span></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`&lt;image_name&gt;_cropped_sam2_auto_labels`</span> レイヤーを選択（デフォルトで選択されています）</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>napari のラベル編集機能で次を編集します。</span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>基本的なラベルの修正方法については、<span class="co">[</span><span class="ot">napari の公式ドキュメント</span><span class="co">](https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components)</span> を参照してください。</span>
 <span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を追加したいとき</span></span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="al">![ラベル編集例](assets/manual_refinement_01.webp)</span></span>
 <span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>粒が見落とされている場合は、左上のlabelの番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。  </span>
-<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>brush size からペンの太さを調整できます。</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## 手動編集のポイント</span></span>
 <span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を分割したいとき</span></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を追加したいとき</span></span>
 <span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、labelの番号を増やしてペンツールで新たな粒のマスクを作成します。</span>
-<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### 広範囲を消去したいとき</span></span>
-<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。</span>
-<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。</span>
-<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a><span class="fu">### 誤検出された粒を消去したいとき</span></span>
-<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。</span>
-<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### マスクごとに確認したい場合</span></span>
-<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>show selected にチェックを入れると、選択したラベルIDのマスクだけが表示されるようになります。</span>
-<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>この状態で label を変更すると、次々にマスクを確認できます。</span>
-<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (B) ポイントプロンプト補正</span></span>
-<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Create prompt points layer** を実行</span>
-<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Foreground / Background を選択</span>
-<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>クロップ画像上に点を配置</span>
-<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Run SAM2 point prompt** を実行</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>brush size からペンの太さを調整できます。</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### 粒を分割したいとき</span></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、label の番号を増やしてペンツールで新たな粒のマスクを作成します。</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### 広範囲を消去したいとき</span></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。</span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="fu">### 誤検出された粒を消去したいとき</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>ホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。</span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### マスクごとに確認したい場合</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>show selected にチェックを入れると、選択したラベル ID のマスクだけが表示されるようになります。</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>この状態で label を変更すると、次々にマスクを確認できます。</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="fu">#### (B) ポイントプロンプト補正</span></span>
 <span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="in">`*_sam2_points`</span> レイヤーに候補ポリゴンが出力され、補正の判断に使えます。</span>
-<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## 注意点</span></span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Create prompt points layer** を実行</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Foreground / Background を選択</span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>クロップ画像上に点を配置</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Run SAM2 point prompt** を実行</span>
 <span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>現在、こちらの機能は実験的な段階であり、すべてのケースで安定して動作するわけではありません。</span>
-<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>粒が小さい場合はうまくいかないことが多いため、通常の手動編集の方が確実です。</span>
-<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>今後、機能が変更になる可能性が高いことに留意してください。</span>
-<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a><span class="in">`*_sam2_points`</span> レイヤーに候補ポリゴンが出力され、補正の判断に使えます。</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## 注意点</span></span>
 <span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5. 結果のエクスポート</span></span>
-<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>手動編集が完了したら、**Export segmentation artifacts** を実行して成果物を出力します。  </span>
-<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>   出力先のディレクトリはデフォルトで <span class="in">`./outputs`</span> ですが、任意の場所を選択できます。  </span>
-<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>   出力先のディレクトリは自動で作成されます。</span>
-<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>出力が完了すると、<span class="in">`example_02_20260426T044227Z`</span> のようなタイムスタンプ付きのフォルダが生成されます。</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>現在、こちらの機能は実験的な段階であり、すべてのケースで安定して動作するわけではありません。</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>粒が小さい場合はうまくいかないことが多いため、通常の手動編集の方が確実です。</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>今後、機能が変更になる可能性が高いことに留意してください。</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5. 結果のエクスポート</span></span>
 <span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>出力されたフォルダには、以下のファイルが含まれます。</span>
-<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
-<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- ファイル名</span>
-<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>説明</span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>手動編集が完了したら、**Export segmentation artifacts** を実行して成果物を出力します。</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>   出力先のディレクトリはデフォルトで <span class="in">`./outputs`</span> ですが、任意の場所を選択できます。</span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>   出力先のディレクトリは自動で作成されます。</span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>出力が完了すると、<span class="in">`example_02_20260426T044227Z`</span> のようなタイムスタンプ付きのフォルダが生成されます。</span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>出力されたフォルダには、以下のファイルが含まれます。</span>
 <span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`source_with_roi.png`</span></span>
-<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>元画像に ROI ボックスを重ねた画像</span>
-<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`cropped_image.png`</span></span>
-<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>クロップされた分析対象領域の画像</span>
-<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_only_overlay.png`</span></span>
-<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の自動セグメンテーション結果のオーバーレイ画像</span>
-<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_overlay.png`</span></span>
-<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>最終的に採用したラベルのオーバーレイ画像</span>
-<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_blobs.csv`</span></span>
-<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の自動セグメンテーション結果に基づく粒マスクのデータ</span>
-<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_blobs.csv`</span></span>
-<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>最終的に採用したラベルに基づく粒マスクのデータ</span>
-<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`run_metadata.json`</span></span>
-<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>実行時のパラメータ、件数、環境情報などをまとめた JSON ファイル</span>
-<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 6. レイヤの消去</span></span>
-<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>出力が完了したら、**Delete all layers for current image** を実行して、現在の画像に関連するすべてのレイヤーを削除できます。</span>
-<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a>確認のダイアログが表示されるので、誤って消去しないよう注意してください。</span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>::: {.list-table}</span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- ファイル名</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>説明</span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`source_with_roi.png`</span></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>元画像に ROI ボックスを重ねた画像</span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`cropped_image.png`</span></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>クロップされた分析対象領域の画像</span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_only_overlay.png`</span></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の自動セグメンテーション結果のオーバーレイ画像</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_overlay.png`</span></span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>最終的に採用したラベルのオーバーレイ画像</span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`sam2_blobs.csv`</span></span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>SAM2 の自動セグメンテーション結果に基づく粒マスクのデータ</span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`final_blobs.csv`</span></span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>最終的に採用したラベルに基づく粒マスクのデータ</span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>- <span class="in">`run_metadata.json`</span></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>実行時のパラメータ、件数、環境情報などをまとめた JSON ファイル</span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a>全てのレイヤが消去されると、次の画像を読み込む準備ができます。</span>
-<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a>Step 1 に戻って、次の画像を読み込んでください。</span>
-<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a><span class="al">![レイヤの消去](assets/delete_all_layers.webp)</span></span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 6. レイヤの消去</span></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a>出力が完了したら、**Delete all layers for current image** を実行すると、**現在の画像だけでなく、ビューアに読み込まれている全レイヤー** が削除されます。</span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>確認のダイアログは表示されますが、別画像で進めていた作業も失われる可能性があるため、十分注意してください。</span>
 <span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a><span class="fu">## QA チェックリスト</span></span>
-<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a>最終結果として採用する前に、少なくとも次を確認してください。</span>
-<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI が必要領域を過不足なく含んでいる</span>
-<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>代表箇所でマスク境界が妥当である</span>
-<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>大きな merge / split エラーが補正されている</span>
-<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>オーバーレイ表示と CSV 件数に不整合がない</span>
-<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`run_metadata.json`</span> を画像成果物と一緒に保存している</span>
-<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## トラブルシューティング</span></span>
-<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### クロップレイヤーが作成されない</span></span>
-<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>アクティブレイヤーが <span class="in">`*_ROI`</span> か確認</span>
-<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>有効な矩形 ROI が描画されているか確認</span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a>すべてのレイヤーが消去されると、次の画像を読み込む準備ができます。</span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a>Step 1 に戻って、次の画像を読み込んでください。</span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a><span class="al">![レイヤの消去](assets/delete_all_layers.webp)</span></span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## QA チェックリスト</span></span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a>最終結果として採用する前に、少なくとも次を確認してください。</span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI が必要領域を過不足なく含んでいる</span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>代表箇所でマスク境界が妥当である</span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>大きな merge / split エラーが補正されている</span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>オーバーレイ表示と CSV 件数に不整合がない</span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`run_metadata.json`</span> を画像成果物と一緒に保存している</span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a><span class="fu">## トラブルシューティング</span></span>
 <span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### SAM2 自動セグメンテーションが失敗する</span></span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### クロップレイヤーが作成されない</span></span>
 <span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 セットアップとモデル配置を再確認</span>
-<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI を小さくして再試行</span>
-<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`points_per_side`</span> を下げて再試行</span>
-<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a><span class="fu">### エクスポートが失敗する</span></span>
-<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*_cropped`</span> レイヤーが存在するか確認</span>
-<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 ラベルレイヤーが存在するか確認</span>
-<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>出力先ディレクトリに書き込み権限があるか確認</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>アクティブレイヤーが <span class="in">`*_ROI`</span> か確認</span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>有効な矩形 ROI が描画されているか確認</span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### SAM2 自動セグメンテーションが失敗する</span></span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 セットアップとモデル配置を再確認</span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ROI を小さくして再試行</span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`points_per_side`</span> を下げて再試行</span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a><span class="fu">### エクスポートが失敗する</span></span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*_cropped`</span> レイヤーが存在するか確認</span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SAM2 ラベルレイヤーが存在するか確認</span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>出力先ディレクトリに書き込み権限があるか確認</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

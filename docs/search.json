@@ -4,127 +4,57 @@
     "href": "index.html",
     "title": "SAM Particle Counter",
     "section": "",
-    "text": "Introduction\nWelcome to the SAM Particle Counter manual.\nThis document is a draft for an online manual that explains the analysis workflow in detail, from image loading to final export of particle counts and tables. It is written in English so it can be used as the source for a later Japanese version.",
+    "text": "Introduction\nWelcome to the SAM Particle Counter manual.\nThis page is the English manual describing the analysis workflow, from image loading to exporting particle count results.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
   },
   {
-    "objectID": "index.html#what-this-application-does",
-    "href": "index.html#what-this-application-does",
+    "objectID": "index.html#what-this-app-can-do",
+    "href": "index.html#what-this-app-can-do",
     "title": "SAM Particle Counter",
-    "section": "What this application does",
-    "text": "What this application does\nSAM Particle Counter is a napari-based desktop tool that helps you:\n\ndraw a rectangular region of interest (ROI),\nrun SAM2-based automatic segmentation,\noptionally refine segmentation with point prompts and manual label edits,\nexport overlays, CSV tables, and run metadata.\n\nThe typical usage pattern is:\n\nLoad image\nDraw ROI\nCrop to ROI\nRun SAM2 auto segmentation\nReview/edit labels\nExport artifacts",
+    "section": "What this app can do",
+    "text": "What this app can do\nSAM Particle Counter is a napari based desktop tool that supports the following tasks:\n\nCreating a rectangular ROI (region of interest)\nAutomatic segmentation with SAM2\nRefinement by point prompts and label editing\nExporting overlay images, CSV files, and run metadata\n\nThe typical workflow is as follows:\n\nLoad an image\nDraw an ROI\nCrop to the ROI\nRun SAM2 auto segmentation\nRefine the result if needed\nExport artifacts",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
   },
   {
-    "objectID": "index.html#environment-setup",
-    "href": "index.html#environment-setup",
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
     "title": "SAM Particle Counter",
-    "section": "Environment setup",
-    "text": "Environment setup\nPlease complete project setup first (see the main README for full commands).\nAt a minimum:\n\nPython and dependencies installed via uv\nSAM2 setup script executed for your OS\nApp starts successfully with:\n\nuv run main.py",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nEnvironment setup\nFor detailed setup instructions, see README.md. At minimum, ensure the following:\n\nDependencies have been installed with uv\nThe SAM2 setup script for your OS has been executed\nThe app can be started with the following command\n\n\n\nTerminal\n\nuv run main.py\n\n\n\n\n\n\n\nNoteRecommended input image conditions\n\n\n\nTo stabilize segmentation quality, the following is recommended:\n\nImages with sufficient contrast between particles and background\nImages with minimal strong blur or compression noise",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
   },
   {
-    "objectID": "index.html#recommended-input-image-conditions",
-    "href": "index.html#recommended-input-image-conditions",
+    "objectID": "index.html#detailed-analysis-procedure",
+    "href": "index.html#detailed-analysis-procedure",
     "title": "SAM Particle Counter",
-    "section": "Recommended input image conditions",
-    "text": "Recommended input image conditions\nFor stable segmentation quality:\n\nUse images with clear contrast between particles and background.\nAvoid severe blur or compression artifacts when possible.\nIf images are very large, use ROI cropping to reduce computation and memory load.",
+    "section": "Detailed analysis procedure",
+    "text": "Detailed analysis procedure\n\nStep 1. Load an image\nLoad an image into napari (drag and drop, or File &gt; Open...).\n\n\n\nSelect File\n\n\n\n\n\nSelect Open File(s)…\n\n\nWhen the first image layer is added, the corresponding ROI (region of interest) layer (&lt;image_name&gt;_ROI) is created automatically.\n\n\n\nLoaded image\n\n\n\n\n\n\n\n\nCautionDo not rename layers\n\n\n\nThis app resolves processing targets using layer naming conventions. Please do not manually rename layers.\n\n\n\n\nStep 2. Draw ROI on the *_ROI layer\n\nSelect the ROI layer (&lt;image_name&gt;_ROI) (selected by default)\nDraw a rectangle with the Add Rectangles tool (selected by default)\nIf multiple ROIs exist, the last rectangle drawn is used\nRun the Crop to ROI button in the right-side widget\nAn &lt;image_name&gt;_cropped layer is created, and the ROI region is cropped from the source image\n\n\n\n\nDraw ROI and run Crop to ROI\n\n\n\n\n\nCropped image\n\n\n\n\n\n\n\n\nTipPractical tips\n\n\n\n\nLeave a small margin so target particles are not missed\nExclude irrelevant regions as much as possible\nIf processing is heavy, start from a smaller ROI\nYou can pan the view by dragging while holding the space key\n\n\n\n\n\nStep 3. Run Run SAM2 auto segmentation\n\nSelect the &lt;image_name&gt;_cropped layer (selected by default)\nRun the Run SAM2 auto segmentation button in the right-side widget (adjust parameters as needed)\nSAM2 segmentation results are output as new layers:\n\n&lt;image_name&gt;_cropped_sam2_auto (polygons)\n&lt;image_name&gt;_cropped_sam2_auto_labels (editable labels)\n&lt;image_name&gt;_cropped_sam2_auto_labels_original (read-only reference copy)\nOverlay showing label IDs (do not edit)\n\n\n\n\n\nSAM2 segmentation\n\n\n\nSAM2 parameters\n\n\n\nParameter\nDescription\nDefault (recommended)\n\n\n\n\npoints_per_side\nSpecifies the density of automatic prompt points placed across the image. Increasing this value enables finer exploration and improves detection of small particles, but increases processing time and memory usage.\n56\n\n\npred iou thresh\nThreshold for SAM2’s predicted mask quality score. Higher values keep only more confident masks and tend to reduce false positives, but may increase missed detections.\n0.84\n\n\nstability score thresh\nThreshold for mask stability score. Higher values keep only masks with more stable boundaries. Particles with unstable contours or very small particles may be filtered out.\n0.90\n\n\ncrop n layers\nNumber of iterative crop-and-reprocess passes. Increasing this value can improve local mask detection, but increases processing time.\n2\n\n\ncrop n points downscale factor\nScaling factor for prompt point density within crop regions. Higher values reduce point density in crop regions and lighten processing, but may reduce sensitivity for small targets.\n1\n\n\ndeduplicate masks\nEnables removal of duplicate masks. When enabled, duplicate masks generated for the same particle are removed.\nTrue\n\n\ncontain thresh\nDefines how much one mask must be contained in another to be treated as a duplicate. Lower values make duplicate detection less strict and can remove more masks. Higher values remove masks only when one is almost fully contained in another.\n0.90\n\n\niou thresh\nIoU (Intersection over Union) threshold for overlap between two masks. Lower values make partially overlapping masks more likely to be removed as duplicates. Higher values remove only strongly overlapping masks.\n0.70\n\n\nscore key\nScore used to decide which duplicate mask to keep. Typically use predicted_iou to retain the higher-quality mask.\npredicted_iou\n\n\noutput mode\nSpecifies the output format for SAM2 results.\n\nlabels: Outputs an editable label layer. Usually recommended.\nshapes: Outputs a polygon layer. Use this if you do not need label painting/editing. Typically not edited.\nboth: Outputs both layers.\n\nlabels\n\n\n\n\n\n\nStep 4. Manual refinement (optional)\nRefine results as needed to improve final count accuracy.\n\n(A) Manual label editing\n\nSelect the &lt;image_name&gt;_cropped_sam2_auto_labels layer (selected by default)\nEdit labels using napari label editing tools\n\nFor basic label editing operations, see the official napari documentation.\n\n\n\nLabel editing example\n\n\n\n\n\n\n\n\nTipTips for manual editing\n\n\n\n\nWhen you want to add particles\nIf particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool. You can adjust brush thickness via brush size.\n\n\nWhen you want to split particles\nIf multiple particles are connected, erase one side with the eraser tool, then increase the label number and repaint a new particle mask.\n\n\nWhen you want to erase a wide area\nIf background is falsely detected as a mask, click an empty area with the picker tool to select background, then click the background mask with fill tool to erase in bulk.\nSimilarly, to erase particles in chunks, pick the particle color with the picker tool and then click that particle with fill tool to erase in bulk.\n\n\nWhen you want to remove falsely detected particles\nIf noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool.\n\n\nWhen you want to inspect mask by mask\nEnable show selected to display only the selected label ID mask. While this is enabled, changing label lets you inspect masks one by one.\n\n\n\n\n\n(B) Point-prompt refinement\n\nRun Create prompt points layer\nSelect Foreground / Background\nPlace points on the cropped image\nRun Run SAM2 point prompt\n\nCandidate polygons are output to the *_sam2_points layer and can be used to guide refinement.\n\n\n\n\n\n\nWarningNotes\n\n\n\nThis feature is currently experimental and may not behave stably in all cases. It often does not work well for very small particles, so regular manual editing is usually more reliable. Please note that this feature is likely to change in future updates.\n\n\n\n\n\nStep 5. Export results\n\nAfter manual editing is complete, run Export segmentation artifacts to export outputs. The output directory defaults to ./outputs, but you can choose any location. The output directory is created automatically.\nWhen export completes, a timestamped folder such as example_02_20260426T044227Z is generated.\n\nThe exported folder includes the following files:\n\n\n\nFilename\nDescription\n\n\n\n\nsource_with_roi.png\nSource image with ROI box overlay\n\n\ncropped_image.png\nCropped analysis region image\n\n\nsam2_only_overlay.png\nOverlay image of SAM2 auto segmentation result\n\n\nfinal_overlay.png\nOverlay image of the final adopted labels\n\n\nsam2_blobs.csv\nParticle mask data based on SAM2 auto segmentation result\n\n\nfinal_blobs.csv\nParticle mask data based on the final adopted labels\n\n\nrun_metadata.json\nJSON file summarizing run parameters, counts, and environment information\n\n\n\n\n\nStep 6. Delete layers\nAfter export is complete, run Delete all layers for current image to remove all layers currently loaded in the viewer (not only the current image). A confirmation dialog appears, but this operation can discard unrelated in-progress work, so use it with care.\nOnce all layers are deleted, you are ready to load the next image. Return to Step 1 and load the next image.\n\n\n\nDelete layers",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
   },
   {
-    "objectID": "index.html#step-1.-load-an-image",
-    "href": "index.html#step-1.-load-an-image",
+    "objectID": "index.html#qa-checklist",
+    "href": "index.html#qa-checklist",
     "title": "SAM Particle Counter",
-    "section": "Step 1. Load an image",
-    "text": "Step 1. Load an image\nOpen your image in napari (drag-and-drop or File &gt; Open...).\nWhen the first image layer is added, the app automatically creates a corresponding ROI layer named:\n\n&lt;image_name&gt;_ROI\n\n\nWhy this matters\nAll downstream operations are tied to layer names. Keeping the base image name unchanged helps the tool resolve related layers automatically.",
+    "section": "QA checklist",
+    "text": "QA checklist\nBefore accepting final results, check at least the following:\n\nROI includes required regions without major over/under coverage\nMask boundaries are reasonable at representative locations\nMajor merge/split errors have been corrected\nOverlay display and CSV row counts are consistent\nrun_metadata.json is saved together with image artifacts",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
   },
   {
-    "objectID": "index.html#step-2.-draw-roi-on-the-_roi-layer",
-    "href": "index.html#step-2.-draw-roi-on-the-_roi-layer",
+    "objectID": "index.html#troubleshooting",
+    "href": "index.html#troubleshooting",
     "title": "SAM Particle Counter",
-    "section": "Step 2. Draw ROI on the *_ROI layer",
-    "text": "Step 2. Draw ROI on the *_ROI layer\n\nSelect the ROI layer (&lt;image_name&gt;_ROI).\nDraw a rectangle using the Shapes tool.\nIf multiple rectangles exist, the most recently drawn ROI is used.\n\n\nPractical tips\n\nInclude all target particles with a small safety margin.\nExclude unrelated structures as much as possible.\nIf segmentation is slow, start with a smaller ROI and expand later.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#step-3.-run-crop-to-roi",
-    "href": "index.html#step-3.-run-crop-to-roi",
-    "title": "SAM Particle Counter",
-    "section": "Step 3. Run Crop to ROI",
-    "text": "Step 3. Run Crop to ROI\nPress the right-dock button:\n\nCrop to ROI\n\nThis creates a cropped image layer:\n\n&lt;image_name&gt;_cropped\n\nand stores crop metadata internally (source image/layer names and crop coordinates).\n\nWhat to check\n\nThe cropped layer appears in the layer list.\nThe cropped region visually matches your intended analysis area.\n\nIf no valid rectangle exists, cropping will not run.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#step-4.-run-sam2-auto-segmentation",
-    "href": "index.html#step-4.-run-sam2-auto-segmentation",
-    "title": "SAM Particle Counter",
-    "section": "Step 4. Run SAM2 auto segmentation",
-    "text": "Step 4. Run SAM2 auto segmentation\nSelect &lt;image_name&gt;_cropped, then execute:\n\nRun SAM2 auto segmentation\n\n\nMain parameters (first-pass recommendation)\n\npoints_per_side: start around 56 (higher = denser proposals, slower)\npred_iou_thresh: start around 0.84\nstability_score_thresh: start around 0.90\ncrop_n_layers: start with 1\ncrop_n_points_downscale_factor: start with 1\ndeduplicate_masks: usually ON\ncontain_thresh: start around 0.90\niou_thresh: start around 0.70\noutput_mode: usually labels (or both if polygon output is also needed)\n\n\n\nOutput layers\nDepending on output_mode, the app creates:\n\n&lt;image_name&gt;_cropped_sam2_auto (shape polygons)\n&lt;image_name&gt;_cropped_sam2_auto_labels (editable labels)\n&lt;image_name&gt;_cropped_sam2_auto_labels_original (non-editable reference copy)\nID text overlay layer for label numbers\n\n\n\nInterpretation notes\n\nWith deduplication enabled, overlapping/redundant masks are reduced.\nLabel IDs are integer objects (1..N), with 0 as background.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#step-5.-optional-refinement-recommended-for-publication-quality-counts",
-    "href": "index.html#step-5.-optional-refinement-recommended-for-publication-quality-counts",
-    "title": "SAM Particle Counter",
-    "section": "Step 5. Optional refinement (recommended for publication-quality counts)",
-    "text": "Step 5. Optional refinement (recommended for publication-quality counts)\nYou can refine the result in two ways.\n\nA) Point-prompt refinement with SAM2\n\nUse Create prompt points layer\nChoose foreground/background target\nAdd points on the cropped image\nRun Run SAM2 point prompt\n\nThis produces prompt-based polygon candidates (*_sam2_points) that can guide manual correction.\n\n\nB) Direct manual label editing\nUse napari label editing tools on:\n\n&lt;image_name&gt;_cropped_sam2_auto_labels\n\nTypical edits:\n\nsplit merged particles,\nremove obvious false positives,\nadd missing particles.\n\n\nRecommendation: Keep edits minimal and traceable, and document any manual criteria in your experiment notes.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#step-6.-export-results",
-    "href": "index.html#step-6.-export-results",
-    "title": "SAM Particle Counter",
-    "section": "Step 6. Export results",
-    "text": "Step 6. Export results\nExecute:\n\nExport segmentation artifacts\n\nChoose an output directory (default: ./outputs).\nA timestamped export folder is generated, such as:\n\nexample_01_20260421T094932Z\n\n\nExported files\nTypical files include:\n\nsource_with_roi.png (original image + ROI box)\ncropped_image.png (cropped analysis region)\nsam2_only_overlay.png (overlay from SAM2 auto result)\nfinal_overlay.png (overlay from final selected labels)\nsam2_blobs.csv (per-particle table from SAM2)\nfinal_blobs.csv (per-particle table from final labels)\nrun_metadata.json (parameters, counts, environment, output list)\n\n\n\nCount definitions\nThe export metadata reports:\n\nsam2_raw_count_before_dedup\nsam2_after_dedup_count\ndedup_removed_count\nfinal_count\nmanual_delta_count_net\n\nThis helps separate model output from manual adjustments.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#no-cropped-layer-is-created",
-    "href": "index.html#no-cropped-layer-is-created",
-    "title": "SAM Particle Counter",
-    "section": "No cropped layer is created",
-    "text": "No cropped layer is created\n\nConfirm the active layer is *_ROI.\nConfirm at least one valid rectangle exists.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#sam2-auto-segmentation-fails",
-    "href": "index.html#sam2-auto-segmentation-fails",
-    "title": "SAM Particle Counter",
-    "section": "SAM2 auto segmentation fails",
-    "text": "SAM2 auto segmentation fails\n\nRe-check SAM2 setup scripts and model files.\nTry a smaller ROI.\nReduce proposal density (points_per_side).",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#export-fails",
-    "href": "index.html#export-fails",
-    "title": "SAM Particle Counter",
-    "section": "Export fails",
-    "text": "Export fails\n\nEnsure a cropped layer exists.\nEnsure SAM2 label layer exists.\nCheck write permission for the output directory.",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\n\nCropped layer is not created\n\nConfirm the active layer is *_ROI\nConfirm a valid rectangular ROI has been drawn\n\n\n\nSAM2 auto segmentation fails\n\nRecheck SAM2 setup and model placement\nRetry with a smaller ROI\nRetry with a lower points_per_side\n\n\n\nExport fails\n\nConfirm a *_cropped layer exists\nConfirm a SAM2 label layer exists\nConfirm write permission for the output directory",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
@@ -164,7 +94,7 @@
     "href": "manual/index_ja.html#詳細な解析手順",
     "title": "SAM Particle Counter マニュアル（日本語版）",
     "section": "詳細な解析手順",
-    "text": "詳細な解析手順\n\nStep 1. 画像の読み込み\nnapari に画像を読み込みます（ドラッグ＆ドロップ、または File &gt; Open...）。\n\n\n\nFile を選択する\n\n\n\n\n\nOpen File(s)… を選択する\n\n\n最初の画像レイヤーが追加されると、対応する ROI (region of interest) レイヤー (&lt;image_name&gt;_ROI) が自動作成されます。\n\n\n\n読み込まれた画像\n\n\n\n\n\n\n\n\nCautionレイヤ名は変更しないでください\n\n\n\nこのアプリはレイヤー名の規則を使って処理対象を解決します。 レイヤー名は手動で変更しないようにしてください。\n\n\n\n\nStep 2. *_ROI レイヤーに ROI を描画\n\nROI レイヤー（&lt;image_name&gt;_ROI）を選択 (デフォルトで選択されています)\nAdd Rectangles ツールで矩形を描画 (デフォルトで選択されています)\nROI が複数ある場合は最後に描いた矩形が使用される\n右のウィジェットの Crop to ROI ボタンを実行する\n&lt;image_name&gt;_cropped レイヤーが作成され、元画像の ROI 部分が切り出される\n\n\n\n\nROI を描いてCrop to ROI を実行\n\n\n\n\n\nクロップされた画像\n\n\n\n\n\n\n\n\nTip実務中のコツ\n\n\n\n\n対象粒子を取りこぼさないよう少し余裕を持たせる\n無関係な領域は可能な限り除外する\n処理が重い場合は小さい ROI から開始する\nスペースキーを押しながらドラッグすることで、表示を移動できます\n\n\n\n\n\nStep 3. Run SAM2 auto segmentation を実行\n\n&lt;image_name&gt;_cropped レイヤーを選択 (デフォルトで選択されています)\n右のウィジェットの Run SAM2 auto segmentation ボタンを実行する (必要に応じてパラメータを調整)\nSAM2 のセグメンテーション結果が新しいレイヤーに出力される (&lt;image_name&gt;_cropped_sam2_auto_labels)。 同時に&lt;image_name&gt;_cropped_sam2_auto_labels（編集不可の参照コピー）も生成される。 また、番号を示す&lt;image_name&gt;_cropped_sam2_auto_labelsのオーバーレイも表示される (編集しない)。\n\n\n\n\nSAM2 セグメンテーション\n\n\n\nSAM2 のパラメータ\n\n\n\nパラメータ\n説明\n初期値 (おすすめ設定)\n\n\n\n\npoints_per_side\n画像全体に配置する自動プロンプト点の密度を指定します。\n値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。\n56\n\n\npred iou thresh\nSAM2 が予測したマスク品質スコアのしきい値です。\n値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。\n0.84\n\n\nstability score thresh\nマスクの安定性スコアのしきい値です。\n値を高くすると、境界が安定したマスクだけが残ります。\n輪郭が不安定な粒子や小さい粒子は除外されやすくなります。\n0.90\n\n\ncrop n layers\n画像を段階的にクロップして再探索する回数を指定します。\n値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。\n2\n\n\ncrop n points downscale factor\nクロップ領域で使用するプロンプト点密度の調整係数です。\n値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。\n1\n\n\ndeduplicate masks\n重複して検出されたマスクを削除するかどうかを指定します。\n有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。\nTrue\n\n\ncontain thresh\n片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。\n値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。\n値を高くすると、ほぼ内包されている場合だけ削除されます。\n0.90\n\n\niou thresh\n2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。\n値を低くすると、少し重なったマスクも重複として削除されやすくなります。\n値を高くすると、強く重なっている場合だけ削除されます。\n0.70\n\n\nscore key\n重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。\n通常は predicted_iou を用い、品質スコアが高いマスクを残します。\npredicted_iou\n\n\noutput mode\nSAM2 の結果をどの形式で出力するかを指定します。\n\nlabels: 編集可能なラベルレイヤーを出力します。通常はこちらを選択します。\nshapes: ポリゴンレイヤーを出力します。セグメンテーション結果を塗り分けしたくない場合はこちらを選択します。通常こちらは編集しません。\nboth: 両方のレイヤーを出力します。\n\nlabels\n\n\n\n\n\n\nStep 4. 手動補正（必要に応じて）\n最終カウント精度を高めるため、必要に応じて補正します。\n\n(A) ラベルの手動編集\n\n&lt;image_name&gt;_cropped_sam2_auto_labels レイヤーを選択 (デフォルトで選択されています)\nnapari のラベル編集機能で次を編集します。\n\n基本的なラベルの修正方法については、napari の公式ドキュメントを参照してください。\n\n\n\nラベル編集例\n\n\n\n\n\n\n\n\nTip手動編集のポイント\n\n\n\n\n粒を追加したいとき\n粒が見落とされている場合は、左上のlabelの番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。\nbrush size からペンの太さを調整できます。\n\n\n粒を分割したいとき\n複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、labelの番号を増やしてペンツールで新たな粒のマスクを作成します。\n\n\n広範囲を消去したいとき\n背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。\n同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。\n\n\n誤検出された粒を消去したいとき\nホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。\n\n\nマスクごとに確認したい場合\nshow selected にチェックを入れると、選択したラベルIDのマスクだけが表示されるようになります。 この状態で label を変更すると、次々にマスクを確認できます。\n\n\n\n\n\n(B) ポイントプロンプト補正\n\nCreate prompt points layer を実行\nForeground / Background を選択\nクロップ画像上に点を配置\nRun SAM2 point prompt を実行\n\n*_sam2_points レイヤーに候補ポリゴンが出力され、補正の判断に使えます。\n\n\n\n\n\n\nWarning注意点\n\n\n\n現在、こちらの機能は実験的な段階であり、すべてのケースで安定して動作するわけではありません。 粒が小さい場合はうまくいかないことが多いため、通常の手動編集の方が確実です。 今後、機能が変更になる可能性が高いことに留意してください。\n\n\n\n\n\nStep 5. 結果のエクスポート\n\n手動編集が完了したら、Export segmentation artifacts を実行して成果物を出力します。\n出力先のディレクトリはデフォルトで ./outputs ですが、任意の場所を選択できます。\n出力先のディレクトリは自動で作成されます。\n出力が完了すると、example_02_20260426T044227Z のようなタイムスタンプ付きのフォルダが生成されます。\n\n出力されたフォルダには、以下のファイルが含まれます。\n\n\n\nファイル名\n説明\n\n\n\n\nsource_with_roi.png\n元画像に ROI ボックスを重ねた画像\n\n\ncropped_image.png\nクロップされた分析対象領域の画像\n\n\nsam2_only_overlay.png\nSAM2 の自動セグメンテーション結果のオーバーレイ画像\n\n\nfinal_overlay.png\n最終的に採用したラベルのオーバーレイ画像\n\n\nsam2_blobs.csv\nSAM2 の自動セグメンテーション結果に基づく粒マスクのデータ\n\n\nfinal_blobs.csv\n最終的に採用したラベルに基づく粒マスクのデータ\n\n\nrun_metadata.json\n実行時のパラメータ、件数、環境情報などをまとめた JSON ファイル\n\n\n\n\n\nStep 6. レイヤの消去\n出力が完了したら、Delete all layers for current image を実行して、現在の画像に関連するすべてのレイヤーを削除できます。 確認のダイアログが表示されるので、誤って消去しないよう注意してください。\n全てのレイヤが消去されると、次の画像を読み込む準備ができます。 Step 1 に戻って、次の画像を読み込んでください。\n\n\n\nレイヤの消去",
+    "text": "詳細な解析手順\n\nStep 1. 画像の読み込み\nnapari に画像を読み込みます（ドラッグ＆ドロップ、または File &gt; Open...）。\n\n\n\nFile を選択する\n\n\n\n\n\nOpen File(s)… を選択する\n\n\n最初の画像レイヤーが追加されると、対応する ROI（region of interest）レイヤー（&lt;image_name&gt;_ROI）が自動作成されます。\n\n\n\n読み込まれた画像\n\n\n\n\n\n\n\n\nCautionレイヤ名は変更しないでください\n\n\n\nこのアプリはレイヤー名の規則を使って処理対象を解決します。 レイヤー名は手動で変更しないようにしてください。\n\n\n\n\nStep 2. *_ROI レイヤーに ROI を描画\n\nROI レイヤー（&lt;image_name&gt;_ROI）を選択（デフォルトで選択されています）\nAdd Rectangles ツールで矩形を描画（デフォルトで選択されています）\nROI が複数ある場合は 最後に描いた矩形 が使用される\n右のウィジェットの Crop to ROI ボタンを実行する\n&lt;image_name&gt;_cropped レイヤーが作成され、元画像の ROI 部分が切り出される\n\n\n\n\nROI を描いて Crop to ROI を実行\n\n\n\n\n\nクロップされた画像\n\n\n\n\n\n\n\n\nTip実務中のコツ\n\n\n\n\n対象粒子を取りこぼさないよう少し余裕を持たせる\n無関係な領域は可能な限り除外する\n処理が重い場合は小さい ROI から開始する\nスペースキーを押しながらドラッグすることで、表示を移動できます\n\n\n\n\n\nStep 3. Run SAM2 auto segmentation を実行\n\n&lt;image_name&gt;_cropped レイヤーを選択（デフォルトで選択されています）\n右のウィジェットの Run SAM2 auto segmentation ボタンを実行する（必要に応じてパラメータを調整）\nSAM2 のセグメンテーション結果が新しいレイヤーに出力される。\n\n&lt;image_name&gt;_cropped_sam2_auto（ポリゴン）\n&lt;image_name&gt;_cropped_sam2_auto_labels（編集可能ラベル）\n&lt;image_name&gt;_cropped_sam2_auto_labels_original（編集不可の参照コピー）\nラベル番号を示すオーバーレイ（編集しない）\n\n\n\n\n\nSAM2 セグメンテーション\n\n\n\nSAM2 のパラメータ\n\n\n\nパラメータ\n説明\n初期値（おすすめ設定）\n\n\n\n\npoints_per_side\n画像全体に配置する自動プロンプト点の密度を指定します。 値を大きくすると、より細かく探索され、小さい粒子も検出されやすくなりますが、処理時間とメモリ使用量が増えます。\n56\n\n\npred iou thresh\nSAM2 が予測したマスク品質スコアのしきい値です。 値を高くすると、信頼度の高いマスクだけが残り、誤検出は減りやすくなりますが、検出漏れが増える可能性があります。\n0.84\n\n\nstability score thresh\nマスクの安定性スコアのしきい値です。 値を高くすると、境界が安定したマスクだけが残ります。 輪郭が不安定な粒子や小さい粒子は除外されやすくなります。\n0.90\n\n\ncrop n layers\n画像を段階的にクロップして再探索する回数を指定します。 値を大きくすると、局所領域でより細かくマスクを検出できますが、処理時間が増えます。\n2\n\n\ncrop n points downscale factor\nクロップ領域で使用するプロンプト点密度の調整係数です。 値を大きくすると、クロップ領域での点密度が下がり、処理は軽くなりますが、小さい対象の検出力は低下する可能性があります。\n1\n\n\ndeduplicate masks\n重複して検出されたマスクを削除するかどうかを指定します。 有効にすると、同じ粒子に対して複数のマスクが作成された場合に、重複マスクを除去します。\nTrue\n\n\ncontain thresh\n片方のマスクがもう片方のマスクにどの程度含まれていれば重複とみなすかを指定します。 値を低くすると重複判定が厳しくなりすぎず、多くのマスクが削除されやすくなります。 値を高くすると、ほぼ内包されている場合だけ削除されます。\n0.90\n\n\niou thresh\n2つのマスクの重なり具合を IoU（Intersection over Union）で評価するしきい値です。 値を低くすると、少し重なったマスクも重複として削除されやすくなります。 値を高くすると、強く重なっている場合だけ削除されます。\n0.70\n\n\nscore key\n重複マスクのうち、どちらを残すか判断するときに使うスコアを指定します。 通常は predicted_iou を用い、品質スコアが高いマスクを残します。\npredicted_iou\n\n\noutput mode\nSAM2 の結果をどの形式で出力するかを指定します。\n\nlabels: 編集可能なラベルレイヤーを出力します。通常はこちらを選択します。\nshapes: ポリゴンレイヤーを出力します。セグメンテーション結果を塗り分けしたくない場合はこちらを選択します。通常こちらは編集しません。\nboth: 両方のレイヤーを出力します。\n\nlabels\n\n\n\n\n\n\nStep 4. 手動補正（必要に応じて）\n最終カウント精度を高めるため、必要に応じて補正します。\n\n(A) ラベルの手動編集\n\n&lt;image_name&gt;_cropped_sam2_auto_labels レイヤーを選択（デフォルトで選択されています）\nnapari のラベル編集機能で次を編集します。\n\n基本的なラベルの修正方法については、napari の公式ドキュメント を参照してください。\n\n\n\nラベル編集例\n\n\n\n\n\n\n\n\nTip手動編集のポイント\n\n\n\n\n粒を追加したいとき\n粒が見落とされている場合は、左上の label の番号を一つ増やし、ペンツールで新たな粒のマスクを作成します。 brush size からペンの太さを調整できます。\n\n\n粒を分割したいとき\n複数の粒が連結してしまっている場合は、片方を消しゴムツールで消去した後、label の番号を増やしてペンツールで新たな粒のマスクを作成します。\n\n\n広範囲を消去したいとき\n背景がマスクとして誤検出されている場合は、スポイトツールで何もない場所をクリックして背景色を選択し、塗りつぶしツールで背景マスクをクリックすると、まとめて消去できます。\n同様に、かたまり単位で粒を消去したいときは、スポイトツールで粒子の色をクリックして選択し、塗りつぶしツールでその粒子をクリックすると、まとめて消去できます。\n\n\n誤検出された粒を消去したいとき\nホコリなどのノイズが粒として誤検出されている場合は、消しゴムツールで消去します。\n\n\nマスクごとに確認したい場合\nshow selected にチェックを入れると、選択したラベル ID のマスクだけが表示されるようになります。 この状態で label を変更すると、次々にマスクを確認できます。\n\n\n\n\n\n(B) ポイントプロンプト補正\n\nCreate prompt points layer を実行\nForeground / Background を選択\nクロップ画像上に点を配置\nRun SAM2 point prompt を実行\n\n*_sam2_points レイヤーに候補ポリゴンが出力され、補正の判断に使えます。\n\n\n\n\n\n\nWarning注意点\n\n\n\n現在、こちらの機能は実験的な段階であり、すべてのケースで安定して動作するわけではありません。 粒が小さい場合はうまくいかないことが多いため、通常の手動編集の方が確実です。 今後、機能が変更になる可能性が高いことに留意してください。\n\n\n\n\n\nStep 5. 結果のエクスポート\n\n手動編集が完了したら、Export segmentation artifacts を実行して成果物を出力します。 出力先のディレクトリはデフォルトで ./outputs ですが、任意の場所を選択できます。 出力先のディレクトリは自動で作成されます。\n出力が完了すると、example_02_20260426T044227Z のようなタイムスタンプ付きのフォルダが生成されます。\n\n出力されたフォルダには、以下のファイルが含まれます。\n\n\n\nファイル名\n説明\n\n\n\n\nsource_with_roi.png\n元画像に ROI ボックスを重ねた画像\n\n\ncropped_image.png\nクロップされた分析対象領域の画像\n\n\nsam2_only_overlay.png\nSAM2 の自動セグメンテーション結果のオーバーレイ画像\n\n\nfinal_overlay.png\n最終的に採用したラベルのオーバーレイ画像\n\n\nsam2_blobs.csv\nSAM2 の自動セグメンテーション結果に基づく粒マスクのデータ\n\n\nfinal_blobs.csv\n最終的に採用したラベルに基づく粒マスクのデータ\n\n\nrun_metadata.json\n実行時のパラメータ、件数、環境情報などをまとめた JSON ファイル\n\n\n\n\n\nStep 6. レイヤの消去\n出力が完了したら、Delete all layers for current image を実行すると、現在の画像だけでなく、ビューアに読み込まれている全レイヤー が削除されます。 確認のダイアログは表示されますが、別画像で進めていた作業も失われる可能性があるため、十分注意してください。\nすべてのレイヤーが消去されると、次の画像を読み込む準備ができます。 Step 1 に戻って、次の画像を読み込んでください。\n\n\n\nレイヤの消去",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>日本語版</span>"
     ]
