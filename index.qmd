@@ -4,247 +4,300 @@ title: "SAM Particle Counter Manual"
 
 > Japanese version is available here: [SAM Particle Counter マニュアル（日本語版）](manual/index_ja.qmd)
 
-# Introduction
+## Introduction
 
 Welcome to the **SAM Particle Counter** manual.
 
-This document is a draft for an online manual that explains the analysis workflow in detail, from image loading to final export of particle counts and tables. It is written in English so it can be used as the source for a later Japanese version.
+This page is the English manual describing the analysis workflow, from image loading to exporting particle count results.
 
-## What this application does
+## What this app can do
 
-SAM Particle Counter is a napari-based desktop tool that helps you:
+SAM Particle Counter is a [napari](https://napari.org/stable/) based desktop tool that supports the following tasks:
 
-- draw a rectangular region of interest (ROI),
-- run SAM2-based automatic segmentation,
-- optionally refine segmentation with point prompts and manual label edits,
-- export overlays, CSV tables, and run metadata.
+- Creating a rectangular ROI (region of interest)
+- Automatic segmentation with [SAM2](https://ai.meta.com/research/sam2/)
+- Refinement by point prompts and label editing
+- Exporting overlay images, CSV files, and run metadata
 
-The typical usage pattern is:
+The typical workflow is as follows:
 
-1. Load image
-2. Draw ROI
-3. Crop to ROI
+1. Load an image
+2. Draw an ROI
+3. Crop to the ROI
 4. Run SAM2 auto segmentation
-5. Review/edit labels
+5. Refine the result if needed
 6. Export artifacts
 
----
+## Prerequisites
 
-# Before You Start
+### Environment setup
 
-## Environment setup
+For detailed setup instructions, see [`README.md`](https://github.com/maple60/sam-particle-counter).
+At minimum, ensure the following:
 
-Please complete project setup first (see the main README for full commands).
+- Dependencies have been installed with `uv`
+- The SAM2 setup script for your OS has been executed
+- The app can be started with the following command
 
-At a minimum:
-
-- Python and dependencies installed via `uv`
-- SAM2 setup script executed for your OS
-- App starts successfully with:
-
-```bash
+```{.bash filename="Terminal"}
 uv run main.py
 ```
 
+::: {.callout-note}
 ## Recommended input image conditions
 
-For stable segmentation quality:
+To stabilize segmentation quality, the following is recommended:
 
-- Use images with clear contrast between particles and background.
-- Avoid severe blur or compression artifacts when possible.
-- If images are very large, use ROI cropping to reduce computation and memory load.
+- Images with sufficient contrast between particles and background
+- Images with minimal strong blur or compression noise
+:::
 
----
+## Detailed analysis procedure
 
-# Detailed Analysis Procedure
+### Step 1. Load an image
 
-## Step 1. Load an image
+Load an image into napari (drag and drop, or `File > Open...`).
 
-Open your image in napari (drag-and-drop or `File > Open...`).
+![Select File](manual/assets/open_file_01.webp)
 
-When the first image layer is added, the app automatically creates a corresponding ROI layer named:
+![Select Open File(s)...](manual/assets/open_file_02.webp)
 
-- `<image_name>_ROI`
+When the first image layer is added, the corresponding ROI (region of interest) layer (`<image_name>_ROI`) is created automatically.
 
-### Why this matters
+![Loaded image](manual/assets/open_file_03.webp)
 
-All downstream operations are tied to layer names. Keeping the base image name unchanged helps the tool resolve related layers automatically.
+::: {.callout-caution}
+## Do not rename layers
 
----
+This app resolves processing targets using layer naming conventions.
+Please do not manually rename layers.
+:::
 
-## Step 2. Draw ROI on the `*_ROI` layer
+### Step 2. Draw ROI on the `*_ROI` layer
 
-1. Select the ROI layer (`<image_name>_ROI`).
-2. Draw a rectangle using the Shapes tool.
-3. If multiple rectangles exist, the **most recently drawn ROI** is used.
+1. Select the ROI layer (`<image_name>_ROI`) (selected by default)
+2. Draw a rectangle with the Add Rectangles tool (selected by default)
+3. If multiple ROIs exist, the **last rectangle drawn** is used
+4. Run the **Crop to ROI** button in the right-side widget
+5. An `<image_name>_cropped` layer is created, and the ROI region is cropped from the source image
 
-### Practical tips
+![Draw ROI and run Crop to ROI](manual/assets/crop_roi_01.webp)
 
-- Include all target particles with a small safety margin.
-- Exclude unrelated structures as much as possible.
-- If segmentation is slow, start with a smaller ROI and expand later.
+![Cropped image](manual/assets/crop_roi_02.webp)
 
----
+::: {.callout-tip}
+## Practical tips
 
-## Step 3. Run **Crop to ROI**
+- Leave a small margin so target particles are not missed
+- Exclude irrelevant regions as much as possible
+- If processing is heavy, start from a smaller ROI
+- You can pan the view by dragging while holding the space key
+:::
 
-Press the right-dock button:
+### Step 3. Run **Run SAM2 auto segmentation**
 
-- **Crop to ROI**
+1. Select the `<image_name>_cropped` layer (selected by default)
+2. Run the **Run SAM2 auto segmentation** button in the right-side widget (adjust parameters as needed)
+3. SAM2 segmentation results are output as new layers:
+   - `<image_name>_cropped_sam2_auto` (polygons)
+   - `<image_name>_cropped_sam2_auto_labels` (editable labels)
+   - `<image_name>_cropped_sam2_auto_labels_original` (read-only reference copy)
+   - Overlay showing label IDs (do not edit)
 
-This creates a cropped image layer:
+![SAM2 segmentation](manual/assets/sam2_segmentation.webp)
 
-- `<image_name>_cropped`
+#### SAM2 parameters
 
-and stores crop metadata internally (source image/layer names and crop coordinates).
+::: {.list-table}
+- - Parameter
+  - Description
+  - Default (recommended)
 
-### What to check
+- - `points_per_side`
+  - Specifies the density of automatic prompt points placed across the image.
+    Increasing this value enables finer exploration and improves detection of small particles, but increases processing time and memory usage.
+  - **56**
 
-- The cropped layer appears in the layer list.
-- The cropped region visually matches your intended analysis area.
+- - `pred iou thresh`
+  - Threshold for SAM2’s predicted mask quality score.
+    Higher values keep only more confident masks and tend to reduce false positives, but may increase missed detections.
+  - **0.84**
 
-If no valid rectangle exists, cropping will not run.
+- - `stability score thresh`
+  - Threshold for mask stability score.
+    Higher values keep only masks with more stable boundaries.
+    Particles with unstable contours or very small particles may be filtered out.
+  - **0.90**
 
----
+- - `crop n layers`
+  - Number of iterative crop-and-reprocess passes.
+    Increasing this value can improve local mask detection, but increases processing time.
+  - **2**
 
-## Step 4. Run **SAM2 auto segmentation**
+- - `crop n points downscale factor`
+  - Scaling factor for prompt point density within crop regions.
+    Higher values reduce point density in crop regions and lighten processing, but may reduce sensitivity for small targets.
+  - **1**
 
-Select `<image_name>_cropped`, then execute:
+- - `deduplicate masks`
+  - Enables removal of duplicate masks.
+    When enabled, duplicate masks generated for the same particle are removed.
+  - **True**
 
-- **Run SAM2 auto segmentation**
+- - `contain thresh`
+  - Defines how much one mask must be contained in another to be treated as a duplicate.
+    Lower values make duplicate detection less strict and can remove more masks.
+    Higher values remove masks only when one is almost fully contained in another.
+  - **0.90**
 
-### Main parameters (first-pass recommendation)
+- - `iou thresh`
+  - IoU (Intersection over Union) threshold for overlap between two masks.
+    Lower values make partially overlapping masks more likely to be removed as duplicates.
+    Higher values remove only strongly overlapping masks.
+  - **0.70**
 
-- `points_per_side`: start around **56** (higher = denser proposals, slower)
-- `pred_iou_thresh`: start around **0.84**
-- `stability_score_thresh`: start around **0.90**
-- `crop_n_layers`: start with **1**
-- `crop_n_points_downscale_factor`: start with **1**
-- `deduplicate_masks`: usually **ON**
-- `contain_thresh`: start around **0.90**
-- `iou_thresh`: start around **0.70**
-- `output_mode`: usually **labels** (or `both` if polygon output is also needed)
+- - `score key`
+  - Score used to decide which duplicate mask to keep.
+    Typically use `predicted_iou` to retain the higher-quality mask.
+  - **predicted_iou**
 
-### Output layers
+- - `output mode`
+  - Specifies the output format for SAM2 results.
+    - `labels`: Outputs an editable label layer. Usually recommended.
+    - `shapes`: Outputs a polygon layer. Use this if you do not need label painting/editing. Typically not edited.
+    - `both`: Outputs both layers.
+  - **labels**
+:::
 
-Depending on `output_mode`, the app creates:
+### Step 4. Manual refinement (optional)
 
-- `<image_name>_cropped_sam2_auto` (shape polygons)
-- `<image_name>_cropped_sam2_auto_labels` (editable labels)
-- `<image_name>_cropped_sam2_auto_labels_original` (non-editable reference copy)
-- ID text overlay layer for label numbers
+Refine results as needed to improve final count accuracy.
 
-### Interpretation notes
+#### (A) Manual label editing
 
-- With deduplication enabled, overlapping/redundant masks are reduced.
-- Label IDs are integer objects (`1..N`), with `0` as background.
+1. Select the `<image_name>_cropped_sam2_auto_labels` layer (selected by default)
+2. Edit labels using napari label editing tools
 
----
+For basic label editing operations, see the [official napari documentation](https://napari.org/stable/howtos/layers/labels.html#creating-deleting-merging-and-splitting-connected-components).
 
-## Step 5. Optional refinement (recommended for publication-quality counts)
+![Label editing example](manual/assets/manual_refinement_01.webp)
 
-You can refine the result in two ways.
+::: {.callout-tip}
+## Tips for manual editing
 
-### A) Point-prompt refinement with SAM2
+### When you want to add particles
 
-1. Use **Create prompt points layer**
-2. Choose foreground/background target
-3. Add points on the cropped image
+If particles were missed, increase the label number in the upper-left panel by one, then draw a new particle mask using the paint tool.
+You can adjust brush thickness via brush size.
+
+### When you want to split particles
+
+If multiple particles are connected, erase one side with the eraser tool, then increase the label number and repaint a new particle mask.
+
+### When you want to erase a wide area
+
+If background is falsely detected as a mask, click an empty area with the picker tool to select background, then click the background mask with fill tool to erase in bulk.
+
+Similarly, to erase particles in chunks, pick the particle color with the picker tool and then click that particle with fill tool to erase in bulk.
+
+### When you want to remove falsely detected particles
+
+If noise (e.g., dust) is falsely detected as particles, erase it with the eraser tool.
+
+### When you want to inspect mask by mask
+
+Enable show selected to display only the selected label ID mask.
+While this is enabled, changing label lets you inspect masks one by one.
+:::
+
+#### (B) Point-prompt refinement
+
+1. Run **Create prompt points layer**
+2. Select Foreground / Background
+3. Place points on the cropped image
 4. Run **Run SAM2 point prompt**
 
-This produces prompt-based polygon candidates (`*_sam2_points`) that can guide manual correction.
+Candidate polygons are output to the `*_sam2_points` layer and can be used to guide refinement.
 
-### B) Direct manual label editing
+::: {.callout-warning}
+## Notes
 
-Use napari label editing tools on:
+This feature is currently experimental and may not behave stably in all cases.
+It often does not work well for very small particles, so regular manual editing is usually more reliable.
+Please note that this feature is likely to change in future updates.
+:::
 
-- `<image_name>_cropped_sam2_auto_labels`
+### Step 5. Export results
 
-Typical edits:
+1. After manual editing is complete, run **Export segmentation artifacts** to export outputs.
+   The output directory defaults to `./outputs`, but you can choose any location.
+   The output directory is created automatically.
+2. When export completes, a timestamped folder such as `example_02_20260426T044227Z` is generated.
 
-- split merged particles,
-- remove obvious false positives,
-- add missing particles.
+The exported folder includes the following files:
 
-> Recommendation: Keep edits minimal and traceable, and document any manual criteria in your experiment notes.
+::: {.list-table}
 
----
+- - Filename
+  - Description
 
-## Step 6. Export results
+- - `source_with_roi.png`
+  - Source image with ROI box overlay
 
-Execute:
+- - `cropped_image.png`
+  - Cropped analysis region image
 
-- **Export segmentation artifacts**
+- - `sam2_only_overlay.png`
+  - Overlay image of SAM2 auto segmentation result
 
-Choose an output directory (default: `./outputs`).
+- - `final_overlay.png`
+  - Overlay image of the final adopted labels
 
-A timestamped export folder is generated, such as:
+- - `sam2_blobs.csv`
+  - Particle mask data based on SAM2 auto segmentation result
 
-- `example_01_20260421T094932Z`
+- - `final_blobs.csv`
+  - Particle mask data based on the final adopted labels
 
-### Exported files
+- - `run_metadata.json`
+  - JSON file summarizing run parameters, counts, and environment information
+:::
 
-Typical files include:
+### Step 6. Delete layers
 
-- `source_with_roi.png` (original image + ROI box)
-- `cropped_image.png` (cropped analysis region)
-- `sam2_only_overlay.png` (overlay from SAM2 auto result)
-- `final_overlay.png` (overlay from final selected labels)
-- `sam2_blobs.csv` (per-particle table from SAM2)
-- `final_blobs.csv` (per-particle table from final labels)
-- `run_metadata.json` (parameters, counts, environment, output list)
+After export is complete, run **Delete all layers for current image** to remove **all layers currently loaded in the viewer** (not only the current image).
+A confirmation dialog appears, but this operation can discard unrelated in-progress work, so use it with care.
 
-### Count definitions
+Once all layers are deleted, you are ready to load the next image.
+Return to Step 1 and load the next image.
 
-The export metadata reports:
+![Delete layers](manual/assets/delete_all_layers.webp)
 
-- `sam2_raw_count_before_dedup`
-- `sam2_after_dedup_count`
-- `dedup_removed_count`
-- `final_count`
-- `manual_delta_count_net`
+## QA checklist
 
-This helps separate model output from manual adjustments.
+Before accepting final results, check at least the following:
 
----
+- ROI includes required regions without major over/under coverage
+- Mask boundaries are reasonable at representative locations
+- Major merge/split errors have been corrected
+- Overlay display and CSV row counts are consistent
+- `run_metadata.json` is saved together with image artifacts
 
-# Suggested QA Checklist
+## Troubleshooting
 
-Before accepting final counts:
+### Cropped layer is not created
 
-- ROI includes all relevant particles and excludes irrelevant regions.
-- SAM2 masks align with object boundaries at representative locations.
-- Major merge/split errors are corrected.
-- Final overlay and CSV rows are consistent.
-- Run metadata is archived together with exported images.
+- Confirm the active layer is `*_ROI`
+- Confirm a valid rectangular ROI has been drawn
 
----
+### SAM2 auto segmentation fails
 
-# Troubleshooting
+- Recheck SAM2 setup and model placement
+- Retry with a smaller ROI
+- Retry with a lower `points_per_side`
 
-## No cropped layer is created
+### Export fails
 
-- Confirm the active layer is `*_ROI`.
-- Confirm at least one valid rectangle exists.
-
-## SAM2 auto segmentation fails
-
-- Re-check SAM2 setup scripts and model files.
-- Try a smaller ROI.
-- Reduce proposal density (`points_per_side`).
-
-## Export fails
-
-- Ensure a cropped layer exists.
-- Ensure SAM2 label layer exists.
-- Check write permission for the output directory.
-
----
-
-# Notes for Future Japanese Translation
-
-When creating the Japanese edition, consider keeping:
-
-- button names in English (exact UI labels),
-- terminology mappings in a glossary (ROI, mask, label, deduplication),
-- one-to-one heading structure with this English version for maintainability.
+- Confirm a `*_cropped` layer exists
+- Confirm a SAM2 label layer exists
+- Confirm write permission for the output directory
