@@ -1,6 +1,19 @@
 # SAM Particle Counter
 
+[英語版READMEはこちら / English README](README.md)
+
+<p align="center">
+  <img src="examples/outputs/example_01_20260421T094932Z/cropped_image.png" width="48%" />
+  <img src="examples/outputs/example_01_20260421T094932Z/final_overlay.png" width="48%" />
+</p>
+
+<p align="center">
+  Left: original / Right: final overlay
+</p>
+
 SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用いたセグメンテーションと [napari](https://napari.org/stable/) ベースの可視化により、画像データから粒をカウントするデスクトップアプリケーションです。
+
+[オンラインマニュアルはこちらからご覧ください。](https://maple60.github.io/sam-particle-counter/)
 
 ## 前提条件
 
