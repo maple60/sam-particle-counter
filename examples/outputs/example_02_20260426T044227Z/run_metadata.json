@@ -1,0 +1,82 @@
+{
+  "run_timestamp_utc": "2026-04-26T04:42:36.318672+00:00",
+  "input_image_layer": "example_02",
+  "source_image_shape_hw": [
+    3024,
+    4032
+  ],
+  "cropped_layer_name": "example_02_cropped",
+  "cropped_shape_hw": [
+    1549,
+    1476
+  ],
+  "roi_bbox_yx": [
+    832,
+    2381,
+    1360,
+    2836
+  ],
+  "sam2_model": {
+    "checkpoint_and_cfg": [
+      "C:\\Users\\Konrai\\github\\sam-particle-counter\\sam2_repo\\checkpoints\\sam2.1_hiera_large.pt",
+      "configs/sam2.1/sam2.1_hiera_l.yaml"
+    ],
+    "sam2_auto_params": {
+      "points_per_side": 56,
+      "pred_iou_thresh": 0.84,
+      "stability_score_thresh": 0.9,
+      "crop_n_layers": 1,
+      "crop_n_points_downscale_factor": 1,
+      "deduplicate_masks": true,
+      "contain_thresh": 0.9,
+      "iou_thresh": 0.7,
+      "score_key": "predicted_iou",
+      "output_mode": "labels"
+    }
+  },
+  "counts": {
+    "sam2_raw_count_before_dedup": 113,
+    "sam2_after_dedup_count": 101,
+    "dedup_removed_count": 12,
+    "final_count": 98,
+    "manual_delta_count_net": -3,
+    "manual_added_estimated": 0,
+    "manual_removed_estimated": 3
+  },
+  "layers_used": {
+    "sam2_layer": "example_02_cropped_sam2_auto_labels_original",
+    "final_layer": "example_02_cropped_sam2_auto_labels"
+  },
+  "randomness": {
+    "python_random_seed_explicitly_set": false,
+    "numpy_random_seed_explicitly_set": false,
+    "python_random_state_head": [
+      2972852465,
+      3034656298,
+      935517587,
+      549543162,
+      462589034
+    ],
+    "numpy_random_state_head": [
+      2147483648,
+      3488944237,
+      2347577214,
+      1146639661,
+      2177159581
+    ]
+  },
+  "runtime_environment": {
+    "python_version": "3.12.13 (main, Mar 24 2026, 22:57:53) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cwd": "C:\\Users\\Konrai\\github\\sam-particle-counter"
+  },
+  "output_files": [
+    "cropped_image.png",
+    "final_blobs.csv",
+    "final_overlay.png",
+    "run_metadata.json",
+    "sam2_blobs.csv",
+    "sam2_only_overlay.png",
+    "source_with_roi.png"
+  ]
+}

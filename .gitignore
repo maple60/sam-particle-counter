@@ -11,3 +11,5 @@ wheels/
 
 outputs/
 !examples/outputs/
+/.quarto/
+**/*.quarto_ipynb
