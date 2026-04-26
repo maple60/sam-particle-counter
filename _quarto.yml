@@ -1,0 +1,22 @@
+project:
+  type: book
+  execute-dir: project
+  output-dir: docs # for GitHub Pages
+
+book:
+  title: "SAM Particle Counter"
+  repo-url: https://github.com/maple60/sam-particle-counter
+  chapters:
+    - href: manual/index.qmd
+      text: "Home"
+
+number-sections: false
+
+format:
+  html:
+    code-overflow: wrap
+    code-tools: true
+    code-link: true
+    theme: cosmo
+    execute:
+      eval: false
