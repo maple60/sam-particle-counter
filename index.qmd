@@ -304,5 +304,7 @@ Before accepting final results, check at least the following:
 
 ## Icon Credits
 
-Icons such as *Add Shapes*, *Paint*, *Erase*, and *Polygon* used in the Usage section are derived from the [napari](https://github.com/napari/napari) open-source project (© napari contributors), distributed under the [BSD 3-Clause License](https://github.com/napari/napari/blob/main/LICENSE).
-They have been used here solely for illustrative purposes.
+Some interface icons used in this manual (`fill.svg`, `paint.svg`, `erase.svg`, `picker.svg`, and `rectangle.svg`) are copied and/or adapted from the [napari](https://github.com/napari/napari) project.
+
+Canonical source: [`src/napari/resources/icons` @ `c3e6c4ab549eaeb67c6f98502851dd99e4804522`](https://github.com/napari/napari/tree/c3e6c4ab549eaeb67c6f98502851dd99e4804522/src/napari/resources/icons).
+These icon files are copyright (c) Napari and/or napari contributors and are redistributed under the [BSD 3-Clause License](https://github.com/napari/napari/blob/c3e6c4ab549eaeb67c6f98502851dd99e4804522/LICENSE). See [`LICENSES/napari-BSD-3-Clause.txt`](LICENSES/napari-BSD-3-Clause.txt) for the full license text.

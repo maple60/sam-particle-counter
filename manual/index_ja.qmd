@@ -304,5 +304,7 @@ Step 1 に戻って、次の画像を読み込んでください。
 
 ## アイコンのクレジット
 
-使用している一部のインターフェースアイコン（例：Add Shapes, Paint, Erase, Polygon）は、[napari](https://github.com/napari/napari) プロジェクトに由来するものであり、[BSD 3-Clause License](https://github.com/napari/napari/blob/main/LICENSE) の下で配布されています。
-本ドキュメントでは、説明および教育目的で使用しています。
+本マニュアルで使用している一部のインターフェースアイコン（`fill.svg`, `paint.svg`, `erase.svg`, `picker.svg`, `rectangle.svg`）は、[napari](https://github.com/napari/napari) プロジェクトからコピーまたは改変したものです。
+
+正準の出典（コミット固定）: [`src/napari/resources/icons` @ `c3e6c4ab549eaeb67c6f98502851dd99e4804522`](https://github.com/napari/napari/tree/c3e6c4ab549eaeb67c6f98502851dd99e4804522/src/napari/resources/icons)。
+これらのアイコンファイルは Napari および napari contributors の著作物であり、[BSD 3-Clause License](https://github.com/napari/napari/blob/c3e6c4ab549eaeb67c6f98502851dd99e4804522/LICENSE) に従って再配布しています。ライセンス全文は [`LICENSES/napari-BSD-3-Clause.txt`](../LICENSES/napari-BSD-3-Clause.txt) を参照してください。

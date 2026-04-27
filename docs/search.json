@@ -64,7 +64,7 @@
     "href": "index.html#icon-credits",
     "title": "SAM Particle Counter",
     "section": "Icon Credits",
-    "text": "Icon Credits\nIcons such as Add Shapes, Paint, Erase, and Polygon used in the Usage section are derived from the napari open-source project (© napari contributors), distributed under the BSD 3-Clause License. They have been used here solely for illustrative purposes.",
+    "text": "Icon Credits\nSome interface icons used in this manual (fill.svg, paint.svg, erase.svg, picker.svg, and rectangle.svg) are copied and/or adapted from the napari project.\nCanonical source: src/napari/resources/icons @ c3e6c4ab549eaeb67c6f98502851dd99e4804522. These icon files are copyright (c) Napari and/or napari contributors and are redistributed under the BSD 3-Clause License. See LICENSES/napari-BSD-3-Clause.txt for the full license text.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Home</span>"
     ]
@@ -134,7 +134,7 @@
     "href": "manual/index_ja.html#アイコンのクレジット",
     "title": "SAM Particle Counter マニュアル（日本語版）",
     "section": "アイコンのクレジット",
-    "text": "アイコンのクレジット\n使用している一部のインターフェースアイコン（例：Add Shapes, Paint, Erase, Polygon）は、napari プロジェクトに由来するものであり、BSD 3-Clause License の下で配布されています。 本ドキュメントでは、説明および教育目的で使用しています。",
+    "text": "アイコンのクレジット\n本マニュアルで使用している一部のインターフェースアイコン（fill.svg, paint.svg, erase.svg, picker.svg, rectangle.svg）は、napari プロジェクトからコピーまたは改変したものです。\n正準の出典（コミット固定）: src/napari/resources/icons @ c3e6c4ab549eaeb67c6f98502851dd99e4804522。 これらのアイコンファイルは Napari および napari contributors の著作物であり、BSD 3-Clause License に従って再配布しています。ライセンス全文は LICENSES/napari-BSD-3-Clause.txt を参照してください。",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>日本語版</span>"
     ]
