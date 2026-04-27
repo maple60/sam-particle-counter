@@ -11,6 +11,11 @@ book:
       text: "Home"
     - href: manual/index_ja.qmd
       text: "日本語版"
+  appendices:
+    - href: appendix.qmd
+      text: "Duplicate mask removal"
+    - href: manual/appendix_ja.qmd
+      text: "重複マスク削除"
 
 number-sections: false
 

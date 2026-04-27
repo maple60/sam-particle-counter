@@ -142,6 +142,7 @@ Please do not manually rename layers.
 - - `deduplicate masks`
   - Enables removal of duplicate masks.
     When enabled, duplicate masks generated for the same particle are removed.
+    For details, see the [duplicate mask removal appendix](appendix.qmd).
   - **True**
 
 - - `contain thresh`

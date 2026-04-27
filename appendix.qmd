@@ -1,0 +1,69 @@
+---
+title: "How duplicate masks are removed"
+---
+
+SAM2 automatic segmentation can sometimes return multiple masks for the same particle.
+This can happen when the same object is detected from different prompt points or crop regions.
+If those masks are counted as separate particles, the final particle count becomes too high.
+
+When `deduplicate masks` is enabled, this app compares every pair of SAM2 masks and removes likely duplicates before creating the editable label layer.
+
+## Overlap measures
+
+For two masks A and B, the app first calculates the number of pixels in their intersection, their individual areas, and their union.
+It then uses two overlap measures.
+
+**Containment** measures how much the smaller mask is included in the other mask:
+
+```text
+contain = intersection(A, B) / min(area(A), area(B))
+```
+
+This is useful when one mask is mostly inside another mask.
+For example, if SAM2 outputs both a full particle mask and a smaller mask covering the center of the same particle, containment becomes high even when IoU is not very high.
+
+**IoU (Intersection over Union)** measures how similar the two masks are as whole regions:
+
+```text
+iou = intersection(A, B) / union(A, B)
+```
+
+This is useful when two masks have similar size and shape.
+
+## Duplicate decision
+
+A pair of masks is treated as a duplicate candidate when either of the following is true:
+
+```text
+contain >= contain thresh
+iou >= iou thresh
+```
+
+The default settings are:
+
+- `contain thresh`: **0.90**
+- `iou thresh`: **0.70**
+
+Using both measures helps cover two common duplicate patterns:
+
+- One mask is almost contained in another mask
+- Two masks cover nearly the same region
+
+## Which mask is kept
+
+When two masks are judged to be duplicates, the app compares the score specified by `score key`.
+By default, this is `predicted_iou`, which is SAM2's predicted mask quality score.
+The mask with the higher score is kept, and the lower-scoring mask is removed.
+
+If the scores are equal, the earlier mask in the sorted mask list is kept.
+Masks are sorted by centroid position before deduplication, so label IDs remain relatively stable from top-left to bottom-right.
+
+## Parameter adjustment guide
+
+If too many masks are removed, increase `contain thresh` or `iou thresh`.
+This makes duplicate removal more conservative.
+
+If obvious duplicate masks remain, decrease `contain thresh` or `iou thresh`.
+This makes duplicate removal more aggressive.
+
+For particle-counting workflows, it is usually better to start with the default values, inspect the overlay, and adjust only when duplicate detections or over-removal are visible.
