@@ -40,36 +40,47 @@ SAM Particle Counter は、[SAM2](https://ai.meta.com/research/sam2/) を用い�
 uv sync
 ```
 
-デフォルトの `uv sync` では `torch` は PyPI から解決されます。
-プラットフォームによっては（例: Linux x86_64）PyPI ホイールがすでに CUDA ランタイム依存を含む場合があり、別の環境では CPU 専用ビルドになることもあります。
+下記の SAM2 セットアップスクリプトでは、`uv sync` の後に uv の PyTorch backend 自動判定で `torch` を再インストールします。
 
-まず現在のビルドを確認し、必要な場合のみ CPU/CUDA のインデックスを指定して切り替えてください（下記例）。
+```bash
+uv pip install --upgrade torch --torch-backend=auto
+```
+
+このコマンドにより、uv が GPU/CUDA ドライバを検出して互換性のある PyTorch backend を選択します。対応する GPU backend が見つからない場合は CPU ビルドにフォールバックします。
+
+手動で `uv sync` のみ実行した場合は、上記コマンドを追加で実行し、その後に現在のビルドを確認してください。
+
+```bash
+uv run --no-sync python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+```
 
 #### PyTorch ビルドの切り替え（CPU / CUDA）
 
-同じプロジェクト環境のまま、PC に合わせて PyTorch ビルドを切り替えできます。
+自動判定で意図したビルドが選ばれない場合は、同じプロジェクト環境のまま PyTorch ビルドを明示して切り替えできます。
 
-- 現在のビルド確認:
+- もう一度自動判定する:
 
 ```bash
-uv run python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+uv pip install --upgrade torch --torch-backend=auto
 ```
 
 - CPU ビルドを明示して再インストール:
 
 ```bash
-uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+uv pip install --upgrade torch --torch-backend=cpu
 ```
 
-- CUDA 12.1 ビルドを再インストール（例）:
+- CUDA 12.8 ビルドを再インストール（例）:
 
 ```bash
-uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+uv pip install --upgrade torch --torch-backend=cu128
 ```
 
-> 注意1: `--upgrade` は同じ `uv` 環境内の既存 `torch*` パッケージを置き換えるため、`uv sync` の後に実行しても有効です。
+> 注意1: `--upgrade` は同じ `uv` 環境内の既存 `torch` パッケージを置き換えるため、`uv sync` の後に実行しても有効です。
 >
-> 注意2: `nvidia-smi` の `CUDA Version: ...` でドライバがサポートする CUDA ランタイムを確認し、互換な PyTorch CUDA ホイール（例: `cu121`）を選んでください。
+> 注意2: `nvidia-smi` の `CUDA Version: ...` でドライバがサポートする CUDA ランタイムを確認し、`cu126` や `cu128` など互換性のある uv PyTorch backend を選んでください。
+>
+> 注意3: `uv pip` で PyTorch ビルドを切り替えた後は、選択したビルドがプロジェクト同期で置き換わらないように `uv run --no-sync ...` を使用してください。
 
 OSやCUDAのバージョンに応じたPytorchのインストールコマンドは[こちら](https://pytorch.org/get-started/locally/)からご確認いただけます。
 `pip3`となっている部分は`uv pip`に置き換えてください。
@@ -93,7 +104,7 @@ setup\setup_sam2.bat
 ### アプリケーション起動
 
 ```powershell
-uv run main.py
+uv run --no-sync main.py
 ```
 
 ## クイックスタート手順

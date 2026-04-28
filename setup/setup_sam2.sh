@@ -22,6 +22,9 @@ SAM2_MODELS=(tiny small base_plus large)
 # 1 = run uv sync before setup, 0 = skip
 SYNC_PROJECT=1
 
+# 1 = let uv auto-select the PyTorch backend after sync, 0 = keep synced torch build
+AUTO_TORCH_BACKEND=1
+
 # 1 = skip SAM2 CUDA extension build (safer on some environments)
 # 0 = try normal install
 SKIP_SAM2_CUDA=0
@@ -32,6 +35,7 @@ printf 'Project root: %s\n' "${PROJECT_ROOT}"
 printf 'SAM2 repo:    %s\n' "${SAM2_REPO}"
 printf 'SAM2 ref:     %s\n' "${SAM2_REF}"
 printf 'Models:       %s\n' "${SAM2_MODELS[*]}"
+printf 'Torch backend auto: %s\n' "${AUTO_TORCH_BACKEND}"
 printf '============================================================\n\n'
 
 require_command() {
@@ -104,6 +108,17 @@ download_model() {
   fi
 }
 
+install_torch_auto() {
+  echo "[Info] Selecting PyTorch backend automatically with uv..."
+  if ! uv pip install --upgrade torch --torch-backend=auto; then
+    echo "[Error] Failed to install PyTorch with automatic backend selection." >&2
+    echo "[Hint] Upgrade uv if --torch-backend is unavailable, or install PyTorch manually from README." >&2
+    exit 1
+  fi
+
+  uv run --no-sync python -c "import torch; print('[OK] torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+}
+
 require_command uv "uv is not installed or not on PATH."
 require_command git "git is not installed or not on PATH."
 detect_downloader
@@ -118,8 +133,14 @@ fi
 if [[ "${SYNC_PROJECT}" == "1" ]]; then
   echo "[Info] Syncing project environment..."
   uv sync
+  if [[ "${AUTO_TORCH_BACKEND}" == "1" ]]; then
+    install_torch_auto
+  else
+    echo "[Skip] PyTorch backend auto-selection skipped."
+  fi
 else
   echo "[Skip] uv sync skipped."
+  echo "[Skip] PyTorch backend auto-selection skipped because uv sync was skipped."
 fi
 
 if [[ ! -d "${SAM2_DIR}/.git" ]]; then

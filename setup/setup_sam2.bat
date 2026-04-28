@@ -27,6 +27,9 @@ set "SAM2_MODELS=tiny small base_plus large"
 REM 1 = run uv sync before setup, 0 = skip
 set "SYNC_PROJECT=1"
 
+REM 1 = let uv auto-select the PyTorch backend after sync, 0 = keep synced torch build
+set "AUTO_TORCH_BACKEND=1"
+
 REM 1 = skip SAM2 CUDA extension build (safer on some Windows setups)
 REM 0 = try normal install
 set "SKIP_SAM2_CUDA=0"
@@ -37,6 +40,7 @@ echo Project root: %PROJECT_ROOT%
 echo SAM2 repo:    %SAM2_REPO%
 echo SAM2 ref:     %SAM2_REF%
 echo Models:       %SAM2_MODELS%
+echo Torch backend auto: %AUTO_TORCH_BACKEND%
 echo ============================================================
 echo.
 
@@ -63,8 +67,15 @@ if "%SYNC_PROJECT%"=="1" (
         echo [Error] uv sync failed.
         exit /b 1
     )
+
+    if "%AUTO_TORCH_BACKEND%"=="1" (
+        call :install_torch_auto || exit /b 1
+    ) else (
+        echo [Skip] PyTorch backend auto-selection skipped.
+    )
 ) else (
     echo [Skip] uv sync skipped.
+    echo [Skip] PyTorch backend auto-selection skipped because uv sync was skipped.
 )
 
 REM ---- Clone or update SAM2 repo -----------------------------
@@ -180,6 +191,20 @@ if not errorlevel 1 (
 
 echo [Error] Neither curl, pwsh, nor powershell was found.
 exit /b 1
+
+:install_torch_auto
+echo [Info] Selecting PyTorch backend automatically with uv...
+uv pip install --upgrade torch --torch-backend=auto || (
+    echo [Error] Failed to install PyTorch with automatic backend selection.
+    echo [Hint] Upgrade uv if --torch-backend is unavailable, or install PyTorch manually from README.
+    exit /b 1
+)
+
+uv run --no-sync python -c "import torch; print('[OK] torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())" || (
+    echo [Error] Failed to verify PyTorch installation.
+    exit /b 1
+)
+exit /b 0
 
 :download_model
 set "MODEL=%~1"

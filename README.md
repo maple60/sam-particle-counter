@@ -42,35 +42,47 @@ Clone the repository, then set up the virtual environment and install dependenci
 uv sync
 ```
 
-By default, `uv sync` resolves `torch` from PyPI. On some platforms (for example Linux x86_64), the PyPI wheel may already include CUDA runtime dependencies, while other platforms/environments may get CPU-only builds. 
+The SAM2 setup scripts below run `uv sync`, then automatically reinstall `torch` with uv's PyTorch backend detection:
 
-Always verify your installed build first, then switch to a specific CPU/CUDA index only when needed (see examples below).
+```bash
+uv pip install --upgrade torch --torch-backend=auto
+```
+
+This asks uv to detect the installed GPU/CUDA driver and choose a compatible PyTorch backend. If no supported GPU backend is found, uv falls back to the CPU build.
+
+If you install dependencies manually with `uv sync`, run the command above afterward, then verify the installed build:
+
+```bash
+uv run --no-sync python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+```
 
 #### Switch PyTorch build (CPU / CUDA)
 
-You can keep the same project and swap PyTorch builds to match your PC.
+If automatic detection does not choose the build you want, you can keep the same project environment and swap PyTorch builds explicitly.
 
-- Confirm current build:
+- Auto-select again:
 
 ```bash
-uv run python -c "import torch; print('torch=', torch.__version__, 'cuda=', torch.version.cuda, 'available=', torch.cuda.is_available())"
+uv pip install --upgrade torch --torch-backend=auto
 ```
 
 - Reinstall CPU build explicitly:
 
 ```bash
-uv pip install --upgrade --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+uv pip install --upgrade torch --torch-backend=cpu
 ```
 
-- Reinstall CUDA 12.1 build (example):
+- Reinstall CUDA 12.8 build (example):
 
 ```bash
-uv pip install --upgrade --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+uv pip install --upgrade torch --torch-backend=cu128
 ```
 
-> Note 1: `--upgrade` replaces the currently installed `torch*` packages in the same `uv` environment, so running this after `uv sync` is meaningful.
+> Note 1: `--upgrade` replaces the currently installed `torch` package in the same `uv` environment, so running this after `uv sync` is meaningful.
 >
-> Note 2: You can check the driver-supported CUDA runtime with `nvidia-smi` (`CUDA Version: ...`), then select a compatible PyTorch CUDA wheel (for example `cu121`).
+> Note 2: You can check the driver-supported CUDA runtime with `nvidia-smi` (`CUDA Version: ...`), then select a compatible uv PyTorch backend such as `cu126` or `cu128`.
+>
+> Note 3: After switching PyTorch builds with `uv pip`, use `uv run --no-sync ...` to avoid replacing the selected build during project sync.
 
 You can find the appropriate PyTorch installation command [here](https://pytorch.org/get-started/locally/).
 Use `uv pip` instead of `pip3`.
@@ -94,7 +106,7 @@ setup\setup_sam2.bat
 ### Launch the application
 
 ```powershell
-uv run main.py
+uv run --no-sync main.py
 ```
 
 ## Quick Start Workflow
