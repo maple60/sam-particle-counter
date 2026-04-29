@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 import csv
 import platform
 import random
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
 
 import cv2
 import numpy as np
 import glasbey
-from napari.layers import Image, Labels
+
+if TYPE_CHECKING:
+    from napari.layers import Image, Labels
 
 
 class ExportService:
@@ -100,8 +104,53 @@ class ExportService:
         )
         return canvas
 
-    def _compute_blob_metrics(self, labels: np.ndarray) -> list[dict[str, Any]]:
+    def _compute_axis_metrics(
+        self, xs: np.ndarray, ys: np.ndarray
+    ) -> tuple[float, float, float]:
+        if xs.size < 2:
+            return float("nan"), float("nan"), float("nan")
+
+        coords = np.column_stack((xs.astype(np.float64), ys.astype(np.float64)))
+        centered = coords - coords.mean(axis=0)
+        covariance = (centered.T @ centered) / coords.shape[0]
+        eigenvalues, eigenvectors = np.linalg.eigh(covariance)
+        order = np.argsort(eigenvalues)[::-1]
+        eigenvalues = np.maximum(eigenvalues[order], 0.0)
+        eigenvectors = eigenvectors[:, order]
+
+        major_axis_length = float(4.0 * np.sqrt(eigenvalues[0]))
+        minor_axis_length = float(4.0 * np.sqrt(eigenvalues[1]))
+        if major_axis_length == 0.0:
+            return major_axis_length, minor_axis_length, float("nan")
+
+        major_vector = eigenvectors[:, 0]
+        orientation = float(np.degrees(np.arctan2(major_vector[1], major_vector[0])))
+        orientation = orientation % 180.0
+        return major_axis_length, minor_axis_length, orientation
+
+    def _compute_convex_area_px(
+        self, mask: np.ndarray, xs: np.ndarray, ys: np.ndarray, area: int
+    ) -> int:
+        if xs.size < 3:
+            return area
+
+        points = np.column_stack((xs, ys)).astype(np.int32).reshape(-1, 1, 2)
+        hull = cv2.convexHull(points)
+        if hull is None or len(hull) < 3:
+            return area
+
+        convex_mask = np.zeros_like(mask, dtype=np.uint8)
+        cv2.fillConvexPoly(convex_mask, hull, 1)
+        convex_area = int(convex_mask.sum())
+        return max(convex_area, area)
+
+    def _compute_blob_metrics(
+        self, labels: np.ndarray, roi_bbox_yx: list[int] | None = None
+    ) -> list[dict[str, Any]]:
         blobs: list[dict[str, Any]] = []
+        label_height, label_width = labels.shape[:2]
+        global_x_offset = int(roi_bbox_yx[2]) if roi_bbox_yx is not None else 0
+        global_y_offset = int(roi_bbox_yx[0]) if roi_bbox_yx is not None else 0
         unique_labels = [int(v) for v in np.unique(labels) if int(v) > 0]
         for label_id in unique_labels:
             mask = (labels == label_id).astype(np.uint8)
@@ -129,6 +178,29 @@ class ExportService:
             else:
                 cx = float(moments["m10"] / moments["m00"])
                 cy = float(moments["m01"] / moments["m00"])
+            bbox_width = x_max - x_min + 1
+            bbox_height = y_max - y_min + 1
+            bbox_area = bbox_width * bbox_height
+            major_axis_length, minor_axis_length, orientation = (
+                self._compute_axis_metrics(xs, ys)
+            )
+            aspect_ratio = (
+                float(major_axis_length / minor_axis_length)
+                if minor_axis_length > 0.0
+                else float("nan")
+            )
+            equivalent_diameter = float(np.sqrt((4.0 * area) / np.pi))
+            convex_area = self._compute_convex_area_px(mask, xs, ys, area)
+            solidity = (
+                float(area / convex_area) if convex_area > 0 else float("nan")
+            )
+            extent = float(area / bbox_area) if bbox_area > 0 else float("nan")
+            touches_border = (
+                x_min == 0
+                or y_min == 0
+                or x_max == label_width - 1
+                or y_max == label_height - 1
+            )
 
             blobs.append(
                 {
@@ -140,16 +212,31 @@ class ExportService:
                     "bbox_y_min": y_min,
                     "bbox_x_max": x_max,
                     "bbox_y_max": y_max,
-                    "bbox_width": x_max - x_min + 1,
-                    "bbox_height": y_max - y_min + 1,
+                    "bbox_width": bbox_width,
+                    "bbox_height": bbox_height,
                     "perimeter_px": perimeter,
                     "circularity": circularity,
+                    "major_axis_length_px": major_axis_length,
+                    "minor_axis_length_px": minor_axis_length,
+                    "orientation_deg": orientation,
+                    "aspect_ratio": aspect_ratio,
+                    "equivalent_diameter_px": equivalent_diameter,
+                    "convex_area_px": convex_area,
+                    "solidity": solidity,
+                    "extent": extent,
+                    "touches_border": touches_border,
+                    "centroid_global_x": cx + global_x_offset,
+                    "centroid_global_y": cy + global_y_offset,
+                    "bbox_global_x_min": x_min + global_x_offset,
+                    "bbox_global_y_min": y_min + global_y_offset,
                 }
             )
         return blobs
 
-    def _write_blob_csv(self, path: Path, labels: np.ndarray) -> None:
-        rows = self._compute_blob_metrics(labels)
+    def _write_blob_csv(
+        self, path: Path, labels: np.ndarray, roi_bbox_yx: list[int] | None = None
+    ) -> None:
+        rows = self._compute_blob_metrics(labels, roi_bbox_yx=roi_bbox_yx)
         fieldnames = [
             "id",
             "area_px",
@@ -163,12 +250,32 @@ class ExportService:
             "bbox_height",
             "perimeter_px",
             "circularity",
+            "major_axis_length_px",
+            "minor_axis_length_px",
+            "orientation_deg",
+            "aspect_ratio",
+            "equivalent_diameter_px",
+            "convex_area_px",
+            "solidity",
+            "extent",
+            "touches_border",
+            "centroid_global_x",
+            "centroid_global_y",
+            "bbox_global_x_min",
+            "bbox_global_y_min",
         ]
         with path.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             for row in rows:
                 writer.writerow(row)
+
+    def _write_label_artifacts(self, path_stem: Path, labels: np.ndarray) -> None:
+        labels = np.asarray(labels, dtype=np.int32)
+        np.save(path_stem.with_suffix(".npy"), labels)
+        tiff_path = path_stem.with_suffix(".tif")
+        if not cv2.imwrite(str(tiff_path), labels):
+            raise OSError(f"Failed to write label TIFF: {tiff_path}")
 
     def _count_positive_labels(self, labels: np.ndarray) -> int:
         unique_labels = np.unique(np.asarray(labels, dtype=np.int32))
