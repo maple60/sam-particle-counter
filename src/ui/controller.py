@@ -694,11 +694,21 @@ class RoiController:
                     cv2.cvtColor(roi_overlay, cv2.COLOR_RGB2BGR),
                 )
 
-                self.export_service._write_blob_csv(
-                    export_dir / "sam2_blobs.csv", sam2_labels
+                self.export_service._write_label_artifacts(
+                    export_dir / "sam2_labels", sam2_labels
+                )
+                self.export_service._write_label_artifacts(
+                    export_dir / "final_labels", final_labels
                 )
                 self.export_service._write_blob_csv(
-                    export_dir / "final_blobs.csv", final_labels
+                    export_dir / "sam2_blobs.csv",
+                    sam2_labels,
+                    roi_bbox_yx=roi_bbox_yx,
+                )
+                self.export_service._write_blob_csv(
+                    export_dir / "final_blobs.csv",
+                    final_labels,
+                    roi_bbox_yx=roi_bbox_yx,
                 )
 
                 output_files = sorted(
